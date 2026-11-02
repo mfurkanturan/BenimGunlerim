@@ -101,6 +101,32 @@ class CompletionLogExtensionsTest {
         assertEquals(1, logs.currentStreak(today))
     }
 
+    private val monWedFri = setOf(DayOfWeek.MONDAY, DayOfWeek.WEDNESDAY, DayOfWeek.FRIDAY)
+
+    @Test
+    fun routineStreakSkipsUnscheduledDays() {
+        // 2026-04-15 Çarşamba; bugün henüz yapılmadı. Pzt 13, Cum 10, Çar 8 yapıldı → zincir 3 (Salı, hafta sonu kırmaz).
+        val today = LocalDate.of(2026, 4, 15)
+        val logs = listOf(13, 10, 8).map { completionLog(LocalDate.of(2026, 4, it), "routine", "r1") }
+        assertEquals(3, logs.currentStreakForEntity("routine", "r1", today, monWedFri))
+    }
+
+    @Test
+    fun routineStreakBreaksOnMissedScheduledDay() {
+        // Bugün (Çar 15) ve Pzt 13 yapıldı, Cum 10 kaçırıldı → zincir 2.
+        val today = LocalDate.of(2026, 4, 15)
+        val logs = listOf(15, 13, 8).map { completionLog(LocalDate.of(2026, 4, it), "routine", "r1") }
+        assertEquals(2, logs.currentStreakForEntity("routine", "r1", today, monWedFri))
+    }
+
+    @Test
+    fun routineStreakOnUnscheduledTodayKeepsChain() {
+        // Bugün Salı 14 (rutin günü değil); Pzt 13 ve Cum 10 yapıldı → zincir 2.
+        val today = LocalDate.of(2026, 4, 14)
+        val logs = listOf(13, 10).map { completionLog(LocalDate.of(2026, 4, it), "routine", "r1") }
+        assertEquals(2, logs.currentStreakForEntity("routine", "r1", today, monWedFri))
+    }
+
     private fun completionLog(
         date: LocalDate,
         entityType: String = "task",

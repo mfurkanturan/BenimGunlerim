@@ -1,12 +1,27 @@
+param(
+    [Parameter(Mandatory = $true)]
+    [ValidateScript({ Test-Path -LiteralPath $_ -PathType Leaf })]
+    [string]$SourcePath
+)
+
 Add-Type -AssemblyName System.Drawing
 
-$srcPath = "C:\Users\Acer\.gemini\antigravity-ide\brain\5dfd85ad-8295-4901-b375-20e981fca3c5\.user_uploaded\media_1787054331575.png"
+$srcPath = $SourcePath
 $resDir = "d:\BenimGunlerim\app\src\main\res"
 $playStoreIconPath = "d:\BenimGunlerim\play_store_icon_512.png"
 $appPlayStoreIconPath = "d:\BenimGunlerim\app\play_store_icon_512.png"
 
-$srcImg = [System.Drawing.Bitmap]::FromFile($srcPath)
-Write-Host "Source image loaded: $($srcImg.Width) x $($srcImg.Height)"
+$sourceImg = [System.Drawing.Bitmap]::FromFile($srcPath)
+$workingSize = 1024
+$srcImg = New-Object System.Drawing.Bitmap($workingSize, $workingSize, [System.Drawing.Imaging.PixelFormat]::Format32bppArgb)
+$sourceGraphics = [System.Drawing.Graphics]::FromImage($srcImg)
+$sourceGraphics.CompositingQuality = [System.Drawing.Drawing2D.CompositingQuality]::HighQuality
+$sourceGraphics.InterpolationMode = [System.Drawing.Drawing2D.InterpolationMode]::HighQualityBicubic
+$sourceGraphics.SmoothingMode = [System.Drawing.Drawing2D.SmoothingMode]::HighQuality
+$sourceGraphics.DrawImage($sourceImg, 0, 0, $workingSize, $workingSize)
+$sourceGraphics.Dispose()
+$sourceImg.Dispose()
+Write-Host "Source image normalized to: $($srcImg.Width) x $($srcImg.Height)"
 
 # The cream background color of the logo
 $bgColor = [System.Drawing.Color]::FromArgb(255, 254, 247, 231) # #FEF7E7

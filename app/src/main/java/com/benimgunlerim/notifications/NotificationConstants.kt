@@ -9,6 +9,9 @@ object NotificationConstants {
     const val EXTRA_START_ROUTE = "start_route"
     const val ACTION_DAILY_SUMMARY = "com.benimgunlerim.ACTION_DAILY_SUMMARY"
 
+    // Firebase Cloud Messaging duyuruları
+    const val ANNOUNCEMENT_CHANNEL_ID = "announcements"
+
     // Sprint 8: Task Reminders
     const val TASK_CHANNEL_ID = "task_reminders"
     const val ACTION_TASK_REMINDER = "com.benimgunlerim.ACTION_TASK_REMINDER"

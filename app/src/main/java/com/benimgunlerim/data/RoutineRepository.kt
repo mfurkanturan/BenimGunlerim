@@ -88,6 +88,12 @@ class RoutineRepository @Inject constructor(
         return updated
     }
 
+    suspend fun reorder(routines: List<RoutineEntity>) {
+        routineDao.insertAll(routines.mapIndexed { index, routine ->
+            routine.copy(sortOrder = index, updatedAt = dateTimeProvider.currentTimeMillis())
+        })
+    }
+
     suspend fun archive(routine: RoutineEntity): RoutineEntity {
         val archived = routine.copy(isArchived = true, updatedAt = dateTimeProvider.currentTimeMillis())
         routineDao.update(archived)

@@ -80,33 +80,40 @@ Aynı eylem, aynı ikon, aynı renk anlamı ve aynı geri bildirim biçimiyle ç
 - Aynı anda birden fazla ana buton
 - Kullanıcıyı baskılayan kırmızı uyarılar ve skor dili
 
-## 5. Renk Sistemi
+## 5. Renk Sistemi — Gün Işığı v2
 
-Renkler dekoratif değil, anlam taşıyan işaretlerdir. Uygulama genelinde renk kullanımının semantik anlamı korunmalıdır.
+Renkler dekoratif değil, anlam taşıyan işaretlerdir. **Her renk ailesinin tek bir anlamı vardır.**
 
-| Rol | Kullanım | Davranış |
-|---|---|---|
-| Ana vurgu | Birincil eylem, seçili durum, ana ilerleme | Kullanıcıyı bir sonraki eyleme yönlendirir. |
-| İkincil vurgu | Destekleyici bilgi, alternatif eylem | Ana eylemle yarışmaz. |
-| Tamamlandı | Başarı, tamamlanma, pozitif durum | Sakin ve güven verici görünür. |
-| Uyarı | Geciken iş, dikkat gerektiren durum | Aciliyet bildirir; suçlayıcı değildir. |
-| Yüzey | Kartlar, bottom sheet, bilgi alanları | İçeriği arka plandan ayırır. |
-| Arka plan | Ekran zemini | Sessiz kalır, göz yormaz. |
-| Metin | Başlık, gövde, ikincil bilgi | Kontrast ve okunabilirlik önceliklidir. |
+| Aile | Anlam | Kullanım | Asla |
+|---|---|---|---|
+| **Yaprak** (yeşil) | Marka; "yapabileceğin şey" | Birincil buton, FAB, seçili sekme, link, anahtar | İlerleme göstergesi |
+| **Kayısı** | İlerleme; "yaptığın şey" | Yanan yıldız, güneş ışını, zincir, XP, seri, "kalan" kartları | Buton; düz metin rengi (metinde `doneInk`) |
+| **Gece** (lacivert) | Kapanış ve dinlenme | Günü kapat kartı/ekranı, gece göğü, ruh hali/enerji ölçeği | Gündüz yüzeyleri |
+| **Çayır / Mürekkep** | Zemin ve metin (zemin `#E1E9DC` açık adaçayı: gök → tepeler → çayır; kartlar `#FCFDFB`) | Arka plan, kart, çizgi, metin | — |
+| **Kiremit** | Sadece hata ve geri alınamaz işlem | Sil, verileri temizle, hata | Geciken iş, yüksek öncelik (bunlar `attention`) |
+| **Altın** | Sadece dükkan parası | Altın rozeti, fiyat | XP |
+| **Deniz** | Bilgilendirme | Bilgi banner'ı | — |
 
-Uygulanan token kaynakları:
+### Üç katman
 
-- `app/src/main/java/com/benimgunlerim/ui/theme/DesignTokens.kt`
-- `app/src/main/java/com/benimgunlerim/ui/theme/Theme.kt`
-- `app/src/main/java/com/benimgunlerim/ui/today/theme/TodayColorTokens.kt`
+1. **Ham palet** — `ui/theme/ColorPrimitives.kt` (`internal object Palette`): Kâğıt 50–700 + Mürekkep, Yaprak, Kayısı, Gece, Kiremit, Altın, Deniz, 6 kategori tonu, gök fazları. Sadece `ui/theme` okur.
+2. **Roller** — `MaterialTheme.colorScheme` (primary = Yaprak 700, secondary = Kayısı 500, tertiary = Gece 900, background = Kâğıt 100, surface = Kâğıt 50, error = Kiremit 500) ve `AppTheme.colors` (`ui/theme/AppColors.kt`):
+   - `progress`: `done`, `doneEdge`, `doneInk`, `idle`, `soft`, `onSoft`
+   - `status`: `success` / `attention` / `error` / `info` → `fg`, `container`, `border`
+   - `night`: `sky`, `card`, `line`, `moon`, `text`, `muted`, `scale` (5 ton)
+   - `reward`: `xp`, `xpSoft`, `xpBorder`, `streak`, `streakSoft`, `gold`, `goldSoft`, `onGold`
+   - `category`: 6 doğal ton (yaprak, deniz, erik, kiremit, hardal, taş) — `fg` + `soft`
+3. **Bileşen/ekran** — sadece rol adlarını kullanır. Gece sahneleri `NightSurfaceTheme { }` ile yerel gece şeması alır (karanlık mod değildir).
+
+Gökyüzü: `ui/theme/DaySky.kt` faz başına `SkyPalette` (sabah krem, öğle açık mavi, akşam turuncu, gece lacivert). Gündüz ilerleme = güneşin 8 ışını (oran kadarı yanar), gece = ayın çevresinde yıldızlar.
 
 ### Renk kuralları
 
-1. Aynı durum, tüm ekranlarda aynı renk ailesiyle anlatılır.
-2. Bir kartta en fazla bir baskın vurgu rengi kullanılır. Bu kural kartın büyük yüzey/dolgu rengini hedefler; Level/Seri/XP gibi küçük, bağımsız anlam taşıyan rozet/chip grupları bu kuralın kapsamı dışındadır ve her biri kendi semantik rengini korur.
-3. Sadece renge dayanarak anlam verilmez; metin, ikon veya şekil desteklenir.
-4. Pasif öğeler düşük kontrastta kaybolmamalıdır.
-5. Kırmızı tonlar yalnızca gerçek uyarı/hata durumlarında kullanılır.
+1. Ekran/bileşen dosyasında `Color(0x…)` ve `Palette.` yasaktır — `ColorUsageGuardTest` bunu derlemede yakalar. Beyaz/siyah yerine `onPrimary`, `onError`, `night.sky` gibi "on" rolleri kullanılır.
+2. Kâğıt zeminde metin en az 600 tonu; Kayısı 500 metin olmaz (2.3:1), metinde Kayısı 700 (`progress.doneInk`).
+3. Aynı durum tüm ekranlarda aynı rolle anlatılır. Bir kartta en fazla bir baskın vurgu.
+4. Sadece renge dayanarak anlam verilmez; metin, ikon veya şekil desteklenir.
+5. Kırmızı (Kiremit) yalnızca gerçek hata ve geri alınamaz işlem içindir.
 
 ## 6. Tipografi ve Metin Hiyerarşisi
 
@@ -114,7 +121,7 @@ Tipografi hızlı taramayı desteklemelidir. Bir ekranda aynı anda en fazla ü�
 
 | Seviye | Kullanım | Kural |
 |---|---|---|
-| Ekran başlığı | Hero kartı ve ana ekran adı | Kısa, güçlü, tek odaklı. |
+| Ekran başlığı | `ScreenTitle` / gök selamlaması (Bricolage, display) | Kısa, güçlü, tek odaklı. |
 | Bölüm başlığı | Görevler, Rutinler, Gecikenler | İçeriği gruplar; açıklayıcı olmalıdır. |
 | Ana metric | Tamamlanma, seri, XP | Büyük ve belirgin; tek metric öne çıkar. |
 | Gövde | Açıklama, rehber, not | Kısa cümleler, iki-üç satırı geçmeyen bloklar. |
@@ -194,56 +201,52 @@ Boş durumlar eksikliği değil fırsatı anlatmalıdır.
 - Hata teknik ayrıntılarını kullanıcıya göstermez.
 - Kırmızı rengi ölçülü kullanır.
 
-## 9. Ekran Bazlı Tasarım Standardı
+## 9. Ekran Bazlı Tasarım Standardı — Gün Işığı
+
+**Ana fikir:** Her gün bir gökyüzüdür; tamamlanan her hedef o göğe bir ışık yakar. Mino (kaplumbağa maskot) yavaş ama durmadan yürüyen yol arkadaşıdır. Gündüz ilerleme = güneşin ışınları; gece = yıldızlar. Kapanış ve dinlenme anları gece yüzeyindedir (`NightSurfaceTheme`).
+
+**Tipografi:** Başlıklar Bricolage Grotesque (değişken, `display*` / `headline*`), gövde Nunito (değişken). İkisi de OFL; `OssLicensesScreen`'de listelenir.
 
 ### Bugün
+- Üstte `DaySkyHeader`: saate göre faz (`DayPhase`: sabah 05–11, öğle 11–16:30, akşam 16:30–20:30, gece). Selamlama adla ("Gün batıyor, Furkan."), "HEDEFLER · n / N", Mino balonu. Gündüz güneşin 8 ışını tamamlama oranı kadar yanar; gece ayın çevresinde yıldızlar. Hiç hedef yoksa güneş soluk, "GÖK BUGÜN HENÜZ BOŞ".
+- Sıra: (Reset'ten seçilmişse) "ŞİMDİ SADECE BU" odak kartı → **Rutinlerin** (yıldız satırları, n / N) → **Görevlerin** → önceki günlerden kalan (dikkat kartı) → "Görev ya da rutin ekle" (yalnız iki bölüm de doluyken) → kaçırılan gün → gece "Günü kapat" kartı.
+- Boş bölüm kaybolmaz; kesik çizgili `DashedAddRow` olur. Tamamen boş gün: `TodayEmptyInvite` (hazır başlangıçlar + Rutin/Görev seçimi) ve sessiz "Günü kapat" satırı.
+- Göreve dokunmak ayrıntıyı açar; yıldıza dokunmak tamamlar.
+- Hafif gün: en fazla 2 rutin + 1 açık görev görünür; kalanlar "N hedef bugün dinleniyor".
 
-Bugün ekranı ürünün merkezi olmalıdır.
-
-Öncelik sırası:
-
-1. Günün durumu ve ilerleme
-2. Açık görevler ve rutinler
-3. Gecikenler
-4. Tamamlananlar
-5. Gün kapatma veya missed day
-
-Kurallar:
-
-- Açık işler tamamlananlardan önce gelir.
-- Geciken işler görünür olmalı, ama tüm ekranı ele geçirmemelidir.
-- Rutin ve görev satırları aynı görsel dilde, farklı davranışı açıkça anlatacak biçimde görünmelidir.
-- Tamamlama kontrolü kolay ulaşılır ve yeterince büyük olmalıdır.
-- Gün kapatma, sadece zamanı geldiğinde ana eylem gibi görünmelidir.
+### Günü kapat ve Reset
+- Gece göğü sayfası, 4 adım; başlık "N hedef tamamladın.", son düğme "İyi geceler". Ruh hali/enerji gece ölçeğiyle (`night.scale`).
+- Reset "Biraz dur. → Nefes → Tek adım": nefes ayı 4 sn al / 6 sn ver (tek saat kaynağı), sonunda açık rutin ve görevlerden biri odak olarak seçilir.
 
 ### Plan
-
-Plan ekranı geleceği düzenler; Bugün ekranının kopyası değildir.
-
-- Tarih navigasyonu hızlı ve anlaşılırdır.
-- Seçili gün net biçimde görülür.
-- Görev ekleme sheet’i önce minimum alanları ister, ayrıntıları isteğe bağlı tutar.
-- Geciken görevleri taşıma eylemi geri dönüşü anlaşılır biçimde anlatır.
+- `WeekPicker` = hafta ufku: yedi mini gök, her günün güneşi planlı görev sayısı kadar ışın taşır; geçmiş günler soluk; seçili gün mürekkep dolgu; bugün kayısı nokta.
+- Boş gün: Mino balonu (bugün/yarın/ileri/geçmişe göre) + `DashedAddRow` + "Hızlı başlangıç" çipleri; geçmiş günde ekleme yok, "Bugüne dön". Boş günde FAB gizlenir.
 
 ### Rutinler
+- "Haftanın yolu" kartı: son 7 gün tepeler üzerinde taşlar, o gün yapılan oran kadar dolar; Mino bugünün taşında.
+- Rutinler vakte göre gruplanır (Sabah / Öğle / Akşam / Gece / Gün boyu — hatırlatma saatinden). Satırda 7 günlük ışık zinciri ve "Zincir: N gün" — zincir yalnız rutinin günlerini sayar.
 
-- Aktif rutin sayısı ve bugünkü durum üst bölümde özetlenir.
-- Check tipi ve hedef tipi rutinler görsel olarak ayırt edilir.
-- Artır/azalt eylemleri küçük görünse bile yeterli dokunma alanına sahip olur.
-- Hedef progress değeri her zaman metinle okunabilir kalır.
-- Arşivleme veya atlama gibi ikincil eylemler ana tamamlanma eylemiyle yarışmaz.
-
-### İlerlemen ve başarımlar
-
-- Grafikler ve metricler kullanıcının bir şey yapmasına yardım etmiyorsa sadeleştirilir.
-- Başarımlar kutlanır; henüz açılmamış olanlar baskı unsuru gibi kullanılmaz.
-- Günlük performans, “iyi/kötü insan” yargısı değil bir gözlem olarak sunulur.
+### Günlerim
+- Ayın gece göğü: hedefli her gün yıldız; art arda günler çizgiyle takımyıldızı olur; bugün kayısı halka. Seviye kartı (`GameEngine.calculateLevel`), tek kartta dört sayı.
 
 ### Ayarlar
+- Sabah göğü profil kartı (Mino, "Merhaba, …", seviye/XP; dokununca isim). Bölümler: Günün akışı, Hatırlatmalar, Gizlilik, Verilerin sende. Sayfa sonu: Mino + "Yavaş ama durmadan." + sürüm.
 
-- Ayarlar net bölümlere ayrılır: deneyim, bildirim, gizlilik, veri.
-- Riskli eylemler (veri silme, içe aktarma) onay gerektirir.
-- Yerel veri ve dışa aktarma uyarıları görünür, sade ve anlaşılırdır.
+### Onboarding
+- Bir gün doğumu: 5 adım, gök gece → şafak → sabah → öğle → tam güneş. Mino her adımda bir cümle. Son adım "Gökyüzün hazır, …".
+
+### Kutlamalar
+- Başarım ve seviye: `CelebrationCard` — gece göğü kartı, göz kırpan yıldızlar, ay ışığı haresinde rozet/seviye numarası.
+
+### Ekleme sayfaları
+- Görev ve rutin sayfaları `SheetParts` ile tek dil: büyük başlık, çerçevesiz büyük ad alanı, ayrıntılar hap olarak, tam genişlik "Kaydet". Görev sayfasında hangi güne eklendiği en üstte.
+
+### Oyun motoru kuralları (tek tanım)
+- Öncelik: 1 = Yüksek (18 XP), 2 = Normal (12), 3 = Düşük (8).
+- Seri / en iyi seri / Günlerim yıldızı: en az bir hedefin yapıldığı gün.
+- Rutin zinciri: yalnız rutinin planlı günleri; boş günler kırmaz.
+- Seri başarımları seri eşiği geçtiği an açılır; gün kapatmak gerekmez.
+- Rutin hatırlatması o gün yapılmışsa gösterilmez.
 
 ## 10. Durumlar ve Geri Bildirim
 
@@ -325,12 +328,11 @@ Yeni bir ekran, bileşen veya değişiklik aşağıdaki sorulara olumlu cevap ve
 - [Agent ve Graphify kuralları](AGENTS.md)
 
 Teknik mimari ve veri katmanı açıklamaları bu belgenin kapsamı dışındadır; bunlar kod, Graphify grafiği ve production dokümanlarında tutulur.
-## Today kart standardı (2026-07-30)
 
-Today ekranındaki kartlar düşük radius ile, köşeye yakın fakat tamamen köşeli olmayan tek bir görsel dil kullanır. Ortak kart radius değeri 12dp'dir; görev satırları flat kalır, rutinler iki veya daha fazla öğe olduğunda düşük radius'lu tek dış kapsayıcı içinde gösterilir. Tek öğeli görev veya rutin bölümünde ikinci bir yüzey katmanı kullanılmaz. Today header ilerleme grafiği yalnızca bugünkü görev ve rutinlerin tamamlanma oranını gösterir; dairesel grafiğin merkezinde yüzde bulunur. Header özet kartı bilerek radius'suz, dikdörtgen bir yüzeydir. Gün sonu alanı pasif, aktif ve tamamlanmış durumların tamamında gece temalı koyu yüzey kullanır; eylem metni günü değerlendirme/kapatma amacını açıkça belirtir. Bu koyu yüzey, uygulama temasından (açık/koyu) bağımsız olarak sabit kalır — `Color(0xFF1E293B)` arka plan ve beyaz metin/ikon tonu `CloseDayCard.kt` içinde adlandırılmış sabitler olarak tanımlanır; bu, "hardcoded renk yasak" kuralının tek belgelenmiş istisnasıdır.
 ## Uygulama çerçevesi standardı (2026-07-30)
 
 Ana uygulama sekmelerinin tamamı — Bugün, Plan, Rutinler, İlerleme ve Ayarlar — tek, ortak scaffold içinde aynı `AppTopBar` ve bottom navigation bileşenini kullanır. Topbar; profil, uygulama adı, bildirim aksiyonu ve net alt ayırıcıdan oluşur. Sayfalar kendi içerik başlıklarını taşıyabilir; ancak uygulama düzeyindeki navigasyon çerçevesini yeniden oluşturmaz.
+
 ## 15. Global UI Kuralları
 
 ### Uygulama çerçevesi

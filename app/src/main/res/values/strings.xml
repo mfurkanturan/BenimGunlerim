@@ -7,14 +7,57 @@
     <string name="today_status_completed_count">%1$d / %2$d tamamlandı</string>
     <string name="today_status_percent">%1$d%%</string>
     <string name="today_progress_header_question">Bugün nasıl gidiyor?</string>
+    <string name="today_welcome_subtitle">Bugün küçük bir adım atalım.</string>
+    <string name="mascot_content_description">Mino, küçük adımları hatırlatan kaplumbağa maskot</string>
+    <string name="mascot_encouragement">Harika gidiyorsun!</string>
+    <string name="mascot_encouragement_start">Hadi ilk adımı atalım!</string>
+    <string name="mascot_encouragement_complete">Harika, günü tamamladın!</string>
+    <string name="progress_xp_label">XP</string>
+    <string name="progress_level_label">Seviye</string>
+    <string name="today_streak_label">Seri</string>
+    <string name="progress_gold_label">Altın</string>
     <string name="today_support_steps_remaining">%1$d adım seni bekliyor</string>
     <string name="today_support_add_first_step">Yeni bir görev ya da rutin ekleyebilirsin</string>
     <string name="today_streak_pill">Seri %1$d</string>
     <string name="today_mood_pill">Moral %1$d</string>
-    <string name="today_overdue_tasks_title">Geciken Görevler</string>
+    <string name="today_overdue_tasks_title">Önceki günlerden kalan</string>
     <string name="today_move_all_overdue_to_today">Tümünü Bugüne Taşı</string>
-    <string name="today_tasks_title">Bugünün Görevleri</string>
-    <string name="today_routines_title">Rutinler</string>
+    <string name="today_tasks_title">Görevlerin</string>
+    <string name="today_section_progress">%1$d / %2$d</string>
+    <string name="today_section_progress_cd">%2$d içinden %1$d tamamlandı</string>
+    <string name="today_invite_title">İlk hedefini seç</string>
+    <string name="today_invite_mino">Tek dokunuşla ekle, sonra istediğin gibi değiştir.</string>
+    <string name="today_starter_routine">her gün</string>
+    <string name="today_starter_task">sadece bugün</string>
+    <string name="today_starter_add_cd">%1$s, %2$s. Ekle</string>
+    <string name="today_choice_routine_title">Rutin ekle</string>
+    <string name="today_choice_routine_sub">Her gün tekrar eder</string>
+    <string name="today_choice_task_title">Görev ekle</string>
+    <string name="today_choice_task_sub">Sadece bugün</string>
+    <string name="today_routines_placeholder">İlk rutinini ekle</string>
+    <string name="today_tasks_placeholder">Bugüne bir görev ekle</string>
+    <string name="sky_empty_caption">GÖK BUGÜN HENÜZ BOŞ</string>
+    <string name="today_tasks_section_title">Bugünün görevleri</string>
+    <string name="today_tasks_count_format">%1$d açık görev</string>
+    <string name="today_tasks_edit">Düzenle</string>
+    <string name="today_tasks_done">Bitti</string>
+    <string name="today_routines_section_title">Günlük rutinler</string>
+    <string name="today_routines_count_format">%1$d rutin</string>
+    <string name="plan_screen_subtitle">Bugün için küçük bir yol haritası oluştur.</string>
+    <string name="plan_day_focus_title">Bugünün akışı</string>
+    <string name="plan_task_count_format">%1$d görev planlı</string>
+    <string name="plan_hero_title">Plan</string>
+    <string name="plan_hero_subtitle">Günlerini düzenle</string>
+    <string name="app_profile_cd">Profil ve ayarlar</string>
+    <string name="app_notifications_cd">Bildirimler</string>
+    <string name="today_view_all_tasks">Tümünü gör</string>
+    <string name="recovery_title">Dünü kaçırdın mı?</string>
+    <string name="recovery_body">Sorun değil. %1$s gününü toparla, yarın devam et.</string>
+    <string name="recovery_action">Dünü toparla</string>
+    <string name="recovery_compact">Dünü kaçırdın mı? · %1$s</string>
+    <string name="evening_review_title">Akşam değerlendirmesi</string>
+    <string name="evening_review_desc">Bugünü nasıl geçirdiğini yansıtarak kendine iyi bak.</string>
+    <string name="today_routines_title">Rutinlerin</string>
     <string name="today_routines_view_all">Tümünü gör</string>
     <string name="today_empty_title">Bugün için henüz görev yok</string>
     <string name="today_empty_desc">Güne yeni bir görev veya rutin ekleyerek başlayabilirsin.</string>
@@ -36,9 +79,10 @@
     <string name="missed_day_archive_as_is">Olduğu gibi arşive kaldır</string>
     <string name="today_close_day_title">Günü kapat</string>
     <string name="today_close_day_desc">Bugünkü ilerlemeni kaydet ve XP kazan.</string>
+    <string name="today_close_day_desc_empty">Günü kapat, yarın temiz başla.</string>
     <string name="today_close_day_inactive_hint">21:00’dan sonra aktif olacak.</string>
     <string name="today_close_day_inactive_snack">Gün değerlendirmesi 21:00’dan sonra açılacak.</string>
-    <string name="today_close_day_done_title">Günün Kapatıldı 🎉</string>
+    <string name="today_close_day_done_title">Gün kapandı. İyi geceler.</string>
     <string name="today_close_day_done_desc">Harika iş çıkardın! Yarın yeni hedefler seni bekliyor.</string>
     <string name="today_close_day_action">Günü kapat</string>
     <string name="today_level_default_title">Gelişimci</string>
@@ -61,14 +105,35 @@
     <string name="today_all_routines_completed_title">Bugünün rutinleri tamamlandı</string>
     <string name="today_all_routines_completed_body">Ritmini korudun. Seri: %1$d gün</string>
     <string name="today_xp_bonus_badge">+%1$d XP Bonusu</string>
-    <string name="plan_screen_title">Plan</string>
-    <string name="plan_overdue_tasks_title">Geciken Görevler</string>
-    <string name="plan_move_overdue_to_selected">Seçili Güne Taşı</string>
+    <string name="plan_screen_title">Planın</string>
+    <string name="plan_overdue_tasks_title">Önceki günlerden kalan</string>
+    <string name="plan_move_overdue_to_selected">Seçili güne taşı</string>
+    <string name="plan_move_overdue_to_today">Bugüne taşı</string>
+    <string name="plan_move_overdue_to_tomorrow">Yarına taşı</string>
+    <string name="plan_add_more_row">Bir görev daha ekle</string>
+    <string name="plan_task_age_yesterday">Dünden kaldı</string>
+    <plurals name="plan_task_age_days">
+        <item quantity="one">%d gündür bekliyor</item>
+        <item quantity="other">%d gündür bekliyor</item>
+    </plurals>
     <string name="plan_tasks_for_day_title">Planlanan Görevler</string>
-    <string name="plan_empty_day_title">Bu gün için plan yok</string>
-    <string name="plan_empty_day_desc">Seçilen tarihe yeni bir görev ekleyerek planlayabilirsin.</string>
-    <string name="plan_empty_day_cta">Bu Güne Görev Ekle</string>
-    <string name="plan_add_task_fab_cd">Planlanan Görev Ekle</string>
+    <string name="plan_empty_day_cta">Bu güne görev ekle</string>
+    <string name="plan_empty_today">Bugün hafif. Bir şey eklersen burada görünür.</string>
+    <string name="plan_empty_tomorrow">Yarını şimdiden hafiflet.</string>
+    <string name="plan_empty_future">Bu gün henüz boş.</string>
+    <string name="plan_empty_past">Bu gün geride kaldı.</string>
+    <string name="plan_empty_past_desc">Yeni bir şey için bugünü ya da ileri bir günü seç.</string>
+    <string name="plan_starters_title">Hızlı başlangıç</string>
+    <string name="plan_starter_prepare_next">Ertesi günü hazırla</string>
+    <string name="plan_starter_add_cd">%1$s görevini bu güne ekle</string>
+    <plurals name="plan_day_task_count">
+        <item quantity="one">%1$d görev planlı</item>
+        <item quantity="other">%1$d görev planlı</item>
+    </plurals>
+    <string name="plan_week_summary">Bu hafta %1$d gün planlı</string>
+    <string name="plan_week_summary_none">Bu hafta henüz planlı gün yok</string>
+    <string name="plan_back_to_today">Bugüne dön</string>
+    <string name="plan_add_task_fab_cd">Görev ekle</string>
     <string name="plan_task_deleted_undo">Görev silindi</string>
     <string name="plan_day_summary_format">%1$d Görev Planlandı</string>
     <string name="onboarding_explainer_routine_title">Rutin</string>
@@ -99,7 +164,7 @@
     <string name="nav_today">Bugün</string>
     <string name="nav_plan">Plan</string>
     <string name="nav_routines">Rutinler</string>
-    <string name="nav_progress">İstatistik</string>
+    <string name="nav_progress">Günlerim</string>
     <string name="nav_settings">Ayarlar</string>
     <string name="app_name">Benim Günlerim</string>
     <string name="topbar_plan_subtitle">Günlerini düzenle</string>
@@ -112,6 +177,14 @@
     <!-- Bildirim kanal adları -->
     <string name="notif_channel_routine_name">Rutin hatırlatmaları</string>
     <string name="notif_channel_routine_desc">Günlük rutinleri sakin biçimde hatırlatır.</string>
+    <string name="notif_channel_announcement_name">Duyurular</string>
+    <string name="notif_channel_announcement_desc">Yenilikler ve önemli haberler.</string>
+    <string name="update_title">Yeni sürüm hazır</string>
+    <string name="update_body">Benim Günlerim’in yeni sürümü çıktı. Güncellemek bir dakika sürer, verilerin yerinde kalır.</string>
+    <string name="update_required_title">Güncelleme gerekiyor</string>
+    <string name="update_required_body">Bu sürüm artık desteklenmiyor. Devam etmek için uygulamayı güncelle; verilerin yerinde kalır.</string>
+    <string name="update_action">Güncelle</string>
+    <string name="update_later">Sonra</string>
     <string name="notif_channel_task_name">Görev hatırlatmaları</string>
     <string name="notif_channel_task_desc">Görev hatırlatma alarmları.</string>
     <string name="notif_channel_morning_name">Sabah planlayıcısı</string>
@@ -174,20 +247,16 @@
     <string name="shop_products_section_title">Mağaza Ürünleri</string>
 
     <!-- Celebration Modals -->
-    <string name="celebration_action_continue">Devam Et</string>
-    <string name="celebration_level_up_title">Seviye Atladın!</string>
+    <string name="celebration_action_continue">Devam et</string>
+    <string name="celebration_level_up_title">Yeni seviye</string>
     <string name="celebration_level_up_subtitle">Seviye %1$d · %2$s</string>
-    <string name="celebration_level_up_body">Bugün küçük adımların birikti.</string>
-    <string name="celebration_xp_bonus_badge">⚡ +%1$d XP Bonusu</string>
-    <string name="celebration_achievement_unlocked_title">Başarım Kazanıldı!</string>
-    <string name="celebration_xp_reward_badge">⚡ +%1$d XP</string>
+    <string name="celebration_level_up_body">Küçük adımların birikti. Gökyüzün biraz daha aydınlık.</string>
+    <string name="celebration_xp_bonus_badge">+%1$d XP bonus</string>
+    <string name="celebration_achievement_unlocked_title">Gökyüzüne yeni bir yıldız</string>
+    <string name="celebration_xp_reward_badge">+%1$d XP</string>
     <string name="celebration_achievement_action">Harika</string>
-    <string name="celebration_combined_title">Güzel İlerleme!</string>
-    <string name="celebration_combined_level_body">Seviye %1$d (%2$s) oldun.</string>
-    <string name="celebration_combined_achievement_body">Yeni başarım: %1$s</string>
-    <string name="celebration_combined_xp_badge">⚡ +%1$d XP Kazandın</string>
     <string name="celebration_block_light_day_body">Bugün kendine alan açtın. Bu da ilerleme.</string>
-    <string name="celebration_block_close_day_action">Günü Kapat</string>
+    <string name="celebration_block_close_day_action">Günü kapat</string>
 
     <!-- Ortak aksiyonlar -->
     <string name="action_save">Kaydet</string>
@@ -198,8 +267,16 @@
     <string name="action_undo">Geri Al</string>
 
     <!-- AddTaskSheet -->
-    <string name="add_task_sheet_title">Yeni Görev Ekle</string>
-    <string name="add_task_sheet_title_label">Görev Başlığı</string>
+    <string name="add_task_sheet_title">Görev ekle</string>
+    <string name="add_task_details_label">Ayrıntılar</string>
+    <string name="add_task_time_add">Saat ekle</string>
+    <string name="add_task_category_add">Kategori ekle</string>
+    <string name="sheet_clear_cd">Kaldır</string>
+    <string name="routine_preset_everyday">Her gün</string>
+    <string name="routine_preset_weekdays">Hafta içi</string>
+    <string name="routine_preset_weekend">Hafta sonu</string>
+    <string name="routine_reminder_add">Hatırlatma ekle</string>
+    <string name="add_task_sheet_title_label">Ne yapacaksın?</string>
     <string name="add_task_sheet_priority_label">Öncelik</string>
     <string name="add_task_sheet_priority_high">Yüksek</string>
     <string name="add_task_sheet_priority_normal">Normal</string>
@@ -251,17 +328,17 @@
     <string name="routine_archive_confirm_title">Rutini arşivle?</string>
     <string name="routine_archive_confirm_body">Bu rutin günlük listeden kaldırılacak. Daha sonra rutinler ekranından yönetebilirsin.</string>
     <string name="routine_archive_confirm_action">Arşivle</string>
-    <string name="routine_sheet_add_title">Yeni Rutin Ekle</string>
-    <string name="routine_sheet_edit_title">Rutini Düzenle</string>
-    <string name="routine_sheet_name_label">Rutin Adı</string>
-    <string name="routine_sheet_repeat_days_label">Tekrar Günleri</string>
+    <string name="routine_sheet_add_title">Rutin ekle</string>
+    <string name="routine_sheet_edit_title">Rutini düzenle</string>
+    <string name="routine_sheet_name_label">Her gün ne yapmak istiyorsun?</string>
+    <string name="routine_sheet_repeat_days_label">Hangi günler?</string>
     <string name="routine_sheet_category_label">Kategori</string>
     <string name="routine_sheet_reminder_time_label">Hatırlatıcı Saati (isteğe bağlı)</string>
-    <string name="routine_sheet_goal_switch_label">Hedefli rutin</string>
+    <string name="routine_sheet_goal_switch_label">Sayılı hedef</string>
     <string name="routine_sheet_goal_switch_desc_on">Her gün belirli bir sayı/miktara ulaşman istenir.</string>
     <string name="routine_sheet_goal_switch_desc_off">Basitçe işaretleyerek tamamlanır.</string>
-    <string name="routine_sheet_target_value_label">Hedef Değer</string>
-    <string name="routine_sheet_target_unit_label">Birim</string>
+    <string name="routine_sheet_target_value_label">Kaç?</string>
+    <string name="routine_sheet_target_unit_label">Birim (bardak, sayfa…)</string>
     <string name="routines_archived_section_title">Arşivlenmiş Rutinler</string>
     <string name="routines_unarchive_action">Geri Yükle</string>
     <string name="routines_unarchive_cd">%1$s rutinini arşivden geri yükle</string>
@@ -414,23 +491,31 @@
     <string name="onboarding_intensity_intense">Yoğun başlangıç</string>
     <string name="onboarding_intensity_intense_sub">6+ adım. Hızlı başla, güçlü ilerle.</string>
     <string name="onboarding_p1_title">Şu an neye ihtiyacın var?</string>
-    <string name="onboarding_p1_subtitle">Seçimin önerilen rutinleri ve görevleri belirler.\nSonra istediğin gibi değiştirebilirsin.</string>
+    <string name="onboarding_p1_subtitle">Seçimine göre ilk adımlarını öneririz. Sonra hepsini değiştirebilirsin.</string>
     <string name="onboarding_p2_title">Nasıl bir tempoyla başlamak istersin?</string>
-    <string name="onboarding_p2_subtitle">Hafif başlangıç daha kolay sürer.\nİstediğin zaman artırabilirsin.</string>
-    <string name="onboarding_routines_title">Sana önerdiğimiz rutinler</string>
-    <string name="onboarding_routines_subtitle">Seçtiklerin her gün listene eklenecek.\nİstemediğin kutucukları kaldırabilirsin.</string>
+    <string name="onboarding_p2_subtitle">Hafif başlamak daha kolay sürer. İstediğin zaman artırırsın.</string>
+    <string name="onboarding_routines_title">İlk adımların</string>
+    <string name="onboarding_routines_subtitle">Yanan yıldızlar listene eklenir. Dokunarak çıkarabilirsin.</string>
     <string name="onboarding_concept_mini_tip">Rutinler her gün tekrar eder. Görevler tek seferliktir.</string>
-    <string name="onboarding_ready_title">Hazırsın</string>
+    <string name="onboarding_ready_title">Gökyüzün hazır.</string>
+    <string name="onboarding_ready_title_named">Gökyüzün hazır, %1$s.</string>
+    <string name="onboarding_ready_body">%1$d rutin ve %2$d görevle başlıyorsun. Hepsini sonra değiştirebilirsin.</string>
+    <string name="onboarding_welcome_title">Merhaba, ben Mino.</string>
+    <string name="onboarding_welcome_body">Her gün bir gökyüzü. Tamamladığın her hedef o göğe bir ışık yakar. Ben de yanında yavaş yavaş yürürüm.</string>
+    <string name="onboarding_mino_1">Ne istersen, oradan başlarız.</string>
+    <string name="onboarding_mino_2">Yavaş gitmek de gitmektir.</string>
+    <string name="onboarding_mino_3">Her biri bir yıldız olacak.</string>
+    <string name="onboarding_mino_4">İyi ki geldin.</string>
     <string name="onboarding_ready_subtitle">İlk görevini ve rutinlerini hazırladık.\nİstersen hatırlatmaları da açabilirsin.</string>
     <string name="onboarding_ready_summary_title">Başlangıç planın hazır:</string>
     <string name="onboarding_ready_summary_format">%1$d rutin · %2$d görev</string>
     <string name="onboarding_today_task_badge">İlk görev</string>
     <string name="onboarding_notif_soft_title">Hatırlatmaları açmak ister misin?</string>
     <string name="onboarding_notif_soft_body">Görev ve rutinleri zamanında hatırlatır.</string>
-    <string name="onboarding_notif_later">Şimdilik Geç</string>
-    <string name="onboarding_notif_grant">İzin Ver</string>
-    <string name="onboarding_notif_granted_badge">✓ Hatırlatmalar Açık</string>
-    <string name="onboarding_finish_btn">Başlayalım</string>
+    <string name="onboarding_notif_later">Şimdilik geç</string>
+    <string name="onboarding_notif_grant">İzin ver</string>
+    <string name="onboarding_notif_granted_badge">Hatırlatmalar açık</string>
+    <string name="onboarding_finish_btn">Güne başla</string>
     <string name="onboarding_recommended">Önerilen</string>
 
     <!-- Duygu / Enerji Check-in -->
@@ -454,7 +539,7 @@
     <string name="settings_status_data">Veri</string>
     <string name="settings_version_format">v%1$s (Build %2$d)</string>
     <string name="settings_data_local">Yerel</string>
-    <string name="settings_section_experience">Bugün ekranı</string>
+    <string name="settings_section_experience">Günün akışı</string>
     <string name="settings_section_experience_sub">Kutlamalar ve görsel geri bildirim</string>
     <string name="settings_celebration_title">Kutlama efektleri</string>
     <string name="settings_celebration_subtitle">XP ve başarılarda konfeti ve tam ekran kutlamaları göster</string>
@@ -462,8 +547,13 @@
     <string name="settings_section_reminders_sub">Bildirim sıklığını ve gün sonu saatini ayarla.</string>
     <string name="settings_section_privacy">Gizlilik</string>
     <string name="settings_section_privacy_sub">Hangi kullanım bilgisinin paylaşılacağını belirle.</string>
-    <string name="settings_section_data">Uygulama verisi</string>
-    <string name="settings_section_data_sub">Verilerin cihazda tutulur ve buradan yönetilir.</string>
+    <string name="settings_section_data">Verilerin sende</string>
+    <string name="settings_section_data_sub">Her şey bu telefonda kalır. Yedeğini sen alırsın.</string>
+    <string name="settings_clear_data_row_desc">Bu telefondaki tüm görev, rutin ve ilerlemeyi siler.</string>
+    <string name="settings_profile_ask">Sana nasıl seslenelim?</string>
+    <string name="settings_profile_hello">Merhaba, %1$s.</string>
+    <string name="settings_profile_level">Seviye %1$d · %2$d XP</string>
+    <string name="settings_footer_slogan">Yavaş ama durmadan.</string>
     <string name="settings_notif_mode_title">Bildirim modu</string>
     <string name="settings_notif_mode_off">Kapalı</string>
     <string name="settings_notif_mode_light">Hafif</string>
@@ -555,7 +645,6 @@
     <string name="today_routines_subsection">Rutinler</string>
     <string name="today_focus_now_label">Sıradaki işler</string>
     <string name="today_completed_label">Tamamlananlar</string>
-    <string name="today_tasks_empty">Henüz öğe yok. Bir görev ya da rutin ekle.</string>
     <string name="today_task_with_time">%1$s · tek seferlik görev</string>
     <string name="today_task_no_time">bugün · tek seferlik görev</string>
     <string name="today_task_open_cd">Görev detayını aç</string>
@@ -594,6 +683,7 @@
     <string name="today_routine_decrease">Azalt</string>
     <string name="today_routine_increase">Artır</string>
     <string name="today_routine_progress_value">%1$d / %2$d %3$s</string>
+    <string name="today_routine_progress_compact">%1$d/%2$d</string>
     <string name="today_routine_target_hint">Hedefe ulaşınca tamamlanır</string>
     <string name="today_mark_done_label">Tamamlandı olarak işaretle</string>
     <string name="today_unmark_done_label">Tamamlandı olarak işaretlendi — geri al</string>
@@ -627,7 +717,7 @@
     <string name="today_add_task_note_label">Not (isteğe bağlı)</string>
     <string name="today_add_task_time_label">Saat</string>
     <string name="today_task_plan_time_label">Planlanan saat</string>
-    <string name="today_reminder_switch_label">Hatırlatıcı bildirimi</string>
+    <string name="today_reminder_switch_label">Saatinde hatırlat</string>
     <string name="today_reminder_switch_desc_on">Bu saatte bildirim gönderilir.</string>
     <string name="today_reminder_switch_desc_off">Saat yalnızca sıralama için kullanılır; bildirim gönderilmez.</string>
     <string name="today_reminder_switch_desc_needs_time">Bildirim için önce planlanan saat seç.</string>
@@ -703,13 +793,20 @@
     <string name="shop_purchase_button_icon">🤙</string>
 
     <!-- Sakinleşme ve Zihinsel Destek Mikro Araçları -->
-    <string name="reset_title">1 Dakikalık Reset</string>
+    <string name="reset_title">Biraz dur.</string>
     <string name="reset_subtitle">Telefonu biraz aşağı indir. Omuzlarını gevşet. Yavaşça nefes al.</string>
     <string name="reset_start">Başlat</string>
     <string name="reset_breathe_in">Nefes al</string>
     <string name="reset_breathe_out">Nefes ver</string>
-    <string name="reset_completed_title">Kısa bir duraklama iyi geldi mi?</string>
-    <string name="reset_completed_subtitle">Şimdi tek bir küçük adımla devam edebilirsin.</string>
+    <string name="reset_completed_title">Şimdi tek bir adım.</string>
+    <string name="reset_completed_subtitle">Hangisi? Seçtiğin, Bugün’ün en üstünde seni bekler.</string>
+    <string name="reset_no_candidates">Bugün açık hedefin yok. Bu nefes sana yeter.</string>
+    <string name="reset_duration_120s">2 dakika</string>
+    <string name="reset_seconds_left">%1$d sn</string>
+    <string name="reset_enough">Yeterli</string>
+    <string name="today_focus_kicker">ŞİMDİ SADECE BU</string>
+    <string name="today_focus_clear_cd">Odağı kaldır</string>
+    <string name="light_day_resting">%1$d hedef bugün dinleniyor</string>
     <string name="reset_pick_task">Bir görev seç</string>
     <string name="reset_light_day">Bugünü hafiflet</string>
     <string name="reset_continue">Devam et</string>
@@ -718,7 +815,7 @@
     <string name="reset_contextual_title">Bugün biraz yoğun mu görünüyor?</string>
     <string name="reset_contextual_body">1 dakikalık reset yapıp tek küçük adıma dönebilirsin.</string>
     <string name="reset_contextual_light_body">Bugünü hafiflettik. İstersen kısa bir nefesle devam edebilirsin.</string>
-    <string name="reset_action_btn">1 Dk Reset</string>
+    <string name="reset_action_btn">Biraz dur</string>
 
     <!-- Hafif Gün Modu -->
     <string name="light_day_title">Bugünü hafiflet</string>
@@ -742,8 +839,12 @@
 
     <!-- FAB Hızlı Eylemler -->
     <string name="quick_actions_title">Bugün ne yapmak istersin?</string>
-    <string name="quick_action_add_task_title">Görev Ekle</string>
+    <string name="quick_action_add_task_title">Görev ekle</string>
     <string name="quick_action_add_task_subtitle">Bugün için tek seferlik yapılacak iş</string>
+    <string name="quick_action_add_routine_title">Rutin ekle</string>
+    <string name="quick_actions_add_label">Ekle</string>
+    <string name="quick_actions_calm_label">Biraz nefes</string>
+    <string name="quick_action_add_routine_subtitle">Her gün tekrar eden bir alışkanlık</string>
     <string name="quick_action_braindump_subtitle">Aklındakileri dök ve göreve dönüştür</string>
     <string name="quick_action_reset_subtitle">Zihnini boşalt, nefes al, toparlan</string>
     <string name="quick_action_light_day_off_subtitle">Bugünü iptal etmiyoruz, hafifletiyoruz</string>
@@ -774,6 +875,7 @@
 
     <!-- RoutineRow — hedef tipi rutinlerde artır butonu -->
     <string name="routine_row_increment_cd">Artır</string>
+    <string name="routine_row_decrement_cd">Azalt</string>
 
     <!-- ProgressScreen — bar chart birim etiketi -->
     <string name="progress_bar_unit_completed">tamamlandı</string>
@@ -790,12 +892,12 @@
     <!-- Gizlilik Politikası ekranı -->
     <string name="privacy_web_action_cd">Web Sayfasında Aç</string>
     <string name="privacy_header_title">Gizliliğiniz Önceliğimizdir</string>
-    <string name="privacy_header_updated">Son Güncelleme: 17 Ağustos 2026</string>
+    <string name="privacy_header_updated">Son Güncelleme: 2 Kasım 2026</string>
 
-    <string name="privacy_section1_title">Yerel ve Çevrimdışı Depolama</string>
-    <string name="privacy_section1_desc">BenimGünlerim offline-first prensibiyle çalışır. Verileriniz tamamen cihazınızda saklanır.</string>
-    <string name="privacy_section1_bullet1">Görevleriniz, rutinleriniz, günlük notlarınız ve ilerleme kayıtlarınız yalnızca telefonunuzdaki yerel veritabanında tutulur.</string>
-    <string name="privacy_section1_bullet2">Kişisel verileriniz harici herhangi bir sunucuya aktarılmaz veya satılmaz.</string>
+    <string name="privacy_section1_title">Depolama: Misafir ve Hesap</string>
+    <string name="privacy_section1_desc">BenimGünlerim çevrimdışı çalışır. Hesap açmak isteğe bağlıdır.</string>
+    <string name="privacy_section1_bullet1">Misafir olarak kullanırsanız görevleriniz, rutinleriniz, notlarınız ve ilerlemeniz yalnızca telefonunuzda tutulur.</string>
+    <string name="privacy_section1_bullet2">Hesap açarsanız e-posta adresiniz ve uygulama verilerinizin bir yedeği, yalnızca size ait olacak şekilde Google Firebase (Authentication ve Cloud Firestore) üzerinde şifreli bağlantıyla saklanır. Verileriniz satılmaz, reklam için kullanılmaz ve başka kimseyle paylaşılmaz.</string>
 
     <string name="privacy_section2_title">Anonim Kullanım Ölçümü (Analytics)</string>
     <string name="privacy_section2_desc">Deneyimi iyileştirmek için isteğe bağlı anonim telemetry kullanılabilir.</string>
@@ -818,7 +920,7 @@
 
     <string name="privacy_section6_title">Veri Silme ve Kullanıcı Hakları</string>
     <string name="privacy_section6_desc">Verileriniz sizin kontrolünüzdedir.</string>
-    <string name="privacy_section6_bullet1">Ayarlar ekranındaki \'Tüm verileri temizle\' seçeneği ile tüm verilerinizi anında sıfırlayabilirsiniz.</string>
+    <string name="privacy_section6_bullet1">Ayarlar › Hesap › “Hesabı sil” ile hesabınız ve buluttaki tüm verileriniz kalıcı olarak silinir. “Tüm verileri temizle” ise telefondaki veriyi sıfırlar.</string>
     <string name="privacy_section6_bullet2">Uygulamayı kaldırdığınızda cihazdaki tüm veriler otomatik olarak tamamen silinir.</string>
 
     <string name="privacy_section7_title">İletişim ve Destek</string>
@@ -970,4 +1072,158 @@
     <string name="companion_msg_zero_progress_1">Hadi maceraya başlayalım! ✨</string>
     <string name="companion_msg_zero_progress_2">Yeni bir gün, yeni fırsatlar! 🌅</string>
     <string name="companion_msg_zero_progress_3">Bugün ne yapacağız? 🤔</string>
+
+    <!-- Gün Işığı — selamlama (gün dilimi × isim) -->
+    <string name="greeting_morning">Günaydın.</string>
+    <string name="greeting_morning_named">Günaydın,\n%1$s.</string>
+    <string name="greeting_noon">İyi günler.</string>
+    <string name="greeting_noon_named">İyi günler,\n%1$s.</string>
+    <string name="greeting_evening">Gün batıyor.</string>
+    <string name="greeting_evening_named">Gün batıyor,\n%1$s.</string>
+    <string name="greeting_night">İyi geceler.</string>
+    <string name="greeting_night_named">İyi geceler,\n%1$s.</string>
+    <string name="sky_lights_caption">HEDEFLER · %1$d / %2$d</string>
+    <string name="sky_lights_cd">Bugünün hedefleri: %2$d hedeften %1$d tanesi tamam</string>
+    <!-- Mino'nun cümleleri -->
+    <string name="mino_no_steps">Küçük başla. Ben de yavaş yürürüm.</string>
+    <string name="mino_zero_morning">Güne tek bir adımla başla, yeter.</string>
+    <string name="mino_zero_noon">Gün daha uzun. Bir adım rahatça sığar.</string>
+    <string name="mino_zero_evening">%1$d hedeften biri bile bugünü güzel kapatır.</string>
+    <string name="mino_zero_night">Geç oldu. Bir adım da olur, iyi bir uyku da.</string>
+    <string name="mino_some_lit">%1$d hedef tamam. Bir tane daha?</string>
+    <string name="mino_all_lit">Bütün hedefler tamam. Bugünü sen aydınlattın.</string>
+    <string name="mino_day_closed">Gün kapandı. Yarın yine buradayım.</string>
+    <string name="mino_routines_empty_chain">Ben de yavaş yürürüm. Zincir bugün başlayabilir, tek bir adım yeter.</string>
+    <string name="mino_routines_chain">En uzun zincirin %1$d gün. Ben de yavaş ama durmadan yürüyorum.</string>
+    <!-- Bugün bölüm başlıkları -->
+    <string name="step_routine_meta">Rutin</string>
+    <string name="step_routine_meta_lit">Tamamlandı</string>
+    <string name="step_routine_count">%1$d / %2$d %3$s</string>
+    <string name="step_routine_count_short">%1$d / %2$d</string>
+    <string name="star_state_lit">Tamamlandı</string>
+    <string name="star_state_idle">Henüz tamamlanmadı</string>
+    <string name="today_add_task_row">Görev ya da rutin ekle</string>
+    <string name="today_missed_day_row">%1$s yarım kaldı.</string>
+    <string name="today_missed_day_action_short">Toparla</string>
+    <string name="close_day_row_title">Günü kapat</string>
+    <string name="close_day_row_subtitle_evening">Güneş battı. Hazır olduğunda.</string>
+    <string name="close_day_row_subtitle_day">Gün bitince hedeflerine bir bak.</string>
+    <!-- Günü kapat — gece -->
+    <string name="night_lights_title">%1$d hedef tamamladın.</string>
+    <string name="night_no_lights_title">Bugün hedef tamamlamadın.</string>
+    <string name="night_lights_subtitle">Kalanlar yarına kalsın, sorun değil.</string>
+    <string name="night_no_lights_subtitle">Sorun değil. Bazı günler sadece dinlenmek içindir.</string>
+    <string name="night_good_night">İyi geceler</string>
+    <!-- Ekran başlıkları -->
+    <string name="routines_path_days">Bu hafta %1$d gün yoldaydın.</string>
+    <string name="routines_path_none">Yol bugün başlayabilir.</string>
+    <string name="routines_path_cd">Son 7 günde %1$d gün en az bir rutin yapıldı</string>
+    <string name="routines_group_morning">Sabah</string>
+    <string name="routines_group_noon">Öğle</string>
+    <string name="routines_group_evening">Akşam</string>
+    <string name="routines_group_night">Gece</string>
+    <string name="routines_group_anytime">Gün boyu</string>
+    <string name="routines_group_progress">%1$d / %2$d bugün</string>
+    <string name="routines_header_count">%1$d rutin · her nokta bir gün</string>
+    <string name="routine_chain_label">Zincir: %1$d gün</string>
+    <string name="routine_chain_cd">Son 7 gün: %1$d gün yapıldı</string>
+    <string name="days_title">Günlerim</string>
+    <string name="days_subtitle">Her yıldız, hedeflerine dokunduğun bir gün.</string>
+    <string name="days_month_summary">%1$d yıldızlı gün</string>
+    <string name="days_constellation">En uzun takımyıldızın: %1$d gün art arda.</string>
+    <string name="days_constellation_none">Art arda iki gün, ilk takımyıldızını çizer.</string>
+    <string name="days_legend_lit">Hedefli gün</string>
+    <string name="days_legend_today">Bugün</string>
+    <string name="days_level_title">Seviye %1$d</string>
+    <string name="days_level_xp">%1$d XP</string>
+    <string name="days_level_next">Seviye %1$d için %2$d XP kaldı</string>
+    <string name="settings_header_title">Ayarlar</string>
+    <string name="settings_name_title">Adın</string>
+    <string name="settings_name_empty">Eklenmedi</string>
+    <string name="settings_name_dialog_title">Sana nasıl seslenelim?</string>
+    <string name="onboarding_name_label">Sana nasıl seslenelim?</string>
+    <string name="onboarding_name_placeholder">Adın (isteğe bağlı)</string>
+    <string name="task_drag_handle_cd">Görevi taşımak için sürükle</string>
+    <string name="routine_step_toggle_cd">%1$s hedefini tamamla</string>
+    <string name="routine_step_untoggle_cd">%1$s tamamlandı işaretini kaldır</string>
+    <string name="routine_more_cd">%1$s seçenekleri</string>
+    <string name="plan_day_tomorrow">Yarın</string>
+    <string name="plan_day_today">Bugün</string>
+    <!-- Hesap / misafir -->
+    <string name="gate_title">Günlerin seninle gelsin.</string>
+    <string name="gate_body">Hesap açarsan görevlerin, rutinlerin ve ilerlemen buluta yedeklenir; telefon değişse de kaybolmaz.</string>
+    <string name="gate_register">Hesap aç</string>
+    <string name="gate_login">Giriş yap</string>
+    <string name="gate_guest">Misafir olarak devam et</string>
+    <string name="gate_guest_note">Misafirken her şey sadece bu telefonda kalır. İstediğin an hesap açıp verini taşıyabilirsin.</string>
+    <string name="auth_login_title">Tekrar hoş geldin.</string>
+    <string name="auth_login_body">Gökyüzün seni bekliyor.</string>
+    <string name="auth_register_title">Hesap aç</string>
+    <string name="auth_register_body">Şu ana kadarki günlerin de hesabına taşınır.</string>
+    <string name="auth_reset_title">Şifreni mi unuttun?</string>
+    <string name="auth_reset_body">E-postanı yaz, sıfırlama bağlantısı gönderelim.</string>
+    <string name="auth_email">E-posta</string>
+    <string name="auth_password">Şifre</string>
+    <string name="auth_password_confirm">Şifre (tekrar)</string>
+    <string name="auth_password_hint">En az 8 karakter, bir harf ve bir rakam.</string>
+    <string name="auth_show_password">Şifreyi göster</string>
+    <string name="auth_hide_password">Şifreyi gizle</string>
+    <string name="auth_consent">Gizlilik politikasını okudum; verilerimin hesabımda saklanmasını kabul ediyorum.</string>
+    <string name="auth_consent_link">Gizlilik politikası</string>
+    <string name="auth_submit_login">Giriş yap</string>
+    <string name="auth_submit_register">Hesabı oluştur</string>
+    <string name="auth_submit_reset">Bağlantı gönder</string>
+    <string name="auth_forgot">Şifremi unuttum</string>
+    <string name="auth_to_register">Hesabın yok mu? Hesap aç</string>
+    <string name="auth_to_login">Zaten hesabın var mı? Giriş yap</string>
+    <string name="auth_reset_sent">Bağlantı gönderildi. Gelen kutunu (ve spam klasörünü) kontrol et.</string>
+    <string name="auth_back">Geri</string>
+    <string name="auth_err_email">Geçerli bir e-posta yaz.</string>
+    <string name="auth_err_password_login">Şifreni yaz.</string>
+    <string name="auth_err_password_register">Şifre en az 8 karakter olmalı; bir harf ve bir rakam içermeli.</string>
+    <string name="auth_err_confirm">Şifreler aynı değil.</string>
+    <string name="auth_err_consent">Devam etmek için onaylaman gerekiyor.</string>
+    <string name="auth_err_InvalidEmail">Bu e-posta adresi geçersiz.</string>
+    <string name="auth_err_WeakPassword">Bu şifre çok zayıf. Daha uzun bir şifre dene.</string>
+    <string name="auth_err_WrongCredentials">E-posta ya da şifre hatalı.</string>
+    <string name="auth_err_EmailInUse">Bu e-postayla zaten bir hesap var. Giriş yapmayı dene.</string>
+    <string name="auth_err_UserNotFound">Bu e-postayla bir hesap bulunamadı.</string>
+    <string name="auth_err_TooManyRequests">Çok fazla deneme oldu. Biraz bekleyip tekrar dene.</string>
+    <string name="auth_err_Network">İnternet bağlantısı yok gibi. Bağlanınca tekrar dene.</string>
+    <string name="auth_err_RecentLoginRequired">Güvenlik için şifreni tekrar girmen gerekiyor.</string>
+    <string name="auth_err_Unavailable">Hesap özelliği şu an kullanılamıyor.</string>
+    <string name="auth_err_Unknown">Bir şeyler ters gitti. Tekrar dene.</string>
+    <string name="sync_conflict_title">Hangi günleri tutalım?</string>
+    <string name="sync_conflict_body">Hem bu telefonda hem hesabında kayıt var. Birini seç; diğeri onun yerine geçecek.</string>
+    <string name="sync_conflict_cloud">Hesabımdakini tut</string>
+    <string name="sync_conflict_cloud_meta">%1$d görev · %2$d rutin · %3$s</string>
+    <string name="sync_conflict_phone">Bu telefondakini tut</string>
+    <string name="sync_conflict_phone_meta">%1$d görev · %2$d rutin</string>
+    <string name="account_section">Hesap</string>
+    <string name="account_guest_title">Misafirsin</string>
+    <string name="account_guest_body">Verin sadece bu telefonda. Hesap aç, günlerin buluta yedeklensin.</string>
+    <string name="account_signed_in_as">%1$s</string>
+    <string name="account_last_sync">Son yedek: %1$s</string>
+    <string name="account_last_sync_just_now">Son yedek: az önce</string>
+    <string name="account_never_synced">Henüz yedeklenmedi</string>
+    <string name="account_syncing">Yedekleniyor…</string>
+    <string name="account_sync_now">Şimdi yedekle</string>
+    <string name="account_unverified">E-postanı doğrulamadın.</string>
+    <string name="account_resend">Tekrar gönder</string>
+    <string name="account_i_verified">Doğruladım</string>
+    <string name="account_sign_out">Çıkış yap</string>
+    <string name="account_delete">Hesabı sil</string>
+    <string name="account_sign_out_title">Çıkış yapılsın mı?</string>
+    <string name="account_sign_out_body">Çıkmadan önce son bir yedek alınır. Günlerin hesabında güvende kalır.</string>
+    <string name="account_sign_out_clear">Bu telefondaki veriyi de sil (telefonu başkası kullanacaksa)</string>
+    <string name="account_delete_title">Hesap kalıcı olarak silinsin mi?</string>
+    <string name="account_delete_body">Hesabın ve buluttaki tüm verin silinir; bu geri alınamaz. Bu telefondaki veri misafir olarak kalır.</string>
+    <string name="account_delete_confirm">Kalıcı olarak sil</string>
+    <string name="account_msg_VerificationSent">Doğrulama e-postası gönderildi.</string>
+    <string name="account_msg_Verified">E-postan doğrulandı.</string>
+    <string name="account_msg_NotVerifiedYet">Henüz doğrulanmamış. Bağlantıya tıkladıktan sonra tekrar dene.</string>
+    <string name="account_msg_Synced">Yedeklendi.</string>
+    <string name="account_msg_SyncFailed">Yedeklenemedi. İnternet gelince otomatik denenecek.</string>
+    <string name="account_msg_SignedOut">Çıkış yapıldı. Misafir olarak devam ediyorsun.</string>
+    <string name="account_msg_Deleted">Hesabın silindi.</string>
 </resources>

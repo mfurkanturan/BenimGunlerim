@@ -3,6 +3,7 @@
 package com.benimgunlerim.ui.routines
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.gestures.detectDragGesturesAfterLongPress
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -23,6 +24,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.platform.testTag
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -36,7 +38,7 @@ import com.benimgunlerim.ui.components.core.AppSurface
 import com.benimgunlerim.ui.components.layout.AppFab
 import com.benimgunlerim.ui.components.layout.ScreenScaffold
 import com.benimgunlerim.ui.components.molecules.EmptyState
-import com.benimgunlerim.ui.components.molecules.ProgressBar
+import com.benimgunlerim.ui.components.molecules.ScreenTitle
 import com.benimgunlerim.ui.components.molecules.SectionBlock
 import com.benimgunlerim.ui.components.organisms.AddRoutineSheet
 import com.benimgunlerim.ui.components.organisms.RoutineRow
@@ -51,11 +53,7 @@ fun RoutinesScreen(
     val archivedRoutines by viewModel.archivedRoutines.collectAsState()
     var showAddSheet by remember { mutableStateOf(false) }
 
-    val completedTodayCount = remember(routines) {
-        routines.count { it.last7Days.lastOrNull() == true }
-    }
-    val totalRoutinesCount = routines.size
-    val progress = if (totalRoutinesCount > 0) completedTodayCount.toFloat() / totalRoutinesCount else 0f
+    val longestChain = remember(routines) { routines.maxOfOrNull { it.currentStreak } ?: 0 }
 
     val everyDayLabel = stringResource(R.string.routines_every_day)
     val daysCountLabel = stringResource(R.string.routines_days_count)
@@ -76,8 +74,12 @@ fun RoutinesScreen(
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
                 .padding(contentPadding),
-            verticalArrangement = Arrangement.spacedBy(AppTokens.Spacing.sectionGap),
+            verticalArrangement = Arrangement.spacedBy(AppTokens.Spacing.md),
         ) {
+            ScreenTitle(
+                title = stringResource(R.string.routines_header_title),
+                subtitle = if (routines.isNotEmpty()) stringResource(R.string.routines_header_count, routines.size) else null,
+            )
             if (routines.isEmpty()) {
                 EmptyState(
                     emoji = "🔥",
@@ -91,71 +93,43 @@ fun RoutinesScreen(
                     },
                 )
             } else {
-                // Alışkanlık Karnesi (Summary Card)
-                AppSurface(
-                    radius = AppTokens.Radius.md,
-                    modifier = Modifier.fillMaxWidth(),
-                ) {
-                    Column(verticalArrangement = Arrangement.spacedBy(AppTokens.Spacing.xs)) {
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            verticalAlignment = Alignment.CenterVertically,
-                        ) {
-                            Text(
-                                text = stringResource(R.string.routines_summary_streak_title),
-                                style = MaterialTheme.typography.titleMedium.copy(fontWeight = androidx.compose.ui.text.font.FontWeight.Bold),
-                                color = MaterialTheme.colorScheme.onSurface,
-                            )
-                            Text(
-                                text = stringResource(
-                                    R.string.routines_summary_today_done,
-                                    completedTodayCount,
-                                    totalRoutinesCount,
-                                ),
-                                style = MaterialTheme.typography.labelMedium.copy(fontWeight = androidx.compose.ui.text.font.FontWeight.SemiBold),
-                                color = MaterialTheme.colorScheme.primary,
-                            )
-                        }
-                        ProgressBar(
-                            progress = progress,
-                            modifier = Modifier.fillMaxWidth(),
-                        )
-                    }
-                }
+                WeekPathCard(routines = routines, longestChain = longestChain)
 
-                // Aktif Rutinler Listesi (Single Surface)
-                SectionBlock(title = stringResource(R.string.routines_section_title)) {
-                    AppSurface(radius = AppTokens.Radius.md, padding = AppTokens.Spacing.none) {
-                        Column {
-                            routines.forEachIndexed { index, routine ->
+                // Vakitlere göre gruplar: sabah → öğle → akşam → gece → gün boyu
+                val grouped = routines.groupBy { it.phase() }
+                RoutineGroupOrder.forEach { phase ->
+                    val items = grouped[phase].orEmpty()
+                    if (items.isNotEmpty()) RoutineGroup {
+                        val doneToday = items.count { it.last7Days.lastOrNull() == true }
+                        RoutineGroupHeader(
+                            label = stringResource(groupLabelRes(phase)),
+                            phase = phase,
+                            progressText = stringResource(R.string.routines_group_progress, doneToday, items.size),
+                        )
+                        AppSurface(radius = AppTokens.Radius.lg, padding = AppTokens.Spacing.none) {
+                            items.forEachIndexed { index, routine ->
                                 key(routine.id) {
                                     if (index > 0) AppDivider()
-
-                                    val isCompletedToday = routine.last7Days.lastOrNull() == true
-                                    val targetSummary = if (routine.targetDays.size == 7) {
-                                        everyDayLabel
-                                    } else {
-                                        String.format(daysCountLabel, routine.targetDays.size)
-                                    }
-
                                     RoutineRow(
                                         title = routine.name,
-                                        isCompletedToday = isCompletedToday,
+                                        isCompletedToday = routine.last7Days.lastOrNull() == true,
                                         onToggle = { viewModel.toggleRoutine(routine.id) },
                                         weekHistory = routine.last7Days,
                                         targetDays = routine.targetDays,
                                         streakCount = routine.currentStreak,
                                         preferredTime = routine.preferredTime,
-                                        targetDaysSummary = targetSummary,
+                                        targetDaysSummary = if (routine.targetDays.size == 7) {
+                                            everyDayLabel
+                                        } else {
+                                            String.format(daysCountLabel, routine.targetDays.size)
+                                        },
                                         targetType = routine.targetType,
                                         targetValue = routine.targetValue,
                                         targetUnit = routine.targetUnit,
                                         currentValue = routine.currentValue,
-                                        onProgressChange = { nextValue ->
-                                            viewModel.updateRoutineProgress(routine.id, nextValue)
-                                        },
+                                        onProgressChange = { viewModel.updateRoutineProgress(routine.id, it) },
                                         useSurface = false,
+                                        modifier = Modifier.routineReorderGesture(routine, routines, viewModel::reorderRoutines),
                                         onClick = { onOpenRoutineDetail(routine.id) },
                                     )
                                 }
@@ -165,36 +139,7 @@ fun RoutinesScreen(
                 }
 
                 if (archivedRoutines.isNotEmpty()) {
-                    SectionBlock(title = stringResource(R.string.routines_archived_section_title)) {
-                        AppSurface(radius = AppTokens.Radius.md, padding = AppTokens.Spacing.none) {
-                            Column {
-                                archivedRoutines.forEachIndexed { index, archived ->
-                                    key(archived.id) {
-                                        if (index > 0) AppDivider()
-                                        Row(
-                                            modifier = Modifier
-                                                .fillMaxWidth()
-                                                .padding(AppTokens.Spacing.cardInner),
-                                            horizontalArrangement = Arrangement.SpaceBetween,
-                                            verticalAlignment = Alignment.CenterVertically,
-                                        ) {
-                                            Text(
-                                                text = archived.name,
-                                                style = MaterialTheme.typography.bodyMedium,
-                                                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                                modifier = Modifier.weight(1f),
-                                            )
-                                            AppButton(
-                                                text = stringResource(R.string.routines_unarchive_action),
-                                                onClick = { viewModel.unarchiveRoutine(archived.id) },
-                                                variant = AppButtonVariant.Ghost,
-                                            )
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    ArchivedRoutinesSection(archivedRoutines, onUnarchive = { viewModel.unarchiveRoutine(it) })
                 }
             }
         }

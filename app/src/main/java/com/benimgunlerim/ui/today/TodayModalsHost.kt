@@ -1,9 +1,13 @@
 package com.benimgunlerim.ui.today
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.collectAsState
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.benimgunlerim.ui.components.calm.BrainDumpDialog
 import com.benimgunlerim.ui.components.calm.ResetDialog
+import com.benimgunlerim.ui.components.calm.ResetCandidate
 import com.benimgunlerim.ui.components.gamification.AchievementDialog
 import com.benimgunlerim.ui.components.gamification.BlockCompletionSheet
 import com.benimgunlerim.ui.components.gamification.LevelUpDialog
@@ -27,6 +31,8 @@ internal fun TodayModalsHost(
     totalCount: Int,
     modals: TodayModalStates,
 ) {
+    TaskDetailHost(state, today, viewModel, modals)
+
     if (modals.showFabMenu.value) {
         TodayFabMenuSheet(
             isLightDayMode = state.isLightDayMode,
@@ -34,6 +40,10 @@ internal fun TodayModalsHost(
             onAddTaskClick = {
                 modals.showFabMenu.value = false
                 modals.showAddTaskSheet.value = true
+            },
+            onAddRoutineClick = {
+                modals.showFabMenu.value = false
+                modals.showAddRoutineSheet.value = true
             },
             onBrainDumpClick = {
                 modals.showFabMenu.value = false
@@ -51,10 +61,18 @@ internal fun TodayModalsHost(
     }
 
     if (modals.showResetDialog.value) {
+        // Rutin ve görev dönüşümlü: ilk üç öneride ikisi de görünsün.
+        val openRoutines = state.routines.filterNot { it.id in state.completedRoutineIds }.map { ResetCandidate(it.id, it.name, isRoutine = true) }
+        val openTasks = state.tasks.filterNot { it.isCompleted }.map { ResetCandidate(it.id, it.title, isRoutine = false) }
+        val candidates = (0 until maxOf(openRoutines.size, openTasks.size)).flatMap { i ->
+            listOfNotNull(openRoutines.getOrNull(i), openTasks.getOrNull(i))
+        }
         ResetDialog(
             onDismiss = { modals.showResetDialog.value = false },
             onEnableLightDay = { viewModel.toggleLightDayMode(true) },
-            onPickTask = { /* user continues to task list */ },
+            candidates = candidates,
+            onPickStep = { modals.focusStep.value = it },
+            isLightDay = state.isLightDayMode,
         )
     }
 
@@ -152,6 +170,15 @@ internal fun TodayModalsHost(
         }
     }
 
+    if (modals.showAddRoutineSheet.value) {
+        AddRoutineSheet(
+            onDismiss = { modals.showAddRoutineSheet.value = false },
+            onSave = { title, targetDays, reminderTime, category, targetCount, unit ->
+                viewModel.addRoutine(title, targetDays, reminderTime, targetCount, unit, category)
+            },
+        )
+    }
+
     modals.editingRoutine.value?.let { routine ->
         AddRoutineSheet(
             onDismiss = { modals.editingRoutine.value = null },
@@ -197,6 +224,50 @@ internal fun TodayModalsHost(
             },
             onContinueClick = { modals.blockCompletionData.value = null },
             onDismiss = { modals.blockCompletionData.value = null },
+        )
+    }
+}
+
+/** Göreve dokununca açılan ayrıntı sayfası: başlık, not, tarih, saat, öncelik, alt görevler. */
+@OptIn(androidx.compose.material3.ExperimentalMaterial3Api::class)
+@Composable
+internal fun TaskDetailHost(state: TodayUiState, today: LocalDate, viewModel: TodayViewModel, modals: TodayModalStates) {
+    val taskId = modals.openTaskId.value ?: return
+    val task = (state.tasks + state.overdueTasks).firstOrNull { it.id == taskId }
+    if (task == null) {
+        modals.openTaskId.value = null
+        return
+    }
+    val subtasks by viewModel.subTasksFlow(task.id).collectAsState(initial = emptyList())
+    val close = { modals.openTaskId.value = null }
+    androidx.compose.material3.ModalBottomSheet(
+        onDismissRequest = close,
+        sheetState = androidx.compose.material3.rememberModalBottomSheetState(skipPartiallyExpanded = true),
+        containerColor = MaterialTheme.colorScheme.surface,
+    ) {
+        TaskDetailSheet(
+            task = task,
+            today = today,
+            subtasks = subtasks,
+            interactionLocked = state.todayState?.closedAt != null,
+            callbacks = TaskDetailCallbacks(
+                onSave = { title, note, date, startTime, category, priority, reminderTime ->
+                    viewModel.updateTask(task.id, title, note, date, startTime, category, priority, reminderTime)
+                    close()
+                },
+                onMoveTomorrow = {
+                    viewModel.moveTaskToTomorrow(task.id)
+                    close()
+                },
+                onDelete = {
+                    // Ayrıntı sayfası silmeyi zaten onaylattı; ikinci kez sorma.
+                    close()
+                    viewModel.deleteTask(task.id)
+                },
+                onAddSubTask = { viewModel.addSubTask(task.id, it) },
+                onToggleSubTask = { viewModel.toggleSubTask(it) },
+                onDeleteSubTask = { viewModel.deleteSubTask(it) },
+            ),
         )
     }
 }

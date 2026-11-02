@@ -1,5 +1,6 @@
 package com.benimgunlerim.ui.today
 
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
@@ -12,7 +13,6 @@ import androidx.compose.material3.TimePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.benimgunlerim.R
-import com.benimgunlerim.ui.theme.StreakCoral
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
@@ -29,7 +29,7 @@ internal fun TaskDeleteConfirmDialog(
         text = { Text(stringResource(R.string.today_delete_task_body, taskTitle)) },
         confirmButton = {
             TextButton(onClick = onConfirm) {
-                Text(stringResource(R.string.today_delete_label), color = StreakCoral)
+                Text(stringResource(R.string.today_delete_label), color = MaterialTheme.colorScheme.error)
             }
         },
         dismissButton = {

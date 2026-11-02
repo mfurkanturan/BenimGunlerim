@@ -1,5 +1,6 @@
 package com.benimgunlerim.ui.components.gamification
 
+import com.benimgunlerim.ui.theme.AppTheme
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -22,8 +23,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.benimgunlerim.ui.theme.AppTokens
-import com.benimgunlerim.ui.theme.CompletedGreen
-import com.benimgunlerim.ui.theme.SuccessSoft
 
 /**
  * 2. Kademe Küçük Kutlama: Mini Motivasyon Banner'ı (2-3 sn belirip kaybolur)
@@ -45,8 +44,8 @@ fun MiniCelebrationBanner(
             modifier = Modifier
                 .fillMaxWidth()
                 .clip(RoundedCornerShape(AppTokens.Radius.lg))
-                .background(SuccessSoft)
-                .border(AppTokens.BorderWidth.thin, CompletedGreen.copy(alpha = 0.35f), RoundedCornerShape(AppTokens.Radius.lg))
+                .background(AppTheme.colors.status.success.container)
+                .border(AppTokens.BorderWidth.thin, AppTheme.colors.status.success.fg.copy(alpha = 0.35f), RoundedCornerShape(AppTokens.Radius.lg))
                 .padding(horizontal = AppTokens.Spacing.md, vertical = AppTokens.Spacing.xs),
         ) {
             Row(
@@ -57,7 +56,7 @@ fun MiniCelebrationBanner(
                 Text(
                     text = message,
                     style = MaterialTheme.typography.bodySmall.copy(fontWeight = FontWeight.Medium),
-                    color = CompletedGreen,
+                    color = AppTheme.colors.status.success.fg,
                 )
             }
         }

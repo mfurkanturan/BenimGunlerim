@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface RoutineDao {
-    @Query("SELECT * FROM routines WHERE isArchived = 0 ORDER BY createdAt ASC")
+    @Query("SELECT * FROM routines WHERE isArchived = 0 ORDER BY sortOrder ASC, createdAt ASC")
     fun observeActive(): Flow<List<RoutineEntity>>
 
     @Query("SELECT * FROM routines WHERE isArchived = 1 ORDER BY updatedAt DESC")

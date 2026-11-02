@@ -5,6 +5,8 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import com.benimgunlerim.domain.DateTimeProvider
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -48,6 +50,8 @@ data class UserPreferences(
     val celebrationEffectsEnabled: Boolean = true,
     /** Hafif gün modu aktif olan gün tarihi (yyyy-MM-dd) */
     val lightDayModeDate: String = "",
+    /** Kullanıcının seslenilmek istediği ad; boşsa selamlama isimsizdir. */
+    val userName: String = "",
 )
 
 /** Exposes user preferences as a [Flow]. Exists to keep [DataExportService] testable without Android context. */
@@ -72,13 +76,20 @@ interface UserPreferencesAccess : UserPreferencesSource {
     suspend fun setQuietHoursEnd(time: String)
     suspend fun setCelebrationEffectsEnabled(enabled: Boolean)
     suspend fun setLightDayMode(enabled: Boolean, dateStr: String)
+    suspend fun setUserName(name: String)
 }
 
 @Singleton
-class UserPreferencesRepository @Inject constructor(
-    @ApplicationContext private val context: Context,
+class UserPreferencesRepository internal constructor(
+    /** Uygulamada gerçek dosya; testlerde ayrı bir dosya verilir — kullanıcı verisi silinmez. */
+    private val dataStore: DataStore<Preferences>,
     private val dateTimeProvider: DateTimeProvider,
 ) : UserPreferencesAccess, UserPreferencesSource, UserPreferencesWriter {
+    @Inject constructor(
+        @ApplicationContext context: Context,
+        dateTimeProvider: DateTimeProvider,
+    ) : this(context.userPreferencesDataStore, dateTimeProvider)
+
     private object Keys {
         val onboardingCompleted = booleanPreferencesKey("onboarding_completed")
         val selectedGoalProfile = stringPreferencesKey("selected_goal_profile")
@@ -105,9 +116,10 @@ class UserPreferencesRepository @Inject constructor(
         val quietHoursEnd = stringPreferencesKey("quiet_hours_end")
         val celebrationEffectsEnabled = booleanPreferencesKey("celebration_effects_enabled")
         val lightDayModeDate = stringPreferencesKey("light_day_mode_date")
+        val userName = stringPreferencesKey("user_name")
     }
 
-    override val preferences: Flow<UserPreferences> = context.userPreferencesDataStore.data.map { prefs ->
+    override val preferences: Flow<UserPreferences> = dataStore.data.map { prefs ->
         UserPreferences(
             onboardingCompleted = prefs[Keys.onboardingCompleted] ?: false,
             selectedGoalProfile = prefs[Keys.selectedGoalProfile],
@@ -134,67 +146,68 @@ class UserPreferencesRepository @Inject constructor(
             quietHoursEnd = prefs[Keys.quietHoursEnd] ?: "07:00",
             celebrationEffectsEnabled = prefs[Keys.celebrationEffectsEnabled] ?: true,
             lightDayModeDate = prefs[Keys.lightDayModeDate] ?: "",
+            userName = prefs[Keys.userName] ?: "",
         )
     }
 
     suspend fun completeOnboarding(goalProfile: String) {
-        context.userPreferencesDataStore.edit { prefs ->
+        dataStore.edit { prefs ->
             prefs[Keys.onboardingCompleted] = true
             prefs[Keys.selectedGoalProfile] = goalProfile
         }
     }
 
     override suspend fun setNotificationMode(mode: String) {
-        context.userPreferencesDataStore.edit { prefs ->
+        dataStore.edit { prefs ->
             prefs[Keys.notificationMode] = mode
         }
     }
 
     override suspend fun setDailySummaryTime(time: String) {
-        context.userPreferencesDataStore.edit { prefs ->
+        dataStore.edit { prefs ->
             prefs[Keys.dailySummaryTime] = time
         }
     }
 
     override suspend fun setAnalyticsEnabled(enabled: Boolean) {
-        context.userPreferencesDataStore.edit { prefs ->
+        dataStore.edit { prefs ->
             prefs[Keys.analyticsEnabled] = enabled
         }
     }
 
     override suspend fun resetOnboarding() {
-        context.userPreferencesDataStore.edit { prefs ->
+        dataStore.edit { prefs ->
             prefs[Keys.onboardingCompleted] = false
         }
     }
 
     suspend fun addXp(amount: Int) {
-        context.userPreferencesDataStore.edit { prefs ->
+        dataStore.edit { prefs ->
             prefs[Keys.totalXp] = (prefs[Keys.totalXp] ?: 0) + amount
         }
     }
 
     suspend fun addGold(amount: Int) {
-        context.userPreferencesDataStore.edit { prefs ->
+        dataStore.edit { prefs ->
             prefs[Keys.gold] = (prefs[Keys.gold] ?: 0) + amount
         }
     }
 
     suspend fun setHappiness(value: Int) {
-        context.userPreferencesDataStore.edit { prefs ->
+        dataStore.edit { prefs ->
             prefs[Keys.happiness] = value.coerceIn(0, 100)
         }
     }
 
     suspend fun setCompanion(type: String, name: String) {
-        context.userPreferencesDataStore.edit { prefs ->
+        dataStore.edit { prefs ->
             prefs[Keys.companionType] = type
             prefs[Keys.companionName] = name
         }
     }
 
     suspend fun addXpAndGold(xp: Int, gold: Int, happinessDelta: Int) {
-        context.userPreferencesDataStore.edit { prefs ->
+        dataStore.edit { prefs ->
             prefs[Keys.totalXp] = (prefs[Keys.totalXp] ?: 0) + xp
             prefs[Keys.gold] = (prefs[Keys.gold] ?: 0) + gold
             val current = prefs[Keys.happiness] ?: 0
@@ -209,7 +222,7 @@ class UserPreferencesRepository @Inject constructor(
         happinessDelta: Int = 0,
     ): Boolean {
         var granted = false
-        context.userPreferencesDataStore.edit { prefs ->
+        dataStore.edit { prefs ->
             val currentEvents = prefs[Keys.rewardedEvents].orEmpty()
             val events = currentEvents.split(",").filter { it.isNotBlank() }.toMutableList()
             if (eventKey !in events) {
@@ -249,37 +262,37 @@ class UserPreferencesRepository @Inject constructor(
     }
 
     suspend fun incrementTasksCompleted() {
-        context.userPreferencesDataStore.edit { prefs ->
+        dataStore.edit { prefs ->
             prefs[Keys.totalTasksCompleted] = (prefs[Keys.totalTasksCompleted] ?: 0) + 1
         }
     }
 
     suspend fun incrementRoutinesCompleted() {
-        context.userPreferencesDataStore.edit { prefs ->
+        dataStore.edit { prefs ->
             prefs[Keys.totalRoutinesCompleted] = (prefs[Keys.totalRoutinesCompleted] ?: 0) + 1
         }
     }
 
     suspend fun incrementPerfectDays() {
-        context.userPreferencesDataStore.edit { prefs ->
+        dataStore.edit { prefs ->
             prefs[Keys.totalPerfectDays] = (prefs[Keys.totalPerfectDays] ?: 0) + 1
         }
     }
 
     suspend fun incrementDaysClosed() {
-        context.userPreferencesDataStore.edit { prefs ->
+        dataStore.edit { prefs ->
             prefs[Keys.totalDaysClosed] = (prefs[Keys.totalDaysClosed] ?: 0) + 1
         }
     }
 
     suspend fun incrementHappyMoodCount() {
-        context.userPreferencesDataStore.edit { prefs ->
+        dataStore.edit { prefs ->
             prefs[Keys.happyMoodCount] = (prefs[Keys.happyMoodCount] ?: 0) + 1
         }
     }
 
     suspend fun claimDailyReward(dateStr: String, goldAmount: Int) {
-        context.userPreferencesDataStore.edit { prefs ->
+        dataStore.edit { prefs ->
             prefs[Keys.lastDailyRewardDate] = dateStr
             prefs[Keys.gold] = (prefs[Keys.gold] ?: 0) + goldAmount
         }
@@ -287,7 +300,7 @@ class UserPreferencesRepository @Inject constructor(
 
     suspend fun purchaseItem(itemId: String, cost: Int): Boolean {
         var success = false
-        context.userPreferencesDataStore.edit { prefs ->
+        dataStore.edit { prefs ->
             val currentGold = prefs[Keys.gold] ?: 0
             val ownedSet = (prefs[Keys.ownedItems] ?: "").split(",").filter { it.isNotBlank() }.toSet()
             if (currentGold >= cost && itemId !in ownedSet) {
@@ -300,49 +313,55 @@ class UserPreferencesRepository @Inject constructor(
     }
 
     override suspend fun setMorningPlannerEnabled(enabled: Boolean) {
-        context.userPreferencesDataStore.edit { prefs ->
+        dataStore.edit { prefs ->
             prefs[Keys.morningPlannerEnabled] = enabled
         }
     }
 
     override suspend fun setMorningPlannerTime(time: String) {
-        context.userPreferencesDataStore.edit { prefs ->
+        dataStore.edit { prefs ->
             prefs[Keys.morningPlannerTime] = time
         }
     }
 
     override suspend fun setQuietHoursEnabled(enabled: Boolean) {
-        context.userPreferencesDataStore.edit { prefs ->
+        dataStore.edit { prefs ->
             prefs[Keys.quietHoursEnabled] = enabled
         }
     }
 
     override suspend fun setQuietHoursStart(time: String) {
-        context.userPreferencesDataStore.edit { prefs ->
+        dataStore.edit { prefs ->
             prefs[Keys.quietHoursStart] = time
         }
     }
 
     override suspend fun setQuietHoursEnd(time: String) {
-        context.userPreferencesDataStore.edit { prefs ->
+        dataStore.edit { prefs ->
             prefs[Keys.quietHoursEnd] = time
         }
     }
 
     override suspend fun setCelebrationEffectsEnabled(enabled: Boolean) {
-        context.userPreferencesDataStore.edit { prefs ->
+        dataStore.edit { prefs ->
             prefs[Keys.celebrationEffectsEnabled] = enabled
         }
     }
 
     override suspend fun setLightDayMode(enabled: Boolean, dateStr: String) {
-        context.userPreferencesDataStore.edit { prefs ->
+        dataStore.edit { prefs ->
             prefs[Keys.lightDayModeDate] = if (enabled) dateStr else ""
         }
     }
 
+    override suspend fun setUserName(name: String) {
+        dataStore.edit { prefs ->
+            prefs[Keys.userName] = name.trim().take(MAX_USER_NAME_LENGTH)
+        }
+    }
+
     override suspend fun replacePreferences(preferences: UserPreferences) {
-        context.userPreferencesDataStore.edit { prefs ->
+        dataStore.edit { prefs ->
             prefs[Keys.onboardingCompleted] = preferences.onboardingCompleted
             preferences.selectedGoalProfile?.let { prefs[Keys.selectedGoalProfile] = it }
                 ?: prefs.remove(Keys.selectedGoalProfile)
@@ -369,6 +388,10 @@ class UserPreferencesRepository @Inject constructor(
             prefs[Keys.quietHoursEnd] = preferences.quietHoursEnd
             prefs[Keys.celebrationEffectsEnabled] = preferences.celebrationEffectsEnabled
             prefs[Keys.lightDayModeDate] = preferences.lightDayModeDate
+            prefs[Keys.userName] = preferences.userName
         }
     }
 }
+
+/** Selamlamaya sığacak en uzun ad. */
+const val MAX_USER_NAME_LENGTH = 30

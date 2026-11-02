@@ -1,5 +1,6 @@
 package com.benimgunlerim.ui.today
 
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
@@ -16,11 +17,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
+import com.benimgunlerim.BuildConfig
 import com.benimgunlerim.R
+import com.benimgunlerim.ui.theme.DebugSkyPhase
 import com.benimgunlerim.ui.TestTags
 import com.benimgunlerim.ui.components.layout.AppFab
 import com.benimgunlerim.ui.components.layout.ScreenScaffold
-import com.benimgunlerim.ui.theme.BrandPrimary
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -31,11 +33,19 @@ fun TodayScreen(
     onNavigateToSettings: () -> Unit = {},
     onOpenRoutineDetail: (String) -> Unit = {},
 ) {
-    val state by viewModel.uiState.collectAsState()
+    val rawState by viewModel.uiState.collectAsState()
+    val state = if (BuildConfig.DEBUG && DebugSkyPhase.forceEmptyToday) {
+        rawState.copy(routines = emptyList(), tasks = emptyList(), overdueTasks = emptyList(), missedDay = null)
+    } else {
+        rawState
+    }
     val today = viewModel.today()
 
     val showFabMenu = remember { mutableStateOf(false) }
     val showAddTaskSheet = remember { mutableStateOf(false) }
+    val showAddRoutineSheet = remember { mutableStateOf(false) }
+    val focusStep = remember { mutableStateOf<com.benimgunlerim.ui.components.calm.ResetCandidate?>(null) }
+    val openTaskId = remember { mutableStateOf<String?>(null) }
     val showResetDialog = remember { mutableStateOf(false) }
     val showBrainDumpDialog = remember { mutableStateOf(false) }
     val showCloseSheet = remember { mutableStateOf(false) }
@@ -59,7 +69,7 @@ fun TodayScreen(
     val activeRoutineIds = remember(state.routines) { state.routines.mapTo(mutableSetOf()) { it.id } }
     val completedCount = state.tasks.count { it.isCompleted } +
         state.completedRoutineIds.count { it in activeRoutineIds }
-    val userLevel = (state.gameState.totalXp / 100) + 1
+    val userLevel = com.benimgunlerim.domain.GameEngine.calculateLevel(state.gameState.totalXp).level
 
     TodayEventEffects(
         viewModel = viewModel,
@@ -73,20 +83,7 @@ fun TodayScreen(
     ScreenScaffold(
         modifier = Modifier.testTag(TestTags.TodayRoot),
         snackbarHost = { SnackbarHost(snackbarHostState) },
-        floatingActionButton = if (!dayIsClosed) {
-            {
-                AppFab(
-                    onClick = { showFabMenu.value = true },
-                    icon = Icons.Rounded.Add,
-                    contentDescription = stringResource(R.string.today_add_task_fab_cd),
-                    modifier = Modifier.testTag(TestTags.TodayFab),
-                    containerColor = BrandPrimary,
-                    contentColor = Color.White,
-                )
-            }
-        } else {
-            null
-        },
+        floatingActionButton = null,
     ) { contentPadding ->
         val summaryState = remember(
             dayIsClosed,
@@ -116,9 +113,14 @@ fun TodayScreen(
                 onDismissContextualReset = { dismissContextualReset = true },
                 onMissedDayReviewClick = { showMissedDaySheet.value = true },
                 onAddTaskClick = { showAddTaskSheet.value = true },
+                onAddRoutineClick = { showAddRoutineSheet.value = true },
+                onOpenTask = { openTaskId.value = it },
+                onOpenQuickActions = { showFabMenu.value = true },
                 onOpenRoutineMenu = { menuRoutineId.value = it },
                 onCloseDayClick = { showCloseSheet.value = true },
                 onRequestDeleteTask = { deleteTaskId.value = it },
+                onNavigateToSettings = onNavigateToSettings,
+                onNavigateToPlan = onNavigateToPlan,
             )
         }
 
@@ -130,6 +132,8 @@ fun TodayScreen(
             viewModel = viewModel,
             summaryState = summaryState,
             callbacks = listCallbacks,
+            focus = focusStep.value,
+            onClearFocus = { focusStep.value = null },
         )
     }
 
@@ -139,6 +143,9 @@ fun TodayScreen(
             showResetDialog = showResetDialog,
             showBrainDumpDialog = showBrainDumpDialog,
             showAddTaskSheet = showAddTaskSheet,
+            showAddRoutineSheet = showAddRoutineSheet,
+            focusStep = focusStep,
+            openTaskId = openTaskId,
             showCloseSheet = showCloseSheet,
             showMissedDaySheet = showMissedDaySheet,
             menuRoutineId = menuRoutineId,

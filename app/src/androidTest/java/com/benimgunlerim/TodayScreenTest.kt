@@ -3,6 +3,11 @@
 import android.content.Intent
 import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.hasTestTag
+import androidx.compose.ui.test.hasText
+import androidx.compose.ui.test.onLast
+import androidx.compose.ui.test.performScrollToNode
+import androidx.compose.ui.test.performScrollTo
 import androidx.compose.ui.test.junit4.AndroidComposeTestRule
 import androidx.compose.ui.test.onAllNodesWithTag
 import androidx.compose.ui.test.onAllNodesWithText
@@ -53,6 +58,7 @@ class TodayScreenTest {
 
     @Test
     fun today_fab_is_visible() {
+        scrollTodayTo(TestTags.TodayFab)
         composeTestRule
             .onNodeWithTag(TestTags.TodayFab)
             .assertIsDisplayed()
@@ -60,6 +66,7 @@ class TodayScreenTest {
 
     @Test
     fun today_close_day_card_is_visible() {
+        scrollTodayTo(TestTags.TodayCloseDayCard)
         composeTestRule
             .onNodeWithTag(TestTags.TodayCloseDayCard)
             .assertIsDisplayed()
@@ -82,25 +89,39 @@ class TodayScreenTest {
 
     @Test
     fun deleting_task_shows_confirmation_dialog() {
-        val title = "Tamamlanmis test gorevi"
+        // Her koşuda benzersiz ad: önceki yarım kalmış koşulardan kalan görevlerle karışmasın.
+        val title = "Test gorevi ${System.currentTimeMillis() % 100_000}"
 
+        scrollTodayTo(TestTags.TodayFab)
+        // Dolu günde TodayFab hızlı menüyü açar; boş günde doğrudan görev formunu açar.
         composeTestRule.onNodeWithTag(TestTags.TodayFab).performClick()
-        composeTestRule.onNodeWithText(
-            InstrumentationRegistry.getInstrumentation().targetContext.getString(R.string.quick_action_add_task_title),
-        ).performClick()
+        val menuTitle = InstrumentationRegistry.getInstrumentation().targetContext.getString(R.string.quick_action_add_task_title)
+        if (composeTestRule.onAllNodesWithText(menuTitle).fetchSemanticsNodes().isNotEmpty()) {
+            composeTestRule.onNodeWithText(menuTitle).performClick()
+        }
         composeTestRule.onNodeWithTag(TestTags.AddTaskTitleField).performTextInput(title)
         composeTestRule.onNodeWithText("Kaydet").performClick()
+        // Yeni görev listede aşağıda kalabilir (ör. "Bugün biraz yoğun mu?" kartı üstte belirir); ona kaydır.
         composeTestRule.waitUntil(5_000) {
-            composeTestRule.onAllNodesWithText(title).fetchSemanticsNodes().isNotEmpty()
+            runCatching {
+                composeTestRule.onNodeWithTag(TestTags.TodayList).performScrollToNode(hasText(title))
+            }.isSuccess
         }
 
-        composeTestRule
-            .onNodeWithContentDescription(
-                InstrumentationRegistry.getInstrumentation().targetContext.getString(R.string.today_task_delete_cd),
-            )
-            .performClick()
+        // Bugün'de silme, göreve dokununca açılan ayrıntı sayfasından yapılır.
+        val deleteLabel = InstrumentationRegistry.getInstrumentation().targetContext.getString(R.string.today_delete_label)
+        composeTestRule.onNodeWithText(title).performClick()
+        composeTestRule.onNodeWithText(deleteLabel).performScrollTo().performClick()
         composeTestRule.onNodeWithText(
             InstrumentationRegistry.getInstrumentation().targetContext.getString(R.string.today_delete_task_title),
         ).assertIsDisplayed()
+
+        // Temizlik: testin eklediği görevi gerçekten sil — kullanıcının listesinde iz kalmasın.
+        composeTestRule.onAllNodesWithText(deleteLabel).onLast().performClick()
+    }
+
+    /** Bugün listesi uzun; alttaki öğeleri doğrulamadan önce listeyi o öğeye kaydır. */
+    private fun scrollTodayTo(tag: String) {
+        composeTestRule.onNodeWithTag(TestTags.TodayList).performScrollToNode(hasTestTag(tag))
     }
 }

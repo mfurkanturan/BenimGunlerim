@@ -1,5 +1,6 @@
 package com.benimgunlerim.ui.components.core
 
+import com.benimgunlerim.ui.theme.AppTheme
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
@@ -12,10 +13,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.benimgunlerim.ui.theme.AppTokens
-import com.benimgunlerim.ui.theme.SemanticError
-import com.benimgunlerim.ui.theme.SemanticInfo
-import com.benimgunlerim.ui.theme.SemanticSuccess
-import com.benimgunlerim.ui.theme.SemanticWarning
 
 enum class AppBadgeVariant { Success, Warning, Error, Info, Neutral }
 
@@ -26,10 +23,10 @@ fun AppBadge(
     variant: AppBadgeVariant = AppBadgeVariant.Neutral,
 ) {
     val (bg, fg) = when (variant) {
-        AppBadgeVariant.Success -> SemanticSuccess.copy(alpha = 0.12f) to SemanticSuccess
-        AppBadgeVariant.Warning -> SemanticWarning.copy(alpha = 0.12f) to SemanticWarning
-        AppBadgeVariant.Error   -> SemanticError.copy(alpha = 0.12f)   to SemanticError
-        AppBadgeVariant.Info    -> SemanticInfo.copy(alpha = 0.12f)    to SemanticInfo
+        AppBadgeVariant.Success -> AppTheme.colors.status.success.fg.copy(alpha = 0.12f) to AppTheme.colors.status.success.fg
+        AppBadgeVariant.Warning -> AppTheme.colors.status.attention.fg.copy(alpha = 0.12f) to AppTheme.colors.status.attention.fg
+        AppBadgeVariant.Error   -> MaterialTheme.colorScheme.error.copy(alpha = 0.12f)   to MaterialTheme.colorScheme.error
+        AppBadgeVariant.Info    -> AppTheme.colors.status.info.fg.copy(alpha = 0.12f)    to AppTheme.colors.status.info.fg
         AppBadgeVariant.Neutral -> MaterialTheme.colorScheme.surfaceVariant to MaterialTheme.colorScheme.onSurfaceVariant
     }
     Box(

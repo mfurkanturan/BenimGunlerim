@@ -1,5 +1,6 @@
 package com.benimgunlerim.ui.today
 
+import com.benimgunlerim.ui.theme.AppTheme
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -8,6 +9,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -25,15 +27,11 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.text.font.FontWeight
 import com.benimgunlerim.R
-import com.benimgunlerim.ui.theme.CandyPrimary
-import com.benimgunlerim.ui.theme.CandySecondary
-import com.benimgunlerim.ui.theme.CompletedGreen
-import com.benimgunlerim.ui.theme.StreakCoral
+import com.benimgunlerim.ui.theme.AppTokens
 
 private const val TOTAL_STEPS = 4
 private const val LAST_STEP_INDEX = 3
@@ -63,22 +61,23 @@ internal fun CloseDaySheet(
         stringResource(R.string.today_close_step1_mood_good),
         stringResource(R.string.today_close_step1_mood_great),
     )
-    val moodColors = listOf(StreakCoral, StreakCoral.copy(alpha = 0.65f), CandySecondary, CandyPrimary, CompletedGreen)
+    val moodColors = AppTheme.colors.night.scale
+    val nightButtonColors = ButtonDefaults.buttonColors(containerColor = AppTheme.colors.night.moon, contentColor = AppTheme.colors.night.sky)
 
     val closeScroll = rememberScrollState()
     val focusManager = LocalFocusManager.current
     Column(
         Modifier
             .verticalScroll(closeScroll)
-            .padding(horizontal = 24.dp, vertical = 16.dp)
+            .padding(horizontal = AppTokens.Spacing.xl, vertical = AppTokens.Spacing.md)
             .navigationBarsPadding(),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
+        verticalArrangement = Arrangement.spacedBy(AppTokens.Spacing.md),
     ) {
-        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(AppTokens.Spacing.xxs)) {
             repeat(TOTAL_STEPS) { i ->
                 Box(
-                    Modifier.weight(1f).height(3.dp).clip(RoundedCornerShape(2.dp))
-                        .background(if (i <= step) CandySecondary else MaterialTheme.colorScheme.surfaceVariant),
+                    Modifier.weight(1f).height(AppTokens.Spacing.xxs).clip(RoundedCornerShape(AppTokens.Radius.pill))
+                        .background(if (i <= step) AppTheme.colors.night.moon else MaterialTheme.colorScheme.surfaceVariant),
                 )
             }
         }
@@ -112,22 +111,16 @@ internal fun CloseDaySheet(
             )
         }
 
-        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(AppTokens.Spacing.sm)) {
             if (step > 0) {
                 OutlinedSmallButton(stringResource(R.string.today_close_back_btn), Modifier.weight(1f)) { step-- }
             }
-            if (step < LAST_STEP_INDEX) {
-                Button(
-                    onClick = { step++ },
-                    modifier = Modifier.weight(1f).height(50.dp),
-                    shape = RoundedCornerShape(8.dp),
-                    colors = ButtonDefaults.buttonColors(CandySecondary, Color.White),
-                ) {
-                    Text(stringResource(R.string.today_close_next_btn))
-                }
-            } else {
-                Button(
-                    onClick = {
+            val isLast = step >= LAST_STEP_INDEX
+            Button(
+                onClick = {
+                    if (!isLast) {
+                        step++
+                    } else {
                         onSave(
                             CloseDayDraft(
                                 mood = mood,
@@ -139,13 +132,18 @@ internal fun CloseDaySheet(
                                 carryOverdueTasks = carryTasks,
                             ),
                         )
-                    },
-                    modifier = Modifier.weight(1f).height(50.dp),
-                    shape = RoundedCornerShape(8.dp),
-                    colors = ButtonDefaults.buttonColors(CandySecondary, Color.White),
-                ) { Text(stringResource(R.string.today_close_save_btn)) }
+                    }
+                },
+                modifier = Modifier.weight(1f).heightIn(min = AppTokens.TouchTarget.min),
+                shape = RoundedCornerShape(AppTokens.Radius.pill),
+                colors = nightButtonColors,
+            ) {
+                Text(
+                    text = stringResource(if (isLast) R.string.night_good_night else R.string.today_close_next_btn),
+                    style = MaterialTheme.typography.labelLarge.copy(fontWeight = FontWeight.ExtraBold),
+                )
             }
         }
-        Spacer(Modifier.height(12.dp))
+        Spacer(Modifier.height(AppTokens.Spacing.sm))
     }
 }

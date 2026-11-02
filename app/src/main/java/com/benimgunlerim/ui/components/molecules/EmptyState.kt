@@ -29,60 +29,6 @@ import java.time.format.DateTimeFormatter
 import java.util.Locale
 
 @Composable
-fun DynamicCalendarBadge(
-    date: LocalDate,
-    modifier: Modifier = Modifier,
-) {
-    val monthName = remember(date) {
-        val pattern = DateTimeFormatter.ofPattern("MMM", Locale("tr"))
-        date.format(pattern).uppercase(Locale("tr"))
-    }
-    val dayNumber = date.dayOfMonth.toString()
-
-    Column(
-        modifier = modifier
-            .width(58.dp)
-            .clip(RoundedCornerShape(AppTokens.Radius.md))
-            .border(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.7f), RoundedCornerShape(AppTokens.Radius.md))
-            .background(MaterialTheme.colorScheme.surface),
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(Color(0xFFE11D48))
-                .padding(vertical = 3.dp),
-            contentAlignment = Alignment.Center,
-        ) {
-            Text(
-                text = monthName,
-                style = MaterialTheme.typography.labelSmall.copy(
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 11.sp,
-                    letterSpacing = 0.5.sp,
-                ),
-                color = Color.White,
-            )
-        }
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 6.dp),
-            contentAlignment = Alignment.Center,
-        ) {
-            Text(
-                text = dayNumber,
-                style = MaterialTheme.typography.titleLarge.copy(
-                    fontWeight = FontWeight.Black,
-                    fontSize = 22.sp,
-                ),
-                color = MaterialTheme.colorScheme.onSurface,
-            )
-        }
-    }
-}
-
-@Composable
 fun EmptyState(
     title: String,
     description: String,

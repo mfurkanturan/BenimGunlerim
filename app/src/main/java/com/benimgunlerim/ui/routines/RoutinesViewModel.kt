@@ -86,6 +86,7 @@ class RoutinesViewModel @Inject constructor(
                     entityType = CompletionEntityType.ROUTINE.value,
                     entityId = routine.id,
                     today = today,
+                    scheduledDays = routine.targetDaySet(),
                 ),
                 last7Days = last7,
                 currentValue = currentValue,
@@ -173,6 +174,12 @@ class RoutinesViewModel @Inject constructor(
                 allTodayRoutineIds = allIds,
             )
         }
+    }
+
+    fun reorderRoutines(orderedRoutineIds: List<String>) {
+        val routines = orderedRoutineIds.mapNotNull(routineEntitiesById.value::get)
+        if (routines.size != orderedRoutineIds.size) return
+        viewModelScope.launch { routineRepository.reorder(routines) }
     }
 
     fun updateRoutineProgress(routineId: String, value: Float) {

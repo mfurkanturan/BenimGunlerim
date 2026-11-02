@@ -153,10 +153,15 @@ class ObserveTodaySnapshotUseCaseTest {
             id = "log-yesterday",
             date = fixedDate.minusDays(1).toString(),
         )
+        // Rutin sadece Çarşamba: zincir için önceki Çarşamba sayılır, aradaki günler kırmaz.
+        val lastWeekLog = todayLog.copy(
+            id = "log-last-week",
+            date = fixedDate.minusDays(7).toString(),
+        )
         every { routineRepository.observeActive() } returns flowOf(listOf(routine))
         every { completionLogRepository.observeByDate(fixedDate) } returns flowOf(listOf(todayLog))
-        every { completionLogRepository.observeBetween(any(), any()) } returns flowOf(listOf(todayLog, yesterdayLog))
-        every { completionLogRepository.observeAll() } returns flowOf(listOf(todayLog, yesterdayLog))
+        every { completionLogRepository.observeBetween(any(), any()) } returns flowOf(listOf(todayLog, yesterdayLog, lastWeekLog))
+        every { completionLogRepository.observeAll() } returns flowOf(listOf(todayLog, yesterdayLog, lastWeekLog))
 
         val snapshot = useCase(fixedDate).first()
 

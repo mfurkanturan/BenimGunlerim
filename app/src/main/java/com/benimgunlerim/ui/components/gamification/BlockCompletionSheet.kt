@@ -28,8 +28,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import com.benimgunlerim.R
 import com.benimgunlerim.ui.theme.AppTokens
-import com.benimgunlerim.ui.theme.BrandPrimary
-import com.benimgunlerim.ui.theme.BrandPrimarySoft
 
 /**
  * 3. Kademe Orta Kutlama: Tüm Görevler / Tüm Rutinler Bitti Bottom Sheet
@@ -82,13 +80,13 @@ fun BlockCompletionSheet(
             Box(
                 modifier = Modifier
                     .clip(RoundedCornerShape(AppTokens.Radius.md))
-                    .background(BrandPrimarySoft)
+                    .background(MaterialTheme.colorScheme.primaryContainer)
                     .padding(horizontal = AppTokens.Spacing.md, vertical = AppTokens.Spacing.xs),
             ) {
                 Text(
                     text = badgeText,
                     style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.Bold),
-                    color = BrandPrimary,
+                    color = MaterialTheme.colorScheme.primary,
                 )
             }
 
@@ -104,12 +102,12 @@ fun BlockCompletionSheet(
                         .fillMaxWidth()
                         .height(AppTokens.TouchTarget.min),
                     shape = RoundedCornerShape(AppTokens.Radius.md),
-                    colors = ButtonDefaults.buttonColors(containerColor = BrandPrimary),
+                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
                 ) {
                     Text(
                         text = stringResource(R.string.celebration_block_close_day_action),
                         style = MaterialTheme.typography.labelLarge.copy(fontWeight = FontWeight.Bold),
-                        color = Color.White,
+                        color = MaterialTheme.colorScheme.onPrimary,
                     )
                 }
 

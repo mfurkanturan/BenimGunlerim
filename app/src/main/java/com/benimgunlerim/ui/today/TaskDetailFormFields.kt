@@ -22,7 +22,6 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import com.benimgunlerim.R
 import com.benimgunlerim.domain.validation.TimeInputValidator
-import com.benimgunlerim.ui.theme.StreakCoral
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -91,7 +90,7 @@ internal fun TaskDetailFormFields(
             singleLine = true,
             shape = RoundedCornerShape(FieldCornerRadius),
             isError = data.timeErrorText != null,
-            supportingText = { data.timeErrorText?.let { Text(it, color = StreakCoral) } },
+            supportingText = { data.timeErrorText?.let { Text(it, color = MaterialTheme.colorScheme.error) } },
             trailingIcon = {
                 IconButton(onClick = actions.onTimePickerRequest, enabled = !data.interactionLocked) {
                     Icon(Icons.Outlined.Schedule, contentDescription = stringResource(R.string.today_pick_time_cd))

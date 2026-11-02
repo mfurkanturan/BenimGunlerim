@@ -21,8 +21,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.benimgunlerim.R
-import com.benimgunlerim.ui.theme.CandyPrimary
-import com.benimgunlerim.ui.theme.StreakCoral
+import com.benimgunlerim.ui.theme.AppTheme
 
 private const val SELECTED_BG_ALPHA = 0.15f
 private val OptionCornerRadius = 8.dp
@@ -66,7 +65,7 @@ internal fun TaskDetailOptionsSection(
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             listOf(1, 2, 3).forEachIndexed { i, p ->
                 val sel = priority == p
-                val col = if (i == 0) StreakCoral else if (i == 1) CandyPrimary else MaterialTheme.colorScheme.onSurfaceVariant
+                val col = if (i == 0) AppTheme.colors.status.attention.fg else if (i == 1) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
                 Box(
                     Modifier.weight(1f).clip(RoundedCornerShape(OptionCornerRadius))
                         .background(if (sel) col.copy(alpha = SELECTED_BG_ALPHA) else MaterialTheme.colorScheme.surfaceVariant)

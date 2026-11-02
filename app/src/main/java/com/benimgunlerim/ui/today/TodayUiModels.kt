@@ -23,6 +23,7 @@ data class TodayRoutineUi(
     val name: String,
     val preferredTime: String?,
     val color: String?,
+    val category: String?,
     val targetType: String,
     val targetValue: Int?,
     val targetUnit: String?,

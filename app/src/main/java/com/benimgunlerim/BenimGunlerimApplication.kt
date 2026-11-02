@@ -4,6 +4,8 @@ import android.app.Application
 import android.os.StrictMode
 import com.benimgunlerim.analytics.AppCrashHandler
 import com.benimgunlerim.notifications.ensureRoutineNotificationChannel
+import com.benimgunlerim.notifications.push.PushTopics
+import com.benimgunlerim.notifications.push.ensureAnnouncementChannel
 import com.benimgunlerim.notifications.ReminderBootstrapper
 import com.benimgunlerim.domain.service.AppEventCoordinator
 import dagger.hilt.android.HiltAndroidApp
@@ -34,6 +36,8 @@ class BenimGunlerimApplication : Application() {
         }
         appCrashHandler.install()
         ensureRoutineNotificationChannel()
+        ensureAnnouncementChannel()
+        PushTopics.subscribe(this)
         reminderBootstrapper.rescheduleReminders()
         appEventCoordinator.start()
     }

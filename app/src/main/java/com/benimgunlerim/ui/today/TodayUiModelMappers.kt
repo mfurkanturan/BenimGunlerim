@@ -35,6 +35,7 @@ internal fun RoutineEntity.toTodayUiModel(
         name = name,
         preferredTime = preferredTime,
         color = color,
+        category = category,
         targetType = targetType,
         targetValue = targetValue,
         targetUnit = targetUnit,

@@ -1,5 +1,6 @@
 package com.benimgunlerim.ui.components.gamification
 
+import com.benimgunlerim.ui.theme.AppTheme
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -18,8 +19,8 @@ import com.benimgunlerim.ui.theme.AppTokens
 
 @Composable
 fun GoldBadge(gold: Int, modifier: Modifier = Modifier) {
-    val containerColor = Color(0xFFFFD54F) // Bright Amber Gold
-    val contentColor = Color(0xFF5D4037)   // Deep Warm Dark Brown for high contrast
+    val containerColor = AppTheme.colors.reward.goldSoft
+    val contentColor = AppTheme.colors.reward.onGold
 
     Row(
         modifier = modifier

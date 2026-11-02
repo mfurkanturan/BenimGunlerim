@@ -2,6 +2,7 @@ package com.benimgunlerim.ui.today
 
 import com.benimgunlerim.R
 import com.benimgunlerim.analytics.AnalyticsEvent
+import com.benimgunlerim.domain.model.RoutineTargetType
 import com.benimgunlerim.analytics.AnalyticsTracker
 import com.benimgunlerim.data.local.entity.RoutineEntity
 import com.benimgunlerim.domain.AchievementTracker
@@ -28,6 +29,7 @@ internal data class TodayRoutineDependencies(
     val updateRoutineUseCase: UpdateRoutineUseCase,
     val skipRoutineUseCase: SkipRoutineUseCase,
     val archiveRoutineUseCase: ArchiveRoutineUseCase,
+    val addRoutineUseCase: com.benimgunlerim.domain.usecase.AddRoutineUseCase,
 )
 
 /**
@@ -126,6 +128,30 @@ internal class TodayRoutineActions(
             } finally {
                 release(inFlightProgressIds, routineId)
             }
+        }
+    }
+
+    /** Bugün ekranından (boş gün başlangıçları) yeni rutin; her gün tekrar eder. */
+    fun addRoutine(
+        name: String,
+        targetDays: Set<DayOfWeek> = DayOfWeek.entries.toSet(),
+        preferredTime: String? = null,
+        targetValue: Int? = null,
+        targetUnit: String? = null,
+        category: String? = null,
+    ) {
+        if (name.isBlank()) return
+        scope.launch {
+            deps.addRoutineUseCase(
+                name = name.trim(),
+                targetDays = targetDays,
+                preferredTime = preferredTime,
+                targetType = if (targetValue != null) RoutineTargetType.GOAL.value else RoutineTargetType.CHECK.value,
+                targetValue = targetValue,
+                targetUnit = targetUnit,
+                category = category,
+            )
+            deps.analyticsTracker.track(AnalyticsEvent(name = "routine_created", properties = mapOf("source" to "today_starter")))
         }
     }
 

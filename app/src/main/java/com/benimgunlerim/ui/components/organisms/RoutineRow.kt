@@ -1,7 +1,6 @@
 package com.benimgunlerim.ui.components.organisms
 
-import androidx.compose.animation.animateColorAsState
-import androidx.compose.animation.core.tween
+import com.benimgunlerim.ui.theme.AppTheme
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -10,21 +9,20 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.CheckCircle
+import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.MoreVert
-import androidx.compose.material.icons.rounded.RadioButtonUnchecked
+import androidx.compose.material.icons.rounded.Remove
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -33,24 +31,21 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.Role
-import androidx.compose.ui.semantics.role
-import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.dp
 import com.benimgunlerim.R
 import com.benimgunlerim.ui.components.core.AppSurface
-import com.benimgunlerim.ui.components.gamification.StreakBadge
+import com.benimgunlerim.ui.components.core.StarToggle
 import com.benimgunlerim.ui.theme.AppTokens
 import java.time.DayOfWeek
 import java.time.LocalDate
 
-import androidx.compose.material.icons.rounded.Add
-import androidx.compose.material.icons.rounded.Remove
-import androidx.compose.material3.Surface
-import androidx.compose.foundation.shape.RoundedCornerShape
-
+/**
+ * Rutin satırı: yanan/sönük yıldız + son 7 günün ışık zinciri (her nokta bir gün, bugün halkalı).
+ * Sayılı hedeflerde −/+ ile ilerleme. State dışarıdan gelir, aksiyonlar lambda ile yukarı gider.
+ */
 @Composable
 fun RoutineRow(
     title: String,
@@ -58,7 +53,7 @@ fun RoutineRow(
     onToggle: () -> Unit,
     weekHistory: List<Boolean>,
     modifier: Modifier = Modifier,
-    color: Color = MaterialTheme.colorScheme.primary,
+    color: Color = AppTheme.colors.progress.done,
     streakCount: Int = 0,
     preferredTime: String? = null,
     targetDaysSummary: String? = null,
@@ -74,210 +69,86 @@ fun RoutineRow(
     onMenuClick: (() -> Unit)? = null,
 ) {
     val haptic = LocalHapticFeedback.current
-    val checkColor by animateColorAsState(
-        targetValue = if (isCompletedToday) color else MaterialTheme.colorScheme.outline.copy(alpha = 0.6f),
-        animationSpec = tween(durationMillis = AppTokens.Motion.fast),
-        label = "routine_check_color",
-    )
-
     val handleToggle = {
         haptic.performHapticFeedback(HapticFeedbackType.LongPress)
         onToggle()
     }
-
     val effectiveClick = onClick ?: handleToggle
-
-    // Compute last 7 days day initials and date for habit matrix
-    val today = remember { LocalDate.now() }
-    val dayShortCodes = turkishDayShortCode()
-    val days7 = remember(today, dayShortCodes) {
-        (6 downTo 0).map { offset ->
-            val date = today.minusDays(offset.toLong())
-            date to (dayShortCodes[date.dayOfWeek] ?: "")
-        }
-    }
+    val isCounted = targetType == "goal" && targetValue != null && targetValue > 1
 
     val rowContent = @Composable {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .heightIn(min = 60.dp)
-                .padding(vertical = AppTokens.Spacing.xs, horizontal = if (useSurface) AppTokens.Spacing.cardInner else 0.dp),
+                .heightIn(min = AppTokens.Layout.fabDefaultSize)
+                .padding(
+                    vertical = AppTokens.Spacing.xs,
+                    horizontal = if (useSurface) AppTokens.Spacing.xs else AppTokens.Spacing.xxs,
+                ),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(AppTokens.Spacing.xs),
+            horizontalArrangement = Arrangement.spacedBy(AppTokens.Spacing.xxs),
         ) {
-            IconButton(
-                onClick = handleToggle,
-                modifier = Modifier
-                    .size(48.dp)
-                    .semantics { role = Role.Checkbox },
-            ) {
-                Icon(
-                    imageVector = if (isCompletedToday) Icons.Rounded.CheckCircle else Icons.Rounded.RadioButtonUnchecked,
-                    contentDescription = if (isCompletedToday) {
-                        stringResource(R.string.routine_row_mark_incomplete_cd)
-                    } else {
-                        stringResource(R.string.routine_row_mark_complete_cd)
-                    },
-                    tint = checkColor,
-                    modifier = Modifier.size(24.dp),
-                )
-            }
+            StarToggle(
+                lit = isCompletedToday,
+                onToggle = handleToggle,
+                stateLabel = stringResource(if (isCompletedToday) R.string.star_state_lit else R.string.star_state_idle),
+                actionLabel = stringResource(
+                    if (isCompletedToday) R.string.routine_row_mark_incomplete_cd else R.string.routine_row_mark_complete_cd,
+                ),
+                litColor = color,
+                edgeColor = AppTheme.colors.progress.doneEdge,
+                idleColor = AppTheme.colors.progress.idle,
+            )
 
             Column(
                 modifier = Modifier.weight(1f),
-                verticalArrangement = Arrangement.spacedBy(2.dp),
+                verticalArrangement = Arrangement.spacedBy(AppTokens.Spacing.xxs),
             ) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(AppTokens.Spacing.xs),
-                ) {
-                    Text(
-                        text = title,
-                        style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Medium),
-                        color = MaterialTheme.colorScheme.onSurface,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                        modifier = Modifier.weight(1f, fill = false),
-                    )
-                    if (streakCount > 0) {
-                        StreakBadge(streak = streakCount)
-                    }
-                }
-
-                val repeatDesc = targetDaysSummary ?: stringResource(R.string.today_routine_daily_short)
-                val streakText = stringResource(R.string.today_routine_streak_format, streakCount)
-                val subtitle = if (preferredTime != null) {
-                    "⏰ $preferredTime • $repeatDesc · $streakText"
-                } else {
-                    "$repeatDesc · $streakText"
-                }
-
                 Text(
-                    text = subtitle,
-                    style = MaterialTheme.typography.labelSmall,
+                    text = title,
+                    style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.ExtraBold),
+                    color = MaterialTheme.colorScheme.onSurface,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                )
+                val repeatDesc = targetDaysSummary ?: stringResource(R.string.today_routine_daily_short)
+                Text(
+                    text = listOfNotNull(preferredTime, repeatDesc).joinToString(" · "),
+                    style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
-
-                if (targetType == "goal" && targetValue != null && targetValue > 1) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(4.dp),
-                        modifier = Modifier.padding(top = 2.dp, bottom = 2.dp),
-                    ) {
-                        if (onProgressChange != null) {
-                            IconButton(
-                                onClick = {
-                                    val next = maxOf(0f, currentValue - 1f)
-                                    haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
-                                    onProgressChange(next)
-                                },
-                                enabled = currentValue > 0f,
-                                modifier = Modifier.size(28.dp),
-                            ) {
-                                Icon(
-                                    imageVector = Icons.Rounded.Remove,
-                                    contentDescription = "Azalt",
-                                    tint = if (currentValue > 0f) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline.copy(alpha = 0.4f),
-                                    modifier = Modifier.size(16.dp),
-                                )
-                            }
-                        }
-
-                        Surface(
-                            shape = RoundedCornerShape(AppTokens.Radius.sm),
-                            color = if (isCompletedToday) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.surfaceVariant,
-                            modifier = Modifier.height(24.dp),
-                        ) {
-                            Box(
-                                contentAlignment = Alignment.Center,
-                                modifier = Modifier.padding(horizontal = 8.dp),
-                            ) {
-                                Text(
-                                    text = "${currentValue.toInt()} / $targetValue ${targetUnit ?: ""}".trim(),
-                                    style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.SemiBold),
-                                    color = if (isCompletedToday) MaterialTheme.colorScheme.onPrimaryContainer else MaterialTheme.colorScheme.onSurfaceVariant,
-                                )
-                            }
-                        }
-
-                        if (onProgressChange != null) {
-                            IconButton(
-                                onClick = {
-                                    val next = currentValue + 1f
-                                    haptic.performHapticFeedback(HapticFeedbackType.LongPress)
-                                    onProgressChange(next)
-                                },
-                                modifier = Modifier.size(28.dp),
-                            ) {
-                                Icon(
-                                    imageVector = Icons.Rounded.Add,
-                                    contentDescription = stringResource(R.string.routine_row_increment_cd),
-                                    tint = MaterialTheme.colorScheme.primary,
-                                    modifier = Modifier.size(16.dp),
-                                )
-                            }
-                        }
-                    }
-                }
-
                 if (weekHistory.isNotEmpty()) {
-                    val history7 = weekHistory.takeLast(7)
-                    Row(
-                        horizontalArrangement = Arrangement.spacedBy(6.dp),
-                        verticalAlignment = Alignment.CenterVertically,
-                    ) {
-                        history7.forEachIndexed { index, done ->
-                            val (date, initial) = days7.getOrElse(index) { today to "" }
-                            val isTargetDay = targetDays.isEmpty() || date.dayOfWeek in targetDays
-                            val isCurrentDay = index == history7.size - 1
-
-                            Column(
-                                horizontalAlignment = Alignment.CenterHorizontally,
-                                verticalArrangement = Arrangement.spacedBy(3.dp),
-                            ) {
-                                Text(
-                                    text = initial,
-                                    style = MaterialTheme.typography.labelSmall.copy(
-                                        fontWeight = if (isCurrentDay) FontWeight.Bold else if (isTargetDay) FontWeight.SemiBold else FontWeight.Normal,
-                                    ),
-                                    color = if (isTargetDay) {
-                                        MaterialTheme.colorScheme.primary
-                                    } else {
-                                        MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.35f)
-                                    },
-                                )
-                                Box(
-                                    modifier = Modifier
-                                        .size(10.dp)
-                                        .clip(CircleShape)
-                                        .then(
-                                            if (done) {
-                                                Modifier.background(color)
-                                            } else if (isCurrentDay) {
-                                                Modifier
-                                                    .border(1.5.dp, MaterialTheme.colorScheme.primary, CircleShape)
-                                                    .background(Color.Transparent)
-                                            } else {
-                                                Modifier.background(MaterialTheme.colorScheme.surfaceVariant)
-                                            }
-                                        ),
-                                )
+                    LightChain(
+                        history = weekHistory.takeLast(7),
+                        targetDays = targetDays,
+                        litColor = color,
+                        streakCount = streakCount,
+                    )
+                }
+                if (isCounted) {
+                    CountStepper(
+                        current = currentValue.toInt(),
+                        target = targetValue ?: 1,
+                        unit = targetUnit,
+                        onProgressChange = onProgressChange?.let { change ->
+                            { next: Float ->
+                                haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
+                                change(next)
                             }
-                        }
-                    }
+                        },
+                    )
                 }
             }
 
             IconButton(
                 onClick = { onMenuClick?.invoke() ?: (onClick?.invoke() ?: handleToggle()) },
-                modifier = Modifier.size(48.dp),
+                modifier = Modifier.size(AppTokens.TouchTarget.min),
             ) {
                 Icon(
                     imageVector = Icons.Rounded.MoreVert,
                     contentDescription = stringResource(R.string.routine_row_details_cd),
-                    tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.40f),
-                    modifier = Modifier.size(20.dp),
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.size(AppTokens.IconSize.sm),
                 )
             }
         }
@@ -285,21 +156,104 @@ fun RoutineRow(
 
     if (useSurface) {
         AppSurface(
-            modifier = modifier
-                .fillMaxWidth()
-                .clickable(onClick = effectiveClick),
-            radius = AppTokens.Radius.md,
-            padding = AppTokens.Spacing.cardInner,
-        ) {
-            rowContent()
-        }
+            modifier = modifier.fillMaxWidth().clickable(onClick = effectiveClick),
+            radius = AppTokens.Radius.lg,
+            padding = AppTokens.Spacing.none,
+        ) { rowContent() }
     } else {
-        Row(
-            modifier = modifier
-                .fillMaxWidth()
-                .clickable(onClick = effectiveClick),
-        ) {
-            rowContent()
+        Row(modifier = modifier.fillMaxWidth().clickable(onClick = effectiveClick)) { rowContent() }
+    }
+}
+
+@Composable
+private fun LightChain(
+    history: List<Boolean>,
+    targetDays: Set<DayOfWeek>,
+    litColor: Color,
+    streakCount: Int,
+) {
+    val today = remember { LocalDate.now() }
+    val doneCount = history.count { it }
+    val chainCd = stringResource(R.string.routine_chain_cd, doneCount)
+    Row(
+        modifier = Modifier.clearAndSetSemantics { contentDescription = chainCd },
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(AppTokens.Star.chainGap),
+    ) {
+        history.forEachIndexed { index, done ->
+            val date = today.minusDays((history.lastIndex - index).toLong())
+            val isTargetDay = targetDays.isEmpty() || date.dayOfWeek in targetDays
+            val isToday = index == history.lastIndex
+            val dot = if (isToday) AppTokens.Star.chainToday else AppTokens.Star.chainDot
+            Box(
+                modifier = Modifier
+                    .size(dot)
+                    .clip(CircleShape)
+                    .then(
+                        when {
+                            done -> Modifier.background(litColor)
+                            isToday -> Modifier.border(AppTokens.Star.stroke, litColor, CircleShape)
+                            isTargetDay -> Modifier.background(MaterialTheme.colorScheme.outlineVariant)
+                            else -> Modifier.border(AppTokens.Star.stroke, MaterialTheme.colorScheme.outlineVariant, CircleShape)
+                        },
+                    ),
+            )
+        }
+        if (streakCount > 0) {
+            Text(
+                text = stringResource(R.string.routine_chain_label, streakCount),
+                style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.ExtraBold),
+                color = AppTheme.colors.progress.doneInk,
+                modifier = Modifier.padding(start = AppTokens.Spacing.xxs),
+            )
+        }
+    }
+}
+
+@Composable
+private fun CountStepper(
+    current: Int,
+    target: Int,
+    unit: String?,
+    onProgressChange: ((Float) -> Unit)?,
+) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(AppTokens.Spacing.xxs),
+    ) {
+        if (onProgressChange != null) {
+            IconButton(
+                onClick = { onProgressChange(maxOf(0, current - 1).toFloat()) },
+                enabled = current > 0,
+                modifier = Modifier.size(AppTokens.TouchTarget.compact),
+            ) {
+                Icon(
+                    imageVector = Icons.Rounded.Remove,
+                    contentDescription = stringResource(R.string.routine_row_decrement_cd),
+                    modifier = Modifier.size(AppTokens.IconSize.xs),
+                )
+            }
+        }
+        Text(
+            text = stringResource(R.string.step_routine_count, current, target, unit.orEmpty()).trim(),
+            style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.ExtraBold),
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            modifier = Modifier
+                .clip(RoundedCornerShape(AppTokens.Radius.pill))
+                .background(MaterialTheme.colorScheme.surfaceVariant)
+                .padding(horizontal = AppTokens.Spacing.xs, vertical = AppTokens.Spacing.xxs),
+        )
+        if (onProgressChange != null) {
+            IconButton(
+                onClick = { onProgressChange((current + 1).toFloat()) },
+                modifier = Modifier.size(AppTokens.TouchTarget.compact),
+            ) {
+                Icon(
+                    imageVector = Icons.Rounded.Add,
+                    contentDescription = stringResource(R.string.routine_row_increment_cd),
+                    modifier = Modifier.size(AppTokens.IconSize.xs),
+                )
+            }
         }
     }
 }

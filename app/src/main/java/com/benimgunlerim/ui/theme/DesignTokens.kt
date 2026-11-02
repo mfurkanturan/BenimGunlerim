@@ -100,6 +100,11 @@ object AppTokens {
         val lg: Dp = 32.dp
         /** 48dp — empty state / hero illüstrasyon ikonu */
         val xl: Dp = 48.dp
+        /** 80dp — Today özet kartındaki maskot illüstrasyonu */
+        val mascot: Dp = 80.dp
+        val mascotLarge: Dp = 84.dp
+        val progressRing: Dp = 96.dp
+        val routineCardWidth: Dp = 120.dp
         /** 36dp — dairesel ikon konteyneri (örn. gün kapatma ok butonu) */
         val container: Dp = 36.dp
         /** 44dp — büyük seçim kartı ikon konteyneri (örn. onboarding ihtiyaç/tempo kartları) */
@@ -124,6 +129,7 @@ object AppTokens {
     object BorderWidth {
         /** 1dp — standart ince kenarlık */
         val thin: Dp = 1.dp
+        val progress: Dp = 8.dp
     }
 
     // ── Layout ───────────────────────────────────────────────────────────────
@@ -138,6 +144,50 @@ object AppTokens {
         val topBarAvatarDiameter: Dp = 40.dp
         /** 56dp — Material FAB varsayılan boyutu; ilk frame'de gerçek ölçüm gelmeden önce kullanılır */
         val fabDefaultSize: Dp = 56.dp
+    }
+
+    // ── Gün Işığı — Bugün göğü ───────────────────────────────────────────────
+    object Sky {
+        /** Bugün ekranının gök başlığı yüksekliği */
+        val headerHeight: Dp = 316.dp
+        /** Gök altındaki içerik kâğıdının göğe bindiği miktar */
+        val sheetOverlap: Dp = 24.dp
+        /** Gündüz güneş ışınının uzunluğu ve yanık ışın kalınlığı */
+        val rayLength: Dp = 18.dp
+        val rayStroke: Dp = 5.dp
+        /** Plan hafta ufku: gün başına mini güneş kutusu, çekirdek yarıçapı, ışın uzunluğu, tepe yüksekliği */
+        val miniSun: Dp = 30.dp
+        val miniSunCore: Dp = 6.dp
+        val miniRay: Dp = 5.dp
+        val weekHills: Dp = 30.dp
+        /** Rutinler "haftanın yolu" kartı yüksekliği ve yol taşı çapı */
+        val pathCardHeight: Dp = 176.dp
+        val pathStone: Dp = 22.dp
+        /** Onboarding gökyüzü bandı yüksekliği */
+        val onboardingSky: Dp = 250.dp
+        /** Tepelerin kapladığı yükseklik */
+        val hillsHeight: Dp = 130.dp
+        /** Güneş / ay çapı */
+        val sunDiameter: Dp = 124.dp
+        /** Gökteki yıldızlar */
+        val starLarge: Dp = 26.dp
+        val starSmall: Dp = 20.dp
+        /** Mino'nun gökteki boyu */
+        val mascotHeight: Dp = 92.dp
+        val mascotWidth: Dp = 86.dp
+        /** Konuşma balonu genişliği */
+        val bubbleWidth: Dp = 204.dp
+    }
+
+    // ── Yıldız (tamamlanma göstergesi) ───────────────────────────────────────
+    object Star {
+        /** Liste satırındaki yıldız */
+        val row: Dp = 30.dp
+        /** Küçük zincir / takvim noktası */
+        val chainDot: Dp = 10.dp
+        val chainToday: Dp = 14.dp
+        val chainGap: Dp = 7.dp
+        val stroke: Dp = 1.5.dp
     }
 
     // ── Calm / Reset ─────────────────────────────────────────────────────────

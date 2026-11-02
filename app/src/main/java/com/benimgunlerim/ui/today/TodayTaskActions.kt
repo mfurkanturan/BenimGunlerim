@@ -74,7 +74,7 @@ internal class TodayTaskActions(
     fun addTasksFromBrainDump(taskTitles: List<String>) {
         scope.launch {
             runCatching {
-                deps.addTasksBatchUseCase(titles = taskTitles, date = deps.dateTimeProvider.today(), priority = 1)
+                deps.addTasksBatchUseCase(titles = taskTitles, date = deps.dateTimeProvider.today(), priority = 2)
             }.onFailure {
                 emitEffect(TodayUiEffect.ActionFailed(R.string.today_error_generic))
             }

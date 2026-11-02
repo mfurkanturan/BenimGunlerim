@@ -1,21 +1,21 @@
 package com.benimgunlerim.ui.components.organisms
 
-import androidx.compose.animation.animateColorAsState
-import androidx.compose.animation.core.FastOutSlowInEasing
+import com.benimgunlerim.ui.theme.AppTheme
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.CheckCircle
 import androidx.compose.material.icons.rounded.DeleteOutline
-import androidx.compose.material.icons.rounded.RadioButtonUnchecked
+import androidx.compose.material.icons.rounded.DragHandle
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -24,25 +24,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.scale
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.Role
-import androidx.compose.ui.semantics.role
-import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.dp
 import com.benimgunlerim.R
 import com.benimgunlerim.ui.components.core.AppBadge
 import com.benimgunlerim.ui.components.core.AppBadgeVariant
 import com.benimgunlerim.ui.components.core.AppSurface
+import com.benimgunlerim.ui.components.core.StarToggle
 import com.benimgunlerim.ui.theme.AppTokens
-import com.benimgunlerim.ui.theme.CompletedGreen
 
+private const val PRIORITY_HIGH = 1
+
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun TaskRow(
     title: String,
@@ -53,24 +49,18 @@ fun TaskRow(
     dueTime: String? = null,
     priority: Int = 2,
     category: String? = null,
+    /** Başlığın altında tek satır gösterilir (görev notu). */
+    note: String? = null,
+    /** Geciken görevde ne zamandan kaldığı ("2 gün önceden"); dikkat rengiyle yazılır. */
+    ageLabel: String? = null,
     tags: List<String> = emptyList(),
     useSurface: Boolean = true,
+    showDelete: Boolean = true,
+    showDragHandle: Boolean = false,
+    dragHandleModifier: Modifier = Modifier,
     onClick: (() -> Unit)? = null,
 ) {
     val haptic = LocalHapticFeedback.current
-
-    // Mikro Animasyonlar: 160ms check color + 160ms check scale + %50 text alpha
-    val checkColor by animateColorAsState(
-        targetValue = if (isCompleted) CompletedGreen else MaterialTheme.colorScheme.outline.copy(alpha = 0.5f),
-        animationSpec = tween(durationMillis = 160, easing = FastOutSlowInEasing),
-        label = "task_check_color",
-    )
-
-    val checkScale by animateFloatAsState(
-        targetValue = if (isCompleted) 1.08f else 1.0f,
-        animationSpec = tween(durationMillis = 160, easing = FastOutSlowInEasing),
-        label = "task_check_scale",
-    )
 
     val textAlpha by animateFloatAsState(
         targetValue = if (isCompleted) 0.5f else 1.0f,
@@ -89,49 +79,72 @@ fun TaskRow(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .heightIn(min = 56.dp)
-                .padding(vertical = AppTokens.Spacing.xs, horizontal = if (useSurface) AppTokens.Spacing.cardInner else 0.dp),
+                .heightIn(min = AppTokens.Layout.fabDefaultSize)
+                .padding(
+                    vertical = AppTokens.Spacing.xxs,
+                    horizontal = if (useSurface) AppTokens.Spacing.xs else AppTokens.Spacing.none,
+                ),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(AppTokens.Spacing.xs),
+            horizontalArrangement = Arrangement.spacedBy(AppTokens.Spacing.xxs),
         ) {
-            IconButton(
-                onClick = handleToggle,
-                modifier = Modifier
-                    .size(48.dp)
-                    .semantics { role = Role.Checkbox },
-            ) {
-                Icon(
-                    imageVector = if (isCompleted) Icons.Rounded.CheckCircle else Icons.Rounded.RadioButtonUnchecked,
-                    contentDescription = stringResource(
-                        if (isCompleted) R.string.today_task_uncomplete_cd else R.string.today_task_toggle_cd,
-                    ),
-                    tint = checkColor,
-                    modifier = Modifier
-                        .size(24.dp)
-                        .scale(checkScale),
-                )
-            }
+            StarToggle(
+                lit = isCompleted,
+                onToggle = handleToggle,
+                stateLabel = stringResource(if (isCompleted) R.string.star_state_lit else R.string.star_state_idle),
+                actionLabel = stringResource(
+                    if (isCompleted) R.string.today_task_uncomplete_cd else R.string.today_task_toggle_cd,
+                ),
+                litColor = AppTheme.colors.progress.done,
+                edgeColor = AppTheme.colors.progress.doneEdge,
+                idleColor = AppTheme.colors.progress.idle,
+            )
 
             Column(
                 modifier = Modifier.weight(1f),
-                verticalArrangement = Arrangement.spacedBy(2.dp),
+                verticalArrangement = Arrangement.spacedBy(AppTokens.Spacing.none),
             ) {
                 Text(
                     text = title,
                     style = MaterialTheme.typography.bodyLarge.copy(
-                        fontWeight = if (isCompleted) FontWeight.Normal else FontWeight.Medium,
-                        textDecoration = if (isCompleted) TextDecoration.LineThrough else TextDecoration.None,
+                        fontWeight = if (isCompleted) FontWeight.SemiBold else FontWeight.ExtraBold,
                     ),
                     color = MaterialTheme.colorScheme.onSurface.copy(alpha = textAlpha),
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis,
                 )
 
-                if (dueTime != null || category != null || tags.isNotEmpty()) {
-                    Row(
+                if (!note.isNullOrBlank()) {
+                    Text(
+                        text = note,
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = textAlpha),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                    )
+                }
+
+                // Yüksek öncelik yalnızca bitmemiş görevde öne çıkar; normal/düşük için işaret yok.
+                val showPriority = priority == PRIORITY_HIGH && !isCompleted
+                if (dueTime != null || category != null || tags.isNotEmpty() || showPriority || ageLabel != null) {
+                    FlowRow(
                         horizontalArrangement = Arrangement.spacedBy(AppTokens.Spacing.xs),
-                        verticalAlignment = Alignment.CenterVertically,
+                        verticalArrangement = Arrangement.spacedBy(AppTokens.Spacing.xxs),
                     ) {
+                        if (ageLabel != null) {
+                            Text(
+                                text = ageLabel,
+                                style = MaterialTheme.typography.bodySmall.copy(fontWeight = FontWeight.Bold),
+                                color = AppTheme.colors.status.attention.fg,
+                            )
+                        }
+
+                        if (showPriority) {
+                            AppBadge(
+                                text = stringResource(R.string.today_priority_badge_high),
+                                variant = AppBadgeVariant.Warning,
+                            )
+                        }
+
                         if (dueTime != null) {
                             Text(
                                 text = dueTime,
@@ -157,16 +170,26 @@ fun TaskRow(
                 }
             }
 
-            IconButton(
-                onClick = onDelete,
-                modifier = Modifier.size(44.dp),
-            ) {
+            if (showDragHandle) {
                 Icon(
-                    imageVector = Icons.Rounded.DeleteOutline,
-                    contentDescription = stringResource(R.string.today_task_delete_cd),
-                    tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f),
-                    modifier = Modifier.size(20.dp),
+                    imageVector = Icons.Rounded.DragHandle,
+                    contentDescription = stringResource(R.string.task_drag_handle_cd),
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = dragHandleModifier
+                        .padding(end = AppTokens.Spacing.xs)
+                        .size(AppTokens.IconSize.md),
                 )
+            }
+
+            if (showDelete) {
+                IconButton(onClick = onDelete, modifier = Modifier.size(AppTokens.TouchTarget.min)) {
+                    Icon(
+                        imageVector = Icons.Rounded.DeleteOutline,
+                        contentDescription = stringResource(R.string.today_task_delete_cd),
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.size(AppTokens.IconSize.sm),
+                    )
+                }
             }
         }
     }
@@ -174,7 +197,7 @@ fun TaskRow(
     if (useSurface) {
         AppSurface(
             modifier = modifier.clickable(onClick = effectiveClick),
-            radius = AppTokens.Radius.md,
+            radius = AppTokens.Radius.lg,
             padding = AppTokens.Spacing.none,
         ) {
             rowContent()

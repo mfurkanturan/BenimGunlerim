@@ -1,0 +1,22 @@
+rules_version = '2';
+
+// BenimGünlerim — her kullanıcı yalnızca kendi yedek belgesini (users/{uid}) okuyup yazabilir.
+// Başka hiçbir koleksiyona erişim yok. Firebase Console › Firestore › Rules sekmesine yapıştırın.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /users/{uid} {
+      allow read, delete: if request.auth != null && request.auth.uid == uid;
+      allow create, update: if request.auth != null
+        && request.auth.uid == uid
+        && request.resource.data.keys().hasOnly(['snapshot', 'updatedAt', 'taskCount', 'routineCount', 'schemaVersion'])
+        && request.resource.data.snapshot is bytes
+        && request.resource.data.snapshot.size() < 1000000
+        && request.resource.data.updatedAt is int
+        && request.resource.data.taskCount is int
+        && request.resource.data.routineCount is int;
+    }
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

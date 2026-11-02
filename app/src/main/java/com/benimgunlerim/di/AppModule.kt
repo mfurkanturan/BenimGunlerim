@@ -186,4 +186,24 @@ object AppModule {
     @Provides
     @Singleton
     fun provideTickerProvider(): TickerProvider = SystemTickerProvider()
+
+    @Provides
+    @Singleton
+    fun provideAccountRepository(impl: com.benimgunlerim.data.account.FirebaseAccountRepository): com.benimgunlerim.data.account.AccountRepository = impl
+
+    @Provides
+    @Singleton
+    fun provideCloudBackupStore(impl: com.benimgunlerim.data.account.FirestoreCloudBackupStore): com.benimgunlerim.data.account.CloudBackupStore = impl
+
+    @Provides
+    @Singleton
+    fun provideAccountPrefs(impl: com.benimgunlerim.data.account.SharedAccountPrefs): com.benimgunlerim.data.account.AccountPrefs = impl
+
+    @Provides
+    @Singleton
+    fun provideUpdateConfigSource(impl: com.benimgunlerim.data.update.FirebaseUpdateConfigSource): com.benimgunlerim.data.update.UpdateConfigSource = impl
+
+    @Provides
+    @Singleton
+    fun provideUpdateSnoozeStore(impl: com.benimgunlerim.data.update.SharedUpdateSnoozeStore): com.benimgunlerim.data.update.UpdateSnoozeStore = impl
 }

@@ -152,6 +152,7 @@ class DataImportServiceTest {
         assertEquals("routine-1", routineDao.records.single().id)
         assertEquals("ach-1", achievementDao.records.single().id)
         assertEquals(42, prefsWriter.last?.totalXp)
+        assertEquals("", prefsWriter.last?.userName)
     }
 
     @Test
@@ -185,7 +186,7 @@ class DataImportServiceTest {
             records.add(AchievementEntity("ach-1", 5L))
         }
         val sourcePrefs = FakePreferencesStore(
-            UserPreferences(totalXp = 99, lightDayModeDate = "2026-08-17"),
+            UserPreferences(totalXp = 99, lightDayModeDate = "2026-08-17", userName = "Deniz"),
         )
         val exportService = DataExportService(
             taskDao = sourceTaskDao,
@@ -228,6 +229,7 @@ class DataImportServiceTest {
         assertEquals(sourceAchievementDao.records.map { it.id }, targetAchievementDao.records.map { it.id })
         assertEquals(99, targetPrefs.last?.totalXp)
         assertEquals("2026-08-17", targetPrefs.last?.lightDayModeDate)
+        assertEquals("Deniz", targetPrefs.last?.userName)
     }
 
     @Test

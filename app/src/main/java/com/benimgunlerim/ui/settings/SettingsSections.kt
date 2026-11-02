@@ -9,14 +9,13 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.AutoAwesome
+import androidx.compose.material.icons.rounded.Bedtime
+import androidx.compose.material.icons.rounded.WbSunny
 import androidx.compose.material.icons.rounded.ChevronRight
 import androidx.compose.material.icons.rounded.CloudDownload
 import androidx.compose.material.icons.rounded.CloudUpload
 import androidx.compose.material.icons.rounded.Code
 import androidx.compose.material.icons.rounded.DeleteOutline
-import androidx.compose.material.icons.rounded.Info
-import androidx.compose.material.icons.rounded.Notifications
-import androidx.compose.material.icons.rounded.Schedule
 import androidx.compose.material.icons.rounded.Security
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Icon
@@ -31,7 +30,6 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
-import com.benimgunlerim.BuildConfig
 import com.benimgunlerim.R
 import com.benimgunlerim.data.UserPreferences
 import com.benimgunlerim.ui.components.core.AppDivider
@@ -48,7 +46,7 @@ internal fun SettingsExperienceSection(
     onSetMorningPlanner: (Boolean) -> Unit,
 ) {
     SectionBlock(title = stringResource(R.string.settings_section_experience)) {
-        AppSurface(radius = AppTokens.Radius.md, padding = AppTokens.Spacing.none) {
+        AppSurface(radius = AppTokens.Radius.lg, padding = AppTokens.Spacing.none) {
             Column {
                 SettingsToggleRow(
                     title = stringResource(R.string.settings_status_notification),
@@ -78,18 +76,18 @@ internal fun SettingsExperienceSection(
 @Composable
 internal fun SettingsRemindersSection(prefs: UserPreferences) {
     SectionBlock(title = stringResource(R.string.settings_section_reminders)) {
-        AppSurface(radius = AppTokens.Radius.md, padding = AppTokens.Spacing.none) {
+        AppSurface(radius = AppTokens.Radius.lg, padding = AppTokens.Spacing.none) {
             Column {
                 SettingsInfoRow(
                     title = stringResource(R.string.settings_day_end_time_label),
                     value = prefs.dailySummaryTime,
-                    icon = Icons.Rounded.Schedule,
+                    icon = Icons.Rounded.Bedtime,
                 )
                 AppDivider()
                 SettingsInfoRow(
                     title = stringResource(R.string.settings_morning_time_label),
                     value = prefs.morningPlannerTime,
-                    icon = Icons.Rounded.Notifications,
+                    icon = Icons.Rounded.WbSunny,
                 )
             }
         }
@@ -105,7 +103,7 @@ internal fun SettingsPrivacySection(
     onOpenOssLicenses: () -> Unit,
 ) {
     SectionBlock(title = stringResource(R.string.settings_section_privacy)) {
-        AppSurface(radius = AppTokens.Radius.md, padding = AppTokens.Spacing.none) {
+        AppSurface(radius = AppTokens.Radius.lg, padding = AppTokens.Spacing.none) {
             Column {
                 SettingsToggleRow(
                     title = stringResource(R.string.settings_privacy_title),
@@ -137,22 +135,6 @@ internal fun SettingsPrivacySection(
                     icon = Icons.Rounded.Code,
                     onClick = onOpenOssLicenses,
                 )
-                AppDivider()
-                SettingsInfoRow(
-                    title = stringResource(R.string.app_name),
-                    value = stringResource(
-                        R.string.settings_version_format,
-                        BuildConfig.VERSION_NAME,
-                        BuildConfig.VERSION_CODE,
-                    ),
-                    icon = Icons.Rounded.Info,
-                )
-                AppDivider()
-                SettingsInfoRow(
-                    title = stringResource(R.string.settings_status_data),
-                    value = stringResource(R.string.settings_data_local),
-                    icon = Icons.Rounded.Info,
-                )
             }
         }
     }
@@ -165,7 +147,13 @@ internal fun SettingsDataSection(
     onClearClick: () -> Unit,
 ) {
     SectionBlock(title = stringResource(R.string.settings_section_data)) {
-        AppSurface(radius = AppTokens.Radius.md, padding = AppTokens.Spacing.none) {
+        Text(
+            text = stringResource(R.string.settings_section_data_sub),
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            modifier = Modifier.padding(horizontal = AppTokens.Spacing.xs),
+        )
+        AppSurface(radius = AppTokens.Radius.lg, padding = AppTokens.Spacing.none) {
             Column {
                 SettingsClickableRow(
                     title = stringResource(R.string.settings_export_btn),
@@ -199,7 +187,7 @@ internal fun SettingsDataSection(
                             color = MaterialTheme.colorScheme.error,
                         )
                         Text(
-                            text = stringResource(R.string.settings_data_desc),
+                            text = stringResource(R.string.settings_clear_data_row_desc),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )

@@ -1,5 +1,6 @@
 package com.benimgunlerim.ui.components.molecules
 
+import com.benimgunlerim.ui.theme.AppTheme
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -24,15 +25,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import com.benimgunlerim.ui.theme.AppTokens
 
-import com.benimgunlerim.ui.theme.ErrorBorder
-import com.benimgunlerim.ui.theme.ErrorSoft
-import com.benimgunlerim.ui.theme.Info
-import com.benimgunlerim.ui.theme.InfoBorder
-import com.benimgunlerim.ui.theme.InfoSoft
-import com.benimgunlerim.ui.theme.SemanticError
-import com.benimgunlerim.ui.theme.Warning
-import com.benimgunlerim.ui.theme.WarningBorder
-import com.benimgunlerim.ui.theme.WarningSoft
 
 enum class AlertBannerSeverity { Info, Warning, Error }
 
@@ -51,19 +43,19 @@ fun AlertBanner(
 
     when (severity) {
         AlertBannerSeverity.Info -> {
-            containerColor = InfoSoft
-            contentColor = Info
-            borderColor = InfoBorder
+            containerColor = AppTheme.colors.status.info.container
+            contentColor = AppTheme.colors.status.info.fg
+            borderColor = AppTheme.colors.status.info.border
         }
         AlertBannerSeverity.Warning -> {
-            containerColor = WarningSoft
-            contentColor = Warning
-            borderColor = WarningBorder
+            containerColor = AppTheme.colors.status.attention.container
+            contentColor = AppTheme.colors.status.attention.fg
+            borderColor = AppTheme.colors.status.attention.border
         }
         AlertBannerSeverity.Error -> {
-            containerColor = ErrorSoft
-            contentColor = SemanticError
-            borderColor = ErrorBorder
+            containerColor = AppTheme.colors.status.error.container
+            contentColor = MaterialTheme.colorScheme.error
+            borderColor = AppTheme.colors.status.error.border
         }
     }
 

@@ -33,8 +33,6 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.benimgunlerim.R
-import com.benimgunlerim.ui.theme.BrandPrimary
-import com.benimgunlerim.ui.theme.BrandPrimarySoft
 
 @Composable
 fun LightDayBanner(
@@ -45,8 +43,8 @@ fun LightDayBanner(
         modifier = modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(20.dp))
-            .background(BrandPrimarySoft)
-            .border(1.5.dp, BrandPrimary.copy(alpha = 0.35f), RoundedCornerShape(20.dp))
+            .background(MaterialTheme.colorScheme.primaryContainer)
+            .border(1.5.dp, MaterialTheme.colorScheme.primary.copy(alpha = 0.35f), RoundedCornerShape(20.dp))
             .padding(16.dp),
     ) {
         Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -63,20 +61,20 @@ fun LightDayBanner(
                         modifier = Modifier
                             .size(32.dp)
                             .clip(CircleShape)
-                            .background(BrandPrimary),
+                            .background(MaterialTheme.colorScheme.primary),
                         contentAlignment = Alignment.Center,
                     ) {
                         Icon(
                             imageVector = Icons.Rounded.Spa,
                             contentDescription = null,
-                            tint = Color.White,
+                            tint = MaterialTheme.colorScheme.onPrimary,
                             modifier = Modifier.size(18.dp),
                         )
                     }
                     Text(
                         text = stringResource(R.string.light_day_active_title),
                         style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
-                        color = BrandPrimary,
+                        color = MaterialTheme.colorScheme.primary,
                     )
                 }
 
@@ -84,7 +82,7 @@ fun LightDayBanner(
                     Text(
                         text = stringResource(R.string.light_day_disable_btn),
                         style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.SemiBold),
-                        color = BrandPrimary,
+                        color = MaterialTheme.colorScheme.primary,
                     )
                 }
             }
@@ -101,7 +99,7 @@ fun LightDayBanner(
                     fontStyle = FontStyle.Italic,
                     fontWeight = FontWeight.Medium,
                 ),
-                color = BrandPrimary,
+                color = MaterialTheme.colorScheme.primary,
             )
         }
     }
@@ -131,13 +129,13 @@ fun ContextualResetCard(
                 modifier = Modifier
                     .size(38.dp)
                     .clip(CircleShape)
-                    .background(BrandPrimarySoft),
+                    .background(MaterialTheme.colorScheme.primaryContainer),
                 contentAlignment = Alignment.Center,
             ) {
                 Icon(
                     imageVector = Icons.Rounded.SelfImprovement,
                     contentDescription = null,
-                    tint = BrandPrimary,
+                    tint = MaterialTheme.colorScheme.primary,
                     modifier = Modifier.size(22.dp),
                 )
             }
@@ -162,13 +160,13 @@ fun ContextualResetCard(
             Button(
                 onClick = onResetClick,
                 shape = RoundedCornerShape(10.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = BrandPrimary),
+                colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
                 modifier = Modifier.height(36.dp),
             ) {
                 Text(
                     text = stringResource(R.string.reset_action_btn),
                     style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.Bold),
-                    color = Color.White,
+                    color = MaterialTheme.colorScheme.onPrimary,
                 )
             }
 

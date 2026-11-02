@@ -1,74 +1,40 @@
 package com.benimgunlerim.ui.today
 
 import androidx.compose.ui.graphics.Color
-import com.benimgunlerim.ui.theme.BrandPrimary
-import com.benimgunlerim.ui.theme.Info
-import com.benimgunlerim.ui.theme.Streak
-import com.benimgunlerim.ui.theme.Success
-import com.benimgunlerim.ui.theme.XpGold
+import com.benimgunlerim.ui.theme.CategoryColor
+import com.benimgunlerim.ui.theme.CategoryTones
 import java.util.Locale
 import kotlin.math.abs
 
 /**
- * Stable category to accent colors (keyword match first, then deterministic fallback palette).
+ * Kategoriye kararlı renk: önce anahtar kelime, yoksa adın hash'iyle 6 doğal tondan biri.
+ * Tonlar: 0 yaprak, 1 deniz, 2 erik, 3 kiremit, 4 hardal, 5 taş.
  */
 object CategoryPalette {
-    private val CategoryPurple = Color(0xFF7C3AED)
-    private val CategoryBlue   = Color(0xFF2563EB)
-    private val CategorySlate  = Color(0xFF64748B)
+    private const val Leaf = 0
+    private const val Sea = 1
+    private const val Plum = 2
+    private const val Brick = 3
+    private const val Mustard = 4
+    private const val Stone = 5
 
-    private val FALLBACK: List<Color> = listOf(
-        Success,
-        Info,
-        CategoryPurple,
-        Streak,
-        XpGold,
-        CategoryBlue,
-        CategorySlate,
+    /** Sıra önemli: ilk eşleşen kazanır. */
+    private val KEYWORD_TONES: List<Pair<String, Int>> = listOf(
+        "spor" to Leaf, "sağlık" to Leaf, "egzersiz" to Leaf, "yürüyüş" to Leaf, "beslenme" to Leaf,
+        "iş" to Sea, "işler" to Sea, "toplantı" to Sea, "sunum" to Sea, "proje" to Sea, "fatura" to Sea,
+        "gelişim" to Plum, "kişisel" to Plum, "not" to Plum, "günlük" to Plum,
+        "oku" to Plum, "ders" to Plum, "öğren" to Plum, "kitap" to Plum, "dil" to Plum,
+        "sosyal" to Brick, "aile" to Brick, "çocuk" to Brick, "arkadaş" to Brick,
+        "para" to Mustard, "finans" to Mustard, "yatırım" to Mustard,
+        "ev" to Stone, "temizlik" to Stone, "market" to Stone, "alışveriş" to Stone,
     )
 
-    /** Order matters: first keyword match wins (Turkish-focused defaults). */
-    private val KEYWORD_COLORS: List<Pair<String, Color>> = listOf(
-        "spor" to Success,
-        "sağlık" to Success,
-        "egzersiz" to Success,
-        "yürüyüş" to Success,
-        "beslenme" to Success,
-        "iş" to Info,
-        "işler" to Info,
-        "toplantı" to Info,
-        "sunum" to Info,
-        "proje" to Info,
-        "fatura" to Info,
-        "gelişim" to CategoryPurple,
-        "kişisel" to CategoryPurple,
-        "not" to CategoryPurple,
-        "günlük" to CategoryPurple,
-        "oku" to CategoryBlue,
-        "ders" to CategoryBlue,
-        "öğren" to CategoryBlue,
-        "kitap" to CategoryBlue,
-        "dil" to CategoryBlue,
-        "sosyal" to Streak,
-        "aile" to Streak,
-        "çocuk" to Streak,
-        "arkadaş" to Streak,
-        "para" to XpGold,
-        "finans" to XpGold,
-        "yatırım" to XpGold,
-        "ev" to CategorySlate,
-        "temizlik" to CategorySlate,
-        "market" to CategorySlate,
-        "alışveriş" to CategorySlate,
-        "bugün" to BrandPrimary,
-    )
-
-    fun colorFor(seed: String): Color {
-        val v = seed.lowercase(Locale("tr", "TR")).trim().ifEmpty { return FALLBACK[0] }
-        for ((kw, color) in KEYWORD_COLORS) {
-            if (v.contains(kw)) return color
-        }
-        return FALLBACK[abs(v.hashCode()) % FALLBACK.size]
+    fun toneFor(seed: String): CategoryColor {
+        val v = seed.lowercase(Locale("tr", "TR")).trim().ifEmpty { return CategoryTones[Leaf] }
+        val index = KEYWORD_TONES.firstOrNull { (kw, _) -> v.contains(kw) }?.second
+            ?: (abs(v.hashCode()) % CategoryTones.size)
+        return CategoryTones[index]
     }
-}
 
+    fun colorFor(seed: String): Color = toneFor(seed).fg
+}

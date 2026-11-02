@@ -1,120 +1,122 @@
 package com.benimgunlerim.ui.today
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.Psychology
+import androidx.compose.material.icons.rounded.Repeat
 import androidx.compose.material.icons.rounded.SelfImprovement
 import androidx.compose.material.icons.rounded.Spa
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.benimgunlerim.R
-import com.benimgunlerim.ui.theme.BrandPrimary
-import com.benimgunlerim.ui.theme.BrandPrimarySoft
-import com.benimgunlerim.ui.theme.Info
-import com.benimgunlerim.ui.theme.InfoSoft
-import com.benimgunlerim.ui.theme.Warning
-import com.benimgunlerim.ui.theme.WarningSoft
+import com.benimgunlerim.ui.components.molecules.SheetSectionLabel
+import com.benimgunlerim.ui.components.molecules.SheetTitle
+import com.benimgunlerim.ui.theme.AppTheme
+import com.benimgunlerim.ui.theme.AppTokens
 
+/**
+ * Hızlı menü: önce "ekle" (görev, rutin), sonra "sakinleş" (kafam dolu, biraz dur, hafiflet).
+ * Sayfa sistem gezinme çubuğunun üstünde biter; uzun ekranda kaydırılır.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TodayFabMenuSheet(
     isLightDayMode: Boolean,
     onDismiss: () -> Unit,
     onAddTaskClick: () -> Unit,
+    onAddRoutineClick: () -> Unit,
     onBrainDumpClick: () -> Unit,
     onResetClick: () -> Unit,
     onToggleLightDayClick: () -> Unit,
 ) {
+    val progress = AppTheme.colors.progress
+    val night = AppTheme.colors.night
     ModalBottomSheet(
         onDismissRequest = onDismiss,
+        sheetState = androidx.compose.material3.rememberModalBottomSheetState(skipPartiallyExpanded = true),
         containerColor = MaterialTheme.colorScheme.surface,
-        shape = RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp),
     ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 24.dp, vertical = 16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
+                .verticalScroll(rememberScrollState())
+                .padding(horizontal = AppTokens.Spacing.xl)
+                .padding(bottom = AppTokens.Spacing.md)
+                .navigationBarsPadding(),
+            verticalArrangement = Arrangement.spacedBy(AppTokens.Spacing.xs),
         ) {
-            Text(
-                text = stringResource(R.string.quick_actions_title),
-                style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
-                color = MaterialTheme.colorScheme.onSurface,
-            )
-
-            // 1. Görev Ekle
+            SheetTitle(stringResource(R.string.quick_actions_title))
+            SheetSectionLabel(stringResource(R.string.quick_actions_add_label), Modifier.padding(top = AppTokens.Spacing.xs))
             QuickActionRow(
                 title = stringResource(R.string.quick_action_add_task_title),
                 subtitle = stringResource(R.string.quick_action_add_task_subtitle),
                 icon = Icons.Rounded.Add,
-                iconTint = BrandPrimary,
-                iconBg = BrandPrimarySoft,
+                iconTint = MaterialTheme.colorScheme.primary,
+                iconBg = MaterialTheme.colorScheme.primaryContainer,
                 onClick = onAddTaskClick,
             )
-
-            // 2. Kafam Dolu (Zihin Boşaltma)
+            QuickActionRow(
+                title = stringResource(R.string.quick_action_add_routine_title),
+                subtitle = stringResource(R.string.quick_action_add_routine_subtitle),
+                icon = Icons.Rounded.Repeat,
+                iconTint = progress.doneInk,
+                iconBg = progress.soft,
+                onClick = onAddRoutineClick,
+            )
+            SheetSectionLabel(stringResource(R.string.quick_actions_calm_label), Modifier.padding(top = AppTokens.Spacing.sm))
             QuickActionRow(
                 title = stringResource(R.string.braindump_title),
                 subtitle = stringResource(R.string.quick_action_braindump_subtitle),
                 icon = Icons.Rounded.Psychology,
-                iconTint = Info,
-                iconBg = InfoSoft,
+                iconTint = AppTheme.colors.status.info.fg,
+                iconBg = AppTheme.colors.status.info.container,
                 onClick = onBrainDumpClick,
             )
-
-            // 3. 1 Dakikalık Reset & Nefes
             QuickActionRow(
                 title = stringResource(R.string.reset_title),
                 subtitle = stringResource(R.string.quick_action_reset_subtitle),
                 icon = Icons.Rounded.SelfImprovement,
-                iconTint = BrandPrimary,
-                iconBg = BrandPrimarySoft,
+                iconTint = night.moon,
+                iconBg = night.sky,
                 onClick = onResetClick,
             )
-
-            // 4. Hafif Gün Modu
             QuickActionRow(
-                title = if (isLightDayMode) stringResource(R.string.light_day_disable_btn) else stringResource(R.string.light_day_title),
-                subtitle = if (isLightDayMode) {
-                    stringResource(R.string.quick_action_light_day_on_subtitle)
-                } else {
-                    stringResource(R.string.quick_action_light_day_off_subtitle)
-                },
+                title = stringResource(if (isLightDayMode) R.string.light_day_disable_btn else R.string.light_day_title),
+                subtitle = stringResource(
+                    if (isLightDayMode) R.string.quick_action_light_day_on_subtitle else R.string.quick_action_light_day_off_subtitle,
+                ),
                 icon = Icons.Rounded.Spa,
                 badge = if (isLightDayMode) stringResource(R.string.quick_action_active_badge) else null,
-                iconTint = if (isLightDayMode) BrandPrimary else Warning,
-                iconBg = if (isLightDayMode) BrandPrimarySoft else WarningSoft,
+                iconTint = AppTheme.colors.status.attention.fg,
+                iconBg = AppTheme.colors.status.attention.container,
                 onClick = onToggleLightDayClick,
             )
-
-            Spacer(modifier = Modifier.height(12.dp))
         }
     }
 }
@@ -124,67 +126,49 @@ private fun QuickActionRow(
     title: String,
     subtitle: String,
     icon: ImageVector,
-    badge: String? = null,
-    iconTint: Color = BrandPrimary,
-    iconBg: Color = BrandPrimarySoft,
+    iconTint: Color,
+    iconBg: Color,
     onClick: () -> Unit,
+    badge: String? = null,
 ) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clip(RoundedCornerShape(16.dp))
-            .background(MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f))
-            .border(1.dp, MaterialTheme.colorScheme.outline.copy(alpha = 0.3f), RoundedCornerShape(16.dp))
-            .clickable(onClick = onClick)
-            .padding(horizontal = 16.dp, vertical = 12.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(14.dp),
+    Surface(
+        onClick = onClick,
+        shape = RoundedCornerShape(AppTokens.Radius.lg),
+        color = MaterialTheme.colorScheme.surface,
+        border = BorderStroke(AppTokens.BorderWidth.thin, MaterialTheme.colorScheme.outlineVariant),
+        modifier = Modifier.fillMaxWidth().heightIn(min = AppTokens.Layout.fabDefaultSize),
     ) {
-        Box(
-            modifier = Modifier
-                .size(40.dp)
-                .clip(CircleShape)
-                .background(iconBg),
-            contentAlignment = Alignment.Center,
+        Row(
+            modifier = Modifier.padding(horizontal = AppTokens.Spacing.md, vertical = AppTokens.Spacing.sm),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(AppTokens.Spacing.sm),
         ) {
-            Icon(
-                imageVector = icon,
-                contentDescription = null,
-                tint = iconTint,
-                modifier = Modifier.size(22.dp),
-            )
-        }
-
-        Column(modifier = Modifier.weight(1f)) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
+            Box(
+                modifier = Modifier.size(AppTokens.TouchTarget.compact).background(iconBg, CircleShape),
+                contentAlignment = Alignment.Center,
             ) {
-                Text(
-                    text = title,
-                    style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold, fontSize = 15.sp),
-                    color = MaterialTheme.colorScheme.onSurface,
-                )
-                if (badge != null) {
-                    Box(
-                        modifier = Modifier
-                            .clip(RoundedCornerShape(50))
-                            .background(BrandPrimary.copy(alpha = 0.15f))
-                            .padding(horizontal = 8.dp, vertical = 2.dp),
-                    ) {
+                Icon(icon, contentDescription = null, tint = iconTint, modifier = Modifier.size(AppTokens.IconSize.sm))
+            }
+            Column(modifier = Modifier.weight(1f)) {
+                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(AppTokens.Spacing.xs)) {
+                    Text(
+                        text = title,
+                        style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.ExtraBold),
+                        color = MaterialTheme.colorScheme.onSurface,
+                    )
+                    if (badge != null) {
                         Text(
                             text = badge,
-                            style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.Bold),
-                            color = BrandPrimary,
+                            style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.ExtraBold),
+                            color = AppTheme.colors.progress.onSoft,
+                            modifier = Modifier
+                                .background(AppTheme.colors.progress.soft, RoundedCornerShape(AppTokens.Radius.pill))
+                                .padding(horizontal = AppTokens.Spacing.xs, vertical = AppTokens.Spacing.xxs),
                         )
                     }
                 }
+                Text(subtitle, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
-            Text(
-                text = subtitle,
-                style = MaterialTheme.typography.bodySmall.copy(fontSize = 13.sp),
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
         }
     }
 }

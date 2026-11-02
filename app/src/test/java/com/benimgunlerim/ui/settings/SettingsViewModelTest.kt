@@ -75,7 +75,9 @@ class SettingsViewModelTest {
         var dailySummaryTime: String? = null
         var lightDayModeEnabled: Boolean? = null
         var lightDayModeDate: String? = null
+        var userName: String? = null
 
+        override suspend fun setUserName(name: String) { userName = name }
         override suspend fun setNotificationMode(mode: String) { notificationMode = mode }
         override suspend fun setDailySummaryTime(time: String) { dailySummaryTime = time }
         override suspend fun setAnalyticsEnabled(enabled: Boolean) { analyticsEnabled = enabled }

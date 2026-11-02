@@ -2,6 +2,11 @@ package com.benimgunlerim.ui
 
 sealed class AppDestination(val route: String) {
     data object Onboarding : AppDestination("onboarding")
+    data object AccountGate : AppDestination("account_gate")
+    data object Auth : AppDestination("auth/{mode}") {
+        const val ARG_MODE = "mode"
+        fun createRoute(mode: com.benimgunlerim.ui.account.AuthMode) = "auth/${mode.name}"
+    }
     data object Today : AppDestination("today")
     data object Plan : AppDestination("plan")
     data object Routines : AppDestination("routines")

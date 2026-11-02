@@ -55,8 +55,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.benimgunlerim.R
 import com.benimgunlerim.domain.BrainDumpParser
-import com.benimgunlerim.ui.theme.BrandPrimary
-import com.benimgunlerim.ui.theme.BrandPrimarySoft
 
 private enum class BrainDumpStep {
     WRITE,
@@ -100,13 +98,13 @@ fun BrainDumpDialog(
                         modifier = Modifier
                             .size(32.dp)
                             .clip(CircleShape)
-                            .background(BrandPrimarySoft),
+                            .background(MaterialTheme.colorScheme.primaryContainer),
                         contentAlignment = Alignment.Center,
                     ) {
                         Icon(
                             imageVector = Icons.Rounded.Psychology,
                             contentDescription = null,
-                            tint = BrandPrimary,
+                            tint = MaterialTheme.colorScheme.primary,
                             modifier = Modifier.size(20.dp),
                         )
                     }
@@ -160,7 +158,7 @@ fun BrainDumpDialog(
                                     .height(180.dp),
                                 shape = RoundedCornerShape(16.dp),
                                 colors = OutlinedTextFieldDefaults.colors(
-                                    focusedBorderColor = BrandPrimary,
+                                    focusedBorderColor = MaterialTheme.colorScheme.primary,
                                     unfocusedBorderColor = MaterialTheme.colorScheme.outline.copy(alpha = 0.4f),
                                 ),
                             )
@@ -181,19 +179,19 @@ fun BrainDumpDialog(
                                     .fillMaxWidth()
                                     .height(50.dp),
                                 shape = RoundedCornerShape(14.dp),
-                                colors = ButtonDefaults.buttonColors(containerColor = BrandPrimary),
+                                colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
                             ) {
                                 Icon(
                                     imageVector = Icons.Rounded.FormatListBulleted,
                                     contentDescription = null,
-                                    tint = Color.White,
+                                    tint = MaterialTheme.colorScheme.onPrimary,
                                     modifier = Modifier.size(18.dp),
                                 )
                                 Spacer(modifier = Modifier.size(8.dp))
                                 Text(
                                     text = stringResource(R.string.braindump_convert_tasks),
                                     style = MaterialTheme.typography.titleSmall.copy(fontWeight = FontWeight.Bold),
-                                    color = Color.White,
+                                    color = MaterialTheme.colorScheme.onPrimary,
                                 )
                             }
                         }
@@ -225,10 +223,10 @@ fun BrainDumpDialog(
                                     modifier = Modifier
                                         .fillMaxWidth()
                                         .clip(RoundedCornerShape(12.dp))
-                                        .background(if (isSelected) BrandPrimarySoft else MaterialTheme.colorScheme.surface)
+                                        .background(if (isSelected) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.surface)
                                         .border(
                                             1.dp,
-                                            if (isSelected) BrandPrimary.copy(alpha = 0.35f) else MaterialTheme.colorScheme.outline.copy(alpha = 0.3f),
+                                            if (isSelected) MaterialTheme.colorScheme.primary.copy(alpha = 0.35f) else MaterialTheme.colorScheme.outline.copy(alpha = 0.3f),
                                             RoundedCornerShape(12.dp),
                                         )
                                         .clickable {
@@ -247,7 +245,7 @@ fun BrainDumpDialog(
                                         onCheckedChange = { checked ->
                                             selectedLines = if (checked) selectedLines + line else selectedLines - line
                                         },
-                                        colors = CheckboxDefaults.colors(checkedColor = BrandPrimary),
+                                        colors = CheckboxDefaults.colors(checkedColor = MaterialTheme.colorScheme.primary),
                                     )
                                     Text(
                                         text = line,
@@ -270,19 +268,19 @@ fun BrainDumpDialog(
                                     .fillMaxWidth()
                                     .height(50.dp),
                                 shape = RoundedCornerShape(14.dp),
-                                colors = ButtonDefaults.buttonColors(containerColor = BrandPrimary),
+                                colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
                             ) {
                                 Icon(
                                     imageVector = Icons.Rounded.CheckCircle,
                                     contentDescription = null,
-                                    tint = Color.White,
+                                    tint = MaterialTheme.colorScheme.onPrimary,
                                     modifier = Modifier.size(18.dp),
                                 )
                                 Spacer(modifier = Modifier.size(8.dp))
                                 Text(
                                     text = stringResource(R.string.braindump_add_selected),
                                     style = MaterialTheme.typography.titleSmall.copy(fontWeight = FontWeight.Bold),
-                                    color = Color.White,
+                                    color = MaterialTheme.colorScheme.onPrimary,
                                 )
                             }
 

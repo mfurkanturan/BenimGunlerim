@@ -41,8 +41,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.benimgunlerim.R
 import com.benimgunlerim.ui.theme.AppTokens
-import com.benimgunlerim.ui.theme.BrandPrimary
-import com.benimgunlerim.ui.theme.BrandPrimarySoft
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Locale
@@ -107,7 +105,7 @@ fun MissedDayReviewSheet(
                 modifier = Modifier
                     .fillMaxWidth()
                     .clip(RoundedCornerShape(16.dp))
-                    .background(BrandPrimarySoft)
+                    .background(MaterialTheme.colorScheme.primaryContainer)
                     .padding(16.dp),
             ) {
                 Row(
@@ -119,7 +117,7 @@ fun MissedDayReviewSheet(
                         Text(
                             text = stringResource(R.string.missed_day_progress_summary, completedCount, totalCount, percent),
                             style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
-                            color = BrandPrimary,
+                            color = MaterialTheme.colorScheme.primary,
                         )
                         Text(
                             text = if (percent >= 100) {
@@ -164,11 +162,11 @@ fun MissedDayReviewSheet(
                                     .size(46.dp)
                                     .clip(CircleShape)
                                     .background(
-                                        if (isSelected) BrandPrimarySoft else MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.4f),
+                                        if (isSelected) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.4f),
                                     )
                                     .border(
                                         width = if (isSelected) 2.dp else 0.dp,
-                                        color = if (isSelected) BrandPrimary else Color.Transparent,
+                                        color = if (isSelected) MaterialTheme.colorScheme.primary else Color.Transparent,
                                         shape = CircleShape,
                                     ),
                                 contentAlignment = Alignment.Center,
@@ -180,7 +178,7 @@ fun MissedDayReviewSheet(
                                 style = MaterialTheme.typography.labelSmall.copy(
                                     fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
                                 ),
-                                color = if (isSelected) BrandPrimary else MaterialTheme.colorScheme.onSurfaceVariant,
+                                color = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
                             )
                         }
                     }
@@ -206,7 +204,7 @@ fun MissedDayReviewSheet(
                             checked = carryOverTasks,
                             onCheckedChange = { carryOverTasks = it },
                             colors = CheckboxDefaults.colors(
-                                checkedColor = BrandPrimary,
+                                checkedColor = MaterialTheme.colorScheme.primary,
                                 uncheckedColor = MaterialTheme.colorScheme.outline,
                             ),
                         )
@@ -233,12 +231,12 @@ fun MissedDayReviewSheet(
                         .fillMaxWidth()
                         .height(52.dp),
                     shape = RoundedCornerShape(14.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = BrandPrimary),
+                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
                 ) {
                     Text(
                         text = stringResource(R.string.missed_day_close_and_continue),
                         style = MaterialTheme.typography.labelLarge.copy(fontWeight = FontWeight.Bold),
-                        color = Color.White,
+                        color = MaterialTheme.colorScheme.onPrimary,
                     )
                 }
 

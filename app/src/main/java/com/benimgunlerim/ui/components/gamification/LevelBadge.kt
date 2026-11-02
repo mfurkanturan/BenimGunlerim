@@ -12,15 +12,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import com.benimgunlerim.ui.theme.AppTokens
-import com.benimgunlerim.ui.theme.BrandPrimaryDark
-import com.benimgunlerim.ui.theme.BrandPrimarySoft
 
 @Composable
 fun LevelBadge(level: Int, title: String, modifier: Modifier = Modifier) {
     Row(
         modifier = modifier
             .clip(RoundedCornerShape(AppTokens.Radius.pill))
-            .background(BrandPrimarySoft)
+            .background(MaterialTheme.colorScheme.primaryContainer)
             .padding(horizontal = AppTokens.Spacing.sm, vertical = AppTokens.Spacing.xxs),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(AppTokens.Spacing.xxs),
@@ -28,7 +26,7 @@ fun LevelBadge(level: Int, title: String, modifier: Modifier = Modifier) {
         Text(
             text = "Lv.$level $title",
             style = MaterialTheme.typography.labelMedium,
-            color = BrandPrimaryDark,
+            color = MaterialTheme.colorScheme.onPrimaryContainer,
         )
     }
 }

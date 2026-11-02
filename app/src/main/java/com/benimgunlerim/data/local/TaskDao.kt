@@ -10,13 +10,13 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface TaskDao {
-    @Query("SELECT * FROM tasks WHERE plannedDate = :date ORDER BY startTime IS NULL ASC, startTime ASC, priority DESC, createdAt ASC")
+    @Query("SELECT * FROM tasks WHERE plannedDate = :date ORDER BY CASE WHEN completionState = 'completed' THEN 1 ELSE 0 END ASC, sortOrder ASC, createdAt ASC")
     fun observeByDate(date: String): Flow<List<TaskEntity>>
 
-    @Query("SELECT * FROM tasks WHERE plannedDate < :today AND completionState = 'pending' AND (isArchived = 0 OR isArchived IS NULL) ORDER BY plannedDate ASC, priority DESC")
+    @Query("SELECT * FROM tasks WHERE plannedDate < :today AND completionState = 'pending' AND (isArchived = 0 OR isArchived IS NULL) ORDER BY plannedDate ASC, priority ASC")
     fun observeOverdue(today: String): Flow<List<TaskEntity>>
 
-    @Query("SELECT * FROM tasks WHERE plannedDate >= :from AND plannedDate <= :to AND (isArchived = 0 OR isArchived IS NULL) ORDER BY plannedDate ASC, startTime IS NULL ASC, startTime ASC, priority DESC")
+    @Query("SELECT * FROM tasks WHERE plannedDate >= :from AND plannedDate <= :to AND (isArchived = 0 OR isArchived IS NULL) ORDER BY plannedDate ASC, CASE WHEN completionState = 'completed' THEN 1 ELSE 0 END ASC, sortOrder ASC, createdAt ASC")
     fun observeRange(from: String, to: String): Flow<List<TaskEntity>>
 
     @Query("SELECT COUNT(*) FROM tasks")

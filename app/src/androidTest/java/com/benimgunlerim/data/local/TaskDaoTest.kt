@@ -197,17 +197,32 @@ class TaskDaoTest {
     // ── Priority ordering ─────────────────────────────────────────────────────
 
     @Test
-    fun observeByDate_orderedByPriorityDesc() = runTest {
+    fun observeByDate_followsManualOrderThenCreation_notPriority() = runTest {
+        // Bugün listesi kullanıcının sürükle-bırak sırasını izler (sortOrder, sonra createdAt);
+        // öncelik sıralamayı değiştirmez. Tamamlananlar en sona.
         dao.insertAll(listOf(
-            task("low",   "2025-01-15").copy(priority = 1, createdAt = 1L),
-            task("high",  "2025-01-15").copy(priority = 3, createdAt = 2L),
-            task("norm",  "2025-01-15").copy(priority = 2, createdAt = 3L),
+            task("a", "2025-01-15").copy(priority = 3, sortOrder = 1, createdAt = 1L),
+            task("b", "2025-01-15").copy(priority = 1, sortOrder = 0, createdAt = 2L),
+            task("c", "2025-01-15").copy(priority = 2, sortOrder = 1, createdAt = 3L),
+            task("done", "2025-01-15").copy(priority = 1, sortOrder = 0, createdAt = 0L, completionState = "completed"),
         ))
 
         val result = dao.observeByDate("2025-01-15").first()
 
-        // All have no startTime → sorted by priority DESC
-        assertEquals("high", result[0].id)
+        assertEquals(listOf("b", "a", "c", "done"), result.map { it.id })
+    }
+
+    @Test
+    fun observeOverdue_highPriorityFirstWithinSameDay() = runTest {
+        // 1 = Yüksek: aynı gündeki gecikmiş görevlerde yüksek öncelik önce gelir.
+        dao.insertAll(listOf(
+            task("low", "2025-01-10").copy(priority = 3),
+            task("high", "2025-01-10").copy(priority = 1),
+        ))
+
+        val result = dao.observeOverdue("2025-01-15").first()
+
+        assertEquals("high", result.first().id)
     }
 
     // ── Helpers ──────────────────────────────────────────────────────────────

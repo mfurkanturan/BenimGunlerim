@@ -12,7 +12,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.Dp
 import com.benimgunlerim.ui.theme.AppTokens
-import com.benimgunlerim.ui.theme.CandyPrimary
 
 @Composable
 fun LevelDots(
@@ -31,7 +30,7 @@ fun LevelDots(
                     .size(dotSize)
                     .clip(CircleShape)
                     .background(
-                        if (i < filled) CandyPrimary
+                        if (i < filled) MaterialTheme.colorScheme.primary
                         else MaterialTheme.colorScheme.outline.copy(alpha = 0.3f),
                     ),
             )

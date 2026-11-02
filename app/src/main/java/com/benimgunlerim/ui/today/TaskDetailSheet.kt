@@ -1,5 +1,6 @@
 package com.benimgunlerim.ui.today
 
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -32,7 +33,6 @@ import androidx.compose.ui.res.stringResource
 import com.benimgunlerim.R
 import com.benimgunlerim.data.local.entity.SubTaskEntity
 import com.benimgunlerim.domain.validation.TimeInputValidator
-import com.benimgunlerim.ui.theme.CandyPrimary
 import com.benimgunlerim.ui.theme.AppTokens
 import java.time.LocalDate
 import java.time.ZoneId
@@ -175,7 +175,7 @@ internal fun TaskDetailSheet(
             enabled = canSave && !interactionLocked,
             modifier = Modifier.fillMaxWidth().height(ActionButtonHeight),
             shape = RoundedCornerShape(ActionButtonCornerRadius),
-            colors = ButtonDefaults.buttonColors(CandyPrimary, Color.White),
+            colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.primary, MaterialTheme.colorScheme.onPrimary),
         ) { Text(stringResource(R.string.action_save)) }
         Row(horizontalArrangement = Arrangement.spacedBy(AppTokens.Spacing.xs)) {
             OutlinedSmallButton(

@@ -1,55 +1,55 @@
-# Graph Report - BenimGunlerim  (2026-08-20)
+# Graph Report - BenimGunlerim  (2026-10-20)
 
 ## Corpus Check
-- 361 files · ~214,962 words
+- 379 files · ~233,884 words
 - Verdict: corpus is large enough that graph structure adds value.
+- Unclassified: 27 file(s) not represented in the graph (top: .xml 11, .ttf 5, (none) 3)
 
 ## Summary
-- 3229 nodes · 5854 edges · 233 communities (176 shown, 57 thin omitted)
-- Extraction: 97% EXTRACTED · 3% INFERRED · 0% AMBIGUOUS · INFERRED: 154 edges (avg confidence: 0.8)
+- 3878 nodes · 10027 edges · 262 communities (112 shown, 150 thin omitted)
+- Extraction: 98% EXTRACTED · 2% INFERRED · 0% AMBIGUOUS · INFERRED: 177 edges (avg confidence: 0.86)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `e5517418`
+- Built from commit: `a5cf646a`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
 ## Community Hubs (Navigation)
 - DataImportServiceTest.kt
 - SettingsViewModel
-- DetailScreenScaffold
 - TodayViewModel
-- TodayModalsHost
-- AppButton
+- column
+- TaskRepositoryImpl
 - LocalErrorReporter
 - GameEngine
 - AccessibilityTest
 - UserPreferencesRepository
 - DailySummaryScheduler
 - BenimGünlerim — Tasarım Standardı
-- Audit Raporu — Ürün / UX
-- SubTaskDao
+- Constitutional rules
+- SubTaskEntity
 - AchievementEntity
 - GameEngineTest
-- BenimGünlerim — Ürün Felsefesi, Amaçları ve Kullanıcı Akışları
+- AlertBanner.kt
 - DailyStateEntity
-- DateTimeProvider.kt
-- 99 — Incremental Re-Audit Prompt
+- RewardDisplayService
+- RoutineEntity
 - PlanViewModelTest
-- quietHoursActive
-- StubRoutineDao
-- ShopViewModelTest
-- JSONObject
 - SystemFeedbackManager
+- StubRoutineDao
+- ShopViewModel
+- JSONObject
+- RoutineRow.kt
 - OnboardingViewModelTest
-- PlanViewModel
+- TaskDetailDialogs.kt
 - CompletionLogEntity
 - ToggleTaskUseCaseTest
 - SettingsViewModelTest
 - CloseDayUseCaseTest
-- StubSubTaskDao
-- RoutinesViewModelTest
-- TodayViewModel.kt
+- PlanUiEffect
+- RoutineDetailScreen.kt
+- TodayViewModelTest.kt
 - TaskDaoTest
 - FakeAchievementDao
 - AchievementEvaluationServiceTest
@@ -57,840 +57,695 @@
 - TaskEntity
 - DataExportServiceTest
 - DataImportService
-- Audit Raporu — Frontend / Jetpack Compose
-- RewardDisplayService
-- AchievementCategory
-- Audit Raporu — Güvenlik & Gizlilik
-- AppIcon
+- TaskDetailSheet
 - FakeTaskDao
+- AchievementCategory
+- 07 — Tool Discovery and Graph Analysis
+- AppTokens
+- TaskDao
 - AppModule
 - NotificationHelper.kt
 - Faz B — Core Atomlar + Gamification Atomlar
-- Audit Raporu — Data / Database
+- assertequals
 - FakeTaskDao
 - OperationResultTest
-- ScreenScaffold
+- AppFab
 - TodayViewModelTest
 - BenimGünlerim — Agent Kılavuzu
-- SubTaskEntity
+- FakeRoutineDao
 - Faz C — Moleküller + Layout Katmanı
 - UserPreferences
-- ObserveTodaySnapshotUseCaseTest
+- RoutineDetailViewModelTest
 - TickerProvider
 - AchievementTracker
-- ProgressViewModel
-- AppNavigation.kt
+- ProgressViewModelTest
+- PrivacyPolicyScreen.kt
 - TodayUiEffect
 - OnboardingScreen.kt
-- FakeRoutineDao
-- RoutineRepository
+- RoutineEntity
+- ResetDialog
 - UserPreferencesAccess
 - Faz D — Organizmalar
 - TodayTaskActions
-- RoutineReminderScheduler
+- CompletionLogDao
 - AchievementsViewModelTest
 - NotificationIdsTest
 - MorningPlannerScheduler
-- Benim Günlerim — Güncel Audit Raporu
-- Release Checklist - BenimGünlerim
+- FakeTaskDao
+- 08 — Secret Zero Exposure Policy
 - ReminderBootstrapper
-- AppSurface
-- StubTaskDao
-- CarryPendingTasksUseCaseTest
+- AppNavigation.kt
+- FakePrefs
+- ToggleRoutineUseCaseTest
 - AppDestination
 - DailyScoreCalculatorTest
 - RewardGrantServiceTest
 - UserPreferencesRepositoryTest
+- Flow
 - FakeAchievementDao
-- FakeAchievementDao
-- ToggleRoutineUseCaseTest
-- TestTags
+- 14 — Re-Audit Protocol
+- TodayContentList.kt
 - BootReceiver
-- FakeSubTaskDao
-- Gizlilik Politikası Taslağı
-- NotificationMatrixSmokeTest
+- ShopViewModelTest
+- 01 — Project Understanding
+- RoutinesViewModelTest
 - TimeChangeReceiver.kt
 - AppDatabaseMigrationTest
-- TaskDao
+- AUDIT MASTER — Project-Aware Evidence-First Audit Controller
 - .instance
-- TimeInputValidator
+- Required sections
 - CompletionLogExtensionsTest
-- Benim Günlerim — Full Project Scorecard
-- Audit Raporu — State / ViewModel
-- FixedDateTimeProvider
-- Audit Raporu — Backend / Sync Hazırlığı
-- Kalite Kapıları
-- README.md
-- TaskCompletionState
-- AppModule.kt
-- Audit Raporu — Performans
-- AppTokens
-- Audit Raporu — Testing & QA
+- Project Audit Framework — Kullanım Rehberi
+- Action
+- CarryPendingTasksUseCaseTest
+- SubTaskDao
+- UpdateTaskUseCaseTest
+- 04 — Scope and Risk Protocol
+- DailyStateRepository
+- AddRoutineSheet
+- 10 — Scoring Protocol
+- LevelDots
+- 16 — Release Certification Protocol
 - Token Hızlı Başvuru
-- Audit Raporu — Monetizasyon & Release Hazırlığı
-- Benim Günlerim — Full Project Scorecard
-- Faz Detayları
-- Production Readiness Planı
-- 4. Sprint Durumu
-- ProgressBar
-- AppBadgeVariant
+- Finding
+- Release Verdict
+- AchievementDao
+- Discover the following
+- 05 — Contextual Rubric Builder
+- materialtheme
+- DailyStateDao
 - ProgressCalculatorTest
-- BenimGunlerimApplication.kt
-- Sıralı audit planı
+- AppCrashHandler
+- 06 — Evidence Policy
 - BrainDumpParserTest
-- Güncel Puan Tablosu — 2026-08-18
-- TaskDetailSheet
-- FakeDailyStateDao
+- 09 — Execution Safety
+- 12 — Action Protocol
+- TodayModalsHost
 - TodayActions.kt
-- Incremental Re-Audit Report — 2026-08-18
+- Delta report must include
 - TodayScreenTest
-- SystemDateTimeProvider
-- BenimGunlerimTheme
-- .add
-- AddTasksBatchUseCaseTest
-- DailyStateDaoTest
-- ReminderPolicy
-- Dependency ve Platform Sağlığı Politikası
-- Performans Politikası
-- Test Stratejisi
-- SettingsEvent
-- FakeRoutineDao
-- CompletionLogDaoTest
-- DataExportService.kt
-- Incremental Re-Audit Report — 2026-08-17
-- FakeTransactionRunner
-- NotificationIds
-- OnboardingSuggestionsTest
-- AchievementDefTest
 - FakeAchievementDao
-- 00 — Master Audit Prompt
-- 7. Temel Kullanıcı Akışları
-- NotificationMatrixSmokeTest.kt
-- Dış Release Kurulum Kontrolü
-- RoutineEntity
-- BenimGünlerim — Güncel Proje Durumu
+- Theme.kt
+- FakeSubTaskDao
+- AddTasksBatchUseCaseTest
+- 17 — Reporting Contract
+- SettingsScreenTest.kt
+- 18 — Stack Adapter Guidance
+- 02 — Project Purpose
+- Delta Report
+- GameEvent
+- FakeAchievementDao
+- Test
+- DataExportService.kt
+- AppModule.kt
+- FakeTransactionRunner
+- StubTaskDao
+- OnboardingScreen
+- AchievementDefTest
+- 01 — Operation Modes
+- 11 — Finding Protocol
+- 19 — False Positive and Overengineering Policy
+- Current Purpose
+- RoutineReminderReceiver.kt
+- 13 — FIX Protocol
+- CloseDaySheet
+- Project Purpose — RUN-001-BASELINE
 - BenimGünlerim
-- AnalyticsTracker
-- 02 — Frontend / Jetpack Compose Audit Prompt
+- NotificationMatrixSmokeTest.kt
+- 03 — Audit Scope and Risk
 - OperationResult
-- DailySummaryReceiver.kt
+- NotificationMatrixSmokeTest.kt
 - MorningPlannerReceiver.kt
-- 03 — State / ViewModel Audit Prompt
+- ErrorReporter.kt
 - SnoozeReceiver.kt
 - TaskReminderReceiver.kt
 - RoutinesScreenTest
-- FakeAchievementDao
-- TimeInputValidatorTest
+- 08 — Scorecard
+- FakeDailyStateDao
 - TaskReminderScheduler
-- Gizlilik ve Yedekleme Politikası
-- GameEvent
+- 3. Tasarım İlkeleri
+- 8. Bileşen Standardı
 - ErrorReporter
-- 01 — Product & UX Audit Prompt
-- GitHub Branch/Tag Protection ve Secrets Checklist
-- DailyScoreCalculator
-- 04 — Data / Database Audit Prompt
-- 05 — Backend / Sync Readiness Audit Prompt
-- 06 — Security & Privacy Audit Prompt
-- 07 — Performance Audit Prompt
-- 08 — Testing & QA Audit Prompt
-- 09 — Monetization & Release Audit Prompt
-- RewardGrantService
-- Dosya Bazlı Bulgular
-- 4. Ürün Felsefemiz
-- SettingsScreenTest
-- LightDayModeTest
-- Dosya Bazlı Bulgular
-- ErrorReporterContextPolicy
-- ColorRailCard.kt
-- SettingsViewModelTest.kt
-- OnboardingSuggestions
-- CategoryPalette
+- 9. Ekran Bazlı Tasarım Standardı
+- TodayDayCloseActions
+- FakeAchievementDao
+- Detailed Audit
+- Current Project Profile
+- 04 — Contextual Rubric
+- 15. Global UI Kuralları
+- Project Understanding — RUN-001-BASELINE
+- Findings
+- Action Plan
+- Release Verdict — CONDITIONAL GO
+- Rubric Lock
+- RestoreTaskUseCaseTest
+- MainActivity.kt
+- 4. Görsel Karakter
 - TodayRoutineActions
+- AddTaskUseCaseTest
+- RoutineActionsSheet.kt
+- BenimGunlerimApplication.kt
+- CategoryPalette
+- AppEventCoordinator
 - TimeTextTest
 - AppDestinationTest
-- StartupBenchmark
+- ScrollJankBenchmark.kt
 - .noopDailySummaryScheduler
 - .noopMorningPlannerScheduler
-- Benim Günlerim — Full Project Audit Prompt Pack
-- Dosya Bazlı Bulgular
-- gradlew
-- Kalite ve Release İncelemesi — 20 Ağustos 2026
-- Room Migration Matrisi
-- BrainDumpParser
-- Dosya Bazlı Bulgular
-- TodayFabMenu.kt
-- TaskDeleteRestoreIntegrationTest
-- ToggleRoutineUseCase
+- PACKAGE_MANIFEST.md
+- RUN-000-EXAMPLE/README.md
+- 03_AUDIT_SCOPE_AND_RISK.md
+- 04_CONTEXTUAL_RUBRIC.md
+- CelebrationParticles.kt
+- AppChip.kt
+- DatabaseTransactionRunner
+- 06_EVIDENCE_INDEX.md
+- 08_SCORECARD.md
+- command-summary.md
+- ACTION_REGISTRY.md
+- FINDING_REGISTRY.md
+- 05_EVIDENCE_INDEX_TEMPLATE.md
+- VERSION.md
+- INSTALL.md
 - ToggleTaskCompletionUseCaseTest
-- ScrollJankBenchmark
-- SettingsViewModel.kt
-- MainActivity
-- Theme.kt
+- ProgressViewModel.kt
+- RestoreRemindersUseCaseTest.kt
+- AchievementsViewModel.kt
+- BrainDumpStep
+- RoutineReminderScheduler
+- AppTopBar
+- TestTags
+- TaskDeleteRestoreIntegrationTest
+- TodayListContainers.kt
+- Destination
+- .exportToJson_returnsNullOnDaoError
+- TodayFabMenu.kt
+- DateTimeProvider
+- ResetState
+- CompanionBubble
+- LevelBadge
+- XpBadge
+- RoutineDayCodes.kt
+- ErrorReporter
+- ErrorReporter
+- ErrorReporter
 
 ## God Nodes (most connected - your core abstractions)
-1. `TaskEntity` - 147 edges
-2. `RoutineEntity` - 103 edges
-3. `SubTaskEntity` - 78 edges
-4. `CompletionLogEntity` - 77 edges
-5. `AchievementEntity` - 73 edges
-6. `UserPreferencesRepository` - 72 edges
-7. `TaskRepository` - 71 edges
-8. `UserPreferences` - 69 edges
-9. `AppTokens` - 65 edges
-10. `AchievementTracker` - 59 edges
+1. `TaskEntity` - 159 edges
+2. `RoutineEntity` - 111 edges
+3. `TaskRepository` - 94 edges
+4. `UserPreferencesRepository` - 87 edges
+5. `CompletionLogEntity` - 85 edges
+6. `SubTaskEntity` - 85 edges
+7. `AchievementEntity` - 78 edges
+8. `AchievementTracker` - 73 edges
+9. `UserPreferences` - 72 edges
+10. `AppTokens` - 66 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `TodayViewModel` --calls--> `TodayDayCloseDependencies`  [INFERRED]
-  app/src/main/java/com/benimgunlerim/ui/today/TodayViewModel.kt → app/src/main/java/com/benimgunlerim/ui/today/TodayDayCloseActions.kt
-- `TodayViewModel` --calls--> `TodayRoutineDependencies`  [INFERRED]
-  app/src/main/java/com/benimgunlerim/ui/today/TodayViewModel.kt → app/src/main/java/com/benimgunlerim/ui/today/TodayRoutineActions.kt
-- `AchievementTrackerTest` --calls--> `FixedDateTimeProvider`  [INFERRED]
-  app/src/test/java/com/benimgunlerim/domain/AchievementTrackerTest.kt → app/src/main/java/com/benimgunlerim/domain/DateTimeProvider.kt
-- `AddTaskUseCaseTest` --calls--> `AddTaskUseCase`  [INFERRED]
-  app/src/test/java/com/benimgunlerim/domain/usecase/AddTaskUseCaseTest.kt → app/src/main/java/com/benimgunlerim/domain/usecase/AddTaskUseCase.kt
-- `AddTasksBatchUseCaseTest` --calls--> `AddTasksBatchUseCase`  [INFERRED]
-  app/src/test/java/com/benimgunlerim/domain/usecase/AddTasksBatchUseCaseTest.kt → app/src/main/java/com/benimgunlerim/domain/usecase/AddTasksBatchUseCase.kt
+- ``ui/components/gamification/GoldBadge.kt`` --references--> `GoldBadge()`  [INFERRED]
+  CLAUDE.md → app/src/main/java/com/benimgunlerim/ui/components/gamification/GoldBadge.kt
+- `Uygulama çerçevesi` --references--> `AppTopBar()`  [INFERRED]
+  DESIGN.md → app/src/main/java/com/benimgunlerim/ui/components/layout/AppTopBar.kt
+- `Tool and Graph Analysis` --references--> `UserPreferences`  [INFERRED]
+  .audit/runs/RUN-001-BASELINE/05_TOOL_AND_GRAPH_ANALYSIS.md → app/src/main/java/com/benimgunlerim/data/UserPreferencesRepository.kt
+- `Tool and Graph Analysis` --references--> `TaskEntity`  [INFERRED]
+  .audit/runs/RUN-001-BASELINE/05_TOOL_AND_GRAPH_ANALYSIS.md → app/src/main/java/com/benimgunlerim/data/local/entity/TaskEntity.kt
+- ``ui/components/gamification/LevelDots.kt`` --references--> `LevelDots()`  [INFERRED]
+  CLAUDE.md → app/src/main/java/com/benimgunlerim/ui/components/gamification/LevelDots.kt
 
 ## Import Cycles
 - None detected.
 
-## Communities (233 total, 57 thin omitted)
+## Communities (262 total, 150 thin omitted)
 
 ### Community 0 - "DataImportServiceTest.kt"
-Cohesion: 0.06
-Nodes (12): ErrorReporter, ErrorReporter, ErrorReporter, ErrorReporter, ErrorReporter, ErrorReporter, ErrorReporter, ErrorReporter (+4 more)
+Cohesion: 0.08
+Nodes (8): ErrorReporter, ErrorReporter, ErrorReporter, ErrorReporter, ErrorReporter, ErrorReporter, ErrorReporter, ErrorReporter
 
-### Community 2 - "DetailScreenScaffold"
-Cohesion: 0.20
-Nodes (12): AchievementsScreen(), DetailScreenScaffold(), Modifier, Modifier, StatPill(), OpenSourceLibrary, OssLicensesScreen(), PrivacyHeaderCard() (+4 more)
+### Community 1 - "SettingsViewModel"
+Cohesion: 0.07
+Nodes (12): DataCleared, ExportFailed, ExportSaved, ExportWriteFailed, ImportParseFailed, ImportReadFailed, ImportSuccess, SettingsEvent (+4 more)
 
-### Community 3 - "TodayViewModel"
-Cohesion: 0.06
-Nodes (9): completedRoutineIds(), Flow, TodaySnapshot, TodayTaskDependencies, Flow, StateFlow, ViewModel, MissedDayData (+1 more)
-
-### Community 4 - "TodayModalsHost"
-Cohesion: 0.09
-Nodes (22): BrainDumpDialog(), ResetDialog(), ResetState, BREATHING, COMPLETED, INTRO, ResetBreathingContent(), ResetCompletedContent() (+14 more)
-
-### Community 5 - "AppButton"
-Cohesion: 0.09
-Nodes (35): AppButton(), AppButtonVariant, Danger, Ghost, Primary, Secondary, ImageVector, Modifier (+27 more)
+### Community 4 - "column"
+Cohesion: 0.12
+Nodes (4): ScreenScaffold(), PlanTaskListContainer(), reorderModifier(), TodayEventEffects()
 
 ### Community 6 - "LocalErrorReporter"
-Cohesion: 0.09
-Nodes (7): ErrorReporter, LocalErrorReporter, StoredErrorReport, ErrorReporterTest, ErrorReporter, RecordingReporter, LocalErrorReporterTest
+Cohesion: 0.08
+Nodes (7): ErrorReporterContextPolicy, LocalAnalyticsTracker, LocalErrorReporter, StoredErrorReport, ErrorReporterTest, RecordingReporter, LocalErrorReporterTest
 
 ### Community 7 - "GameEngine"
-Cohesion: 0.09
-Nodes (8): CompanionMessage, GameEngine, LevelInfo, Simple, Streak, LevelProgressionService, GrantResultTest, LevelProgressionServiceTest
+Cohesion: 0.16
+Nodes (9): GameEngine, AlreadyGranted, Granted, GrantResult, RewardGrantService, CloseDayUseCase, Result, Result (+1 more)
 
-### Community 8 - "AccessibilityTest"
-Cohesion: 0.15
-Nodes (3): AccessibilityTest, ActivityScenarioRule, AndroidComposeTestRule
-
-### Community 10 - "DailySummaryScheduler"
-Cohesion: 0.24
-Nodes (4): DailySummarySchedule, DailySummarySchedule, DailySummaryScheduler, PendingIntent
+### Community 9 - "UserPreferencesRepository"
+Cohesion: 0.06
+Nodes (4): Keys, UserPreferencesRepository, UserPreferencesSource, UserPreferencesWriter
 
 ### Community 11 - "BenimGünlerim — Tasarım Standardı"
-Cohesion: 0.04
-Nodes (45): 10. Durumlar ve Geri Bildirim, 11. Erişilebilirlik Standardı, 12. İçerik Tonu, 13. Tasarım Karar Kontrol Listesi, 14. İlgili Belgeler, 15. Global UI Kuralları, 16. Tasarım Teslim Kontrolü, 1. Tasarım Vaadi (+37 more)
+Cohesion: 0.12
+Nodes (17): 10. Durumlar ve Geri Bildirim, 11. Erişilebilirlik Standardı, 12. İçerik Tonu, 13. Tasarım Karar Kontrol Listesi, 14. İlgili Belgeler, 16. Tasarım Teslim Kontrolü, 1. Tasarım Vaadi, 2. Tasarım Hedefleri (+9 more)
 
-### Community 12 - "Audit Raporu — Ürün / UX"
-Cohesion: 0.07
-Nodes (28): 1 Haftalık Düzeltme Planı, 2 Haftalık Düzeltme Planı, `app/src/main/java/com/benimgunlerim/ui/components/CelebrationSystem.kt`, `app/src/main/java/com/benimgunlerim/ui/components/layout/AppTopBar.kt`, `app/src/main/java/com/benimgunlerim/ui/components/organisms/AddTaskSheet.kt`, `app/src/main/java/com/benimgunlerim/ui/components/organisms/RoutineRow.kt` ve `ui/routines/RoutinesScreen.kt`, `app/src/main/java/com/benimgunlerim/ui/onboarding/OnboardingScreen.kt`, `app/src/main/java/com/benimgunlerim/ui/plan/PlanTaskListComponents.kt` (+20 more)
+### Community 12 - "Constitutional rules"
+Cohesion: 0.11
+Nodes (18): 00 — Audit Constitution, C10 — Historical integrity, C11 — No silent rubric drift, C12 — Uncertainty must be explicit, C13 — Security proportionality, C14 — No secret exposure, C15 — Read-only audit, C1 — Context before judgment (+10 more)
+
+### Community 13 - "SubTaskEntity"
+Cohesion: 0.08
+Nodes (3): SubTaskEntity, StubSubTaskDao, FakeSubTaskDao
 
 ### Community 14 - "AchievementEntity"
-Cohesion: 0.11
-Nodes (5): AchievementDao, Flow, AchievementEntity, StubAchievementDao, FakeAchievementDao
+Cohesion: 0.10
+Nodes (4): AchievementEntity, StubAchievementDao, FakeAchievementDao, FakeAchievementDao
 
-### Community 16 - "BenimGünlerim — Ürün Felsefesi, Amaçları ve Kullanıcı Akışları"
+### Community 15 - "GameEngineTest"
+Cohesion: 0.06
+Nodes (9): CompanionMessage, LevelInfo, Simple, Streak, FixedIndexRandomProvider, LevelProgressionService, GameEngineTest, GrantResultTest (+1 more)
+
+### Community 16 - "AlertBanner.kt"
 Cohesion: 0.14
-Nodes (14): 10. Başarı Kriterleri, 11. Geliştirme Kararları İçin Kısa Filtre, 12. Ürün Yönü, 1. Bu Belgenin Amacı, 2. Ürünün Kısa Tanımı, 3. Temel Ürün Amacı, 5. Hedef Kullanıcı İhtiyacı, 6. Ana Kullanıcı Döngüsü (+6 more)
+Nodes (5): AlertBanner(), AlertBannerSeverity, Error, Info, Warning
 
 ### Community 17 - "DailyStateEntity"
-Cohesion: 0.09
-Nodes (7): DailyStateRepository, Flow, DailyStateDao, Flow, DailyStateEntity, StubDailyStateDao, FakeDailyStateDao
+Cohesion: 0.14
+Nodes (3): DailyStateEntity, StubDailyStateDao, FakeDailyStateDao
 
-### Community 18 - "DateTimeProvider.kt"
-Cohesion: 0.09
-Nodes (5): DatabaseTransactionRunner, T, TaskReminderSchedulerContract, DeleteTaskUseCaseTest, DatabaseTransactionRunner
+### Community 19 - "RoutineEntity"
+Cohesion: 0.05
+Nodes (18): RoutineEntity, RoutineRepository, AddRoutineUseCase, ArchiveRoutineUseCase, SkipRoutineUseCase, UnarchiveRoutineUseCase, Result, UpdateRoutineProgressUseCase (+10 more)
 
-### Community 19 - "99 — Incremental Re-Audit Prompt"
-Cohesion: 0.07
-Nodes (26): 0. Çalışma Modu, 10. PR Bazlı Kullanım, 11. Full Re-Audit Ne Zaman Yapılır?, 12. En Önemli Kural, 1. Baseline Dosyaları, 2. Değişiklik Kaynağı, 3. Token ve Dosya Sınırı, 4.1 Testing / QA (+18 more)
-
-### Community 20 - "PlanViewModelTest"
-Cohesion: 0.12
-Nodes (5): Flow, ObservePlanSnapshotUseCase, PlanSnapshot, DateTimeProvider, PlanViewModelTest
-
-### Community 21 - "quietHoursActive"
-Cohesion: 0.22
-Nodes (3): java, quietHoursActive(), ReminderPolicyTest
-
-### Community 23 - "ShopViewModelTest"
+### Community 21 - "SystemFeedbackManager"
 Cohesion: 0.08
-Nodes (13): AlreadyOwned, DailyGiftAlreadyClaimed, DailyGiftClaimed, InsufficientGold, ItemPurchased, StateFlow, ViewModel, ShopItem (+5 more)
+Nodes (5): SystemFeedbackManager, NotificationPolicyCache, quietHoursActive(), ReminderPolicy, ReminderPolicyTest
 
-### Community 24 - "JSONObject"
-Cohesion: 0.27
-Nodes (4): DataImportServiceTest, FakePreferencesStore, UserPreferencesSource, JSONObject
+### Community 23 - "ShopViewModel"
+Cohesion: 0.18
+Nodes (9): AlreadyOwned, DailyGiftAlreadyClaimed, DailyGiftClaimed, InsufficientGold, ItemPurchased, ShopItem, ShopMessage, ShopUiState (+1 more)
 
-### Community 25 - "SystemFeedbackManager"
-Cohesion: 0.25
-Nodes (4): SystemFeedbackManager, SoundPool, VibrationEffect, Vibrator
+### Community 25 - "RoutineRow.kt"
+Cohesion: 0.08
+Nodes (3): RoutineRow(), TaskRow(), WeekPicker()
 
-### Community 26 - "OnboardingViewModelTest"
-Cohesion: 0.10
-Nodes (9): RoutineTargetType, CHECK, GOAL, AddRoutineUseCase, StateFlow, ViewModel, OnboardingViewModel, DateTimeProvider (+1 more)
-
-### Community 27 - "PlanViewModel"
-Cohesion: 0.09
-Nodes (11): PlanTaskUi, ActionFailed, StateFlow, ViewModel, OverdueTasksMoved, PlanSnapshotResult, PlanUiEffect, PlanUiState (+3 more)
+### Community 27 - "TaskDetailDialogs.kt"
+Cohesion: 0.26
+Nodes (3): TaskDatePickerDialog(), TaskDeleteConfirmDialog(), TaskTimePickerDialog()
 
 ### Community 28 - "CompletionLogEntity"
 Cohesion: 0.08
-Nodes (8): CompletionLogRepository, CompletionLogRepositoryImpl, Flow, CompletionLogDao, Flow, CompletionLogEntity, DateTimeProvider, ObserveProgressSnapshotUseCaseTest
-
-### Community 29 - "ToggleTaskUseCaseTest"
-Cohesion: 0.17
-Nodes (4): DatabaseTransactionRunner, T, ToggleTaskUseCaseTest, DatabaseTransactionRunner
+Nodes (5): CompletionLogRepository, CompletionLogRepositoryImpl, CompletionLogEntity, ObserveProgressSnapshotUseCaseTest, ObserveTodaySnapshotUseCaseTest
 
 ### Community 30 - "SettingsViewModelTest"
-Cohesion: 0.12
-Nodes (3): FakeLocalDataClearer, FakePrefs, SettingsViewModelTest
+Cohesion: 0.16
+Nodes (3): FakeLocalDataClearer, FakePreferencesWriter, SettingsViewModelTest
 
-### Community 31 - "CloseDayUseCaseTest"
-Cohesion: 0.12
-Nodes (3): CloseDayUseCase, Result, CloseDayUseCaseTest
+### Community 32 - "PlanUiEffect"
+Cohesion: 0.29
+Nodes (5): ActionFailed, OverdueTasksMoved, PlanUiEffect, TaskAdded, TaskDeleted
 
-### Community 33 - "RoutinesViewModelTest"
-Cohesion: 0.09
-Nodes (9): StateFlow, ViewModel, RoutinesViewModel, ArchivedRoutineUi, RoutineCardUi, RoutineDetailRoutineUi, com, DateTimeProvider (+1 more)
+### Community 33 - "RoutineDetailScreen.kt"
+Cohesion: 0.10
+Nodes (16): AppButton(), AppButtonVariant, Danger, Ghost, Primary, Secondary, ColorRailCard(), DetailPill() (+8 more)
 
-### Community 34 - "TodayViewModel.kt"
-Cohesion: 0.11
-Nodes (19): AddSubTaskUseCase, AddTasksBatchUseCase, AddTaskUseCase, AutoCloseMissedDayUseCase, CarryPendingTasksUseCase, DeleteSubTaskUseCase, DeleteTaskUseCase, MoveTaskToDateUseCase (+11 more)
+### Community 34 - "TodayViewModelTest.kt"
+Cohesion: 0.04
+Nodes (27): AnalyticsEvent, AnalyticsTracker, LightDayMode, RoutineTargetType, CHECK, GOAL, normalizedTimeOrNull(), AddSubTaskUseCase (+19 more)
 
-### Community 36 - "FakeAchievementDao"
-Cohesion: 0.17
-Nodes (3): AchievementTrackerTest, FakeAchievementDao, Flow
+### Community 37 - "AchievementEvaluationServiceTest"
+Cohesion: 0.14
+Nodes (3): AchievementEvaluationService, routineReorderGesture(), AchievementEvaluationServiceTest
 
 ### Community 39 - "TaskEntity"
 Cohesion: 0.06
-Nodes (6): TaskEntity, Flow, TaskRepository, TaskRepositoryImpl, DatabaseTransactionRunner, RestoreTaskUseCaseTest
+Nodes (10): DatabaseTransactionRunner, TaskEntity, TaskRepository, TaskCompletionState, COMPLETED, PENDING, SKIPPED, ObservePlanSnapshotUseCase (+2 more)
 
 ### Community 41 - "DataImportService"
-Cohesion: 0.19
-Nodes (5): DataImportResult, DataImportService, ImportPayload, JSONArray, T
+Cohesion: 0.17
+Nodes (3): DataImportResult, DataImportService, ImportPayload
 
-### Community 42 - "Audit Raporu — Frontend / Jetpack Compose"
-Cohesion: 0.08
-Nodes (26): 1 Haftalık Düzeltme Planı, 2 Haftalık Düzeltme Planı, `app/src/main/java/com/benimgunlerim/ui/achievements/AchievementsScreen.kt`, `app/src/main/java/com/benimgunlerim/ui/components/calm/BrainDumpDialog.kt`, `app/src/main/java/com/benimgunlerim/ui/components/calm/ResetDialog.kt`, `app/src/main/java/com/benimgunlerim/ui/components/layout/AppTopBar.kt`, `app/src/main/java/com/benimgunlerim/ui/navigation/AppNavigation.kt`, `app/src/main/java/com/benimgunlerim/ui/today/CategoryPalette.kt` (+18 more)
-
-### Community 43 - "RewardDisplayService"
-Cohesion: 0.11
-Nodes (4): FeedbackManager, Flow, RewardDisplayService, RewardDisplayServiceTest
+### Community 42 - "TaskDetailSheet"
+Cohesion: 0.16
+Nodes (8): SheetSectionHeader(), TaskDetailCallbacks, TaskDetailFormActions, TaskDetailFormData, TaskDetailFormFields(), TaskDetailOptionsSection(), TaskDetailSheet(), TaskDetailSubtasksSection()
 
 ### Community 44 - "AchievementCategory"
-Cohesion: 0.25
-Nodes (10): AchievementBadgeView(), AchievementCategory, CALM, DAY_CLOSE, LEVEL, ROUTINE, TASK, getAchievementCategory() (+2 more)
+Cohesion: 0.15
+Nodes (9): AchievementBadgeView(), AchievementCategory, CALM, DAY_CLOSE, LEVEL, ROUTINE, TASK, getAchievementCategory() (+1 more)
 
-### Community 45 - "Audit Raporu — Güvenlik & Gizlilik"
-Cohesion: 0.12
-Nodes (16): 1 Haftalık Düzeltme Planı, 2 Haftalık Düzeltme Planı, Audit Raporu — Güvenlik & Gizlilik, En Güçlü 5 Taraf, En Kritik 10 Sorun, Final Karar, Genel Puan, Kullanıcı Deneyimi Etkisi (+8 more)
+### Community 45 - "07 — Tool Discovery and Graph Analysis"
+Cohesion: 0.15
+Nodes (12): 07 — Tool Discovery and Graph Analysis, Architecture graph, Build/test, Dependency/security, Existing graph freshness, Graph interpretation safety, No forced installation, Output (+4 more)
 
-### Community 46 - "AppIcon"
-Cohesion: 0.16
-Nodes (18): AppIcon(), Color, Dp, ImageVector, Modifier, GoldBadge(), Modifier, InfoCard() (+10 more)
-
-### Community 47 - "FakeTaskDao"
-Cohesion: 0.08
-Nodes (3): FakeCompletionLogDao, FakeTaskDao, Flow
+### Community 46 - "AppTokens"
+Cohesion: 0.07
+Nodes (24): AppBadge(), AppBadgeVariant, Error, Info, Neutral, Success, Warning, AppColorBadge() (+16 more)
 
 ### Community 48 - "AppModule"
-Cohesion: 0.11
-Nodes (8): AppDatabase, AppModule, DatabaseTransactionRunner, Context, DatabaseTransactionRunner, T, CoroutineDispatcher, RoomDatabase
+Cohesion: 0.10
+Nodes (3): AppDatabase, AppModule, DatabaseTransactionRunner
 
 ### Community 49 - "NotificationHelper.kt"
-Cohesion: 0.30
-Nodes (12): buildSnoozeAction(), ensureMorningNotificationChannel(), ensureTaskNotificationChannel(), PendingIntent, openAppPendingIntent(), safeNotify(), showDailySummaryReminder(), showMorningPlannerReminder() (+4 more)
+Cohesion: 0.15
+Nodes (11): buildSnoozeAction(), ensureMorningNotificationChannel(), ensureTaskNotificationChannel(), openAppPendingIntent(), reminderPolicy(), safeNotify(), scheduleSnoozeShow(), showDailySummaryReminder() (+3 more)
 
 ### Community 50 - "Faz B — Core Atomlar + Gamification Atomlar"
-Cohesion: 0.15
-Nodes (13): Faz B — Core Atomlar + Gamification Atomlar, `ui/components/core/AppBadge.kt`, `ui/components/core/AppButton.kt`, `ui/components/core/AppChip.kt`, `ui/components/core/AppDivider.kt`, `ui/components/core/AppIcon.kt`, `ui/components/core/AppSurface.kt`, `ui/components/gamification/CompanionBubble.kt` (+5 more)
-
-### Community 51 - "Audit Raporu — Data / Database"
-Cohesion: 0.12
-Nodes (16): 1 Haftalık Düzeltme Planı, 2 Haftalık Düzeltme Planı, Audit Raporu — Data / Database, Data Model Riskleri, En Güçlü 5 Taraf, En Kritik 10 Sorun, Final Karar, Genel Puan (+8 more)
-
-### Community 52 - "FakeTaskDao"
-Cohesion: 0.08
-Nodes (3): FakeCompletionLogDao, FakeTaskDao, Flow
-
-### Community 54 - "ScreenScaffold"
-Cohesion: 0.14
-Nodes (18): AppFab(), Color, ImageVector, Modifier, Composable, Modifier, ScreenScaffold(), isCompactHeight() (+10 more)
-
-### Community 55 - "TodayViewModelTest"
-Cohesion: 0.13
-Nodes (3): com, DateTimeProvider, TodayViewModelTest
+Cohesion: 0.20
+Nodes (10): Faz B — Core Atomlar + Gamification Atomlar, Faz Detayları, Faz E — Ekranları Baştan Yaz, `ui/components/core/AppBadge.kt`, `ui/components/core/AppButton.kt`, `ui/components/core/AppChip.kt`, `ui/components/core/AppDivider.kt`, `ui/components/core/AppIcon.kt` (+2 more)
 
 ### Community 56 - "BenimGünlerim — Agent Kılavuzu"
-Cohesion: 0.17
-Nodes (11): 7 Katmanlı Mimari, BenimGünlerim — Agent Kılavuzu, Demir Kurallar — İstisna Yok, Ekran Başına Hangi Bileşenler, Faz Durumu, Graphify, Hedef Dosya Hiyerarşisi (Faz E sonrası), Mevcut Durum — Geçiş Süreci (+3 more)
+Cohesion: 0.20
+Nodes (9): 7 Katmanlı Mimari, BenimGünlerim — Agent Kılavuzu, Demir Kurallar — İstisna Yok, Ekran Başına Hangi Bileşenler, Graphify, Hedef Dosya Hiyerarşisi (Faz E sonrası), Mevcut Durum — Geçiş Süreci, Proje Nedir (+1 more)
 
 ### Community 58 - "Faz C — Moleküller + Layout Katmanı"
-Cohesion: 0.17
-Nodes (12): Faz C — Moleküller + Layout Katmanı, `ui/components/layout/AppTopBar.kt`, `ui/components/layout/ScreenScaffold.kt`, `ui/components/molecules/AlertBanner.kt`, `ui/components/molecules/BarChart.kt`, `ui/components/molecules/ColorRailCard.kt`, `ui/components/molecules/EmptyState.kt`, `ui/components/molecules/InfoCard.kt` (+4 more)
+Cohesion: 0.25
+Nodes (8): Faz C — Moleküller + Layout Katmanı, `ui/components/layout/ScreenScaffold.kt`, `ui/components/molecules/AlertBanner.kt`, `ui/components/molecules/BarChart.kt`, `ui/components/molecules/ColorRailCard.kt`, `ui/components/molecules/EmptyState.kt`, `ui/components/molecules/ProgressBar.kt`, `ui/components/molecules/SectionBlock.kt`
 
 ### Community 59 - "UserPreferences"
-Cohesion: 0.31
-Nodes (3): UserPreferences, DateTimeProvider, ReminderBootstrapperTest
+Cohesion: 0.18
+Nodes (3): UserPreferences, RewardDisplayServiceTest, ReminderBootstrapperTest
 
 ### Community 61 - "TickerProvider"
-Cohesion: 0.13
-Nodes (9): ImmediateTickerProvider, DateTimeProvider, Flow, SystemTickerProvider, TickerProvider, DateTimeProvider, java, TickerProviderTest (+1 more)
+Cohesion: 0.17
+Nodes (4): ImmediateTickerProvider, SystemTickerProvider, TickerProvider, TickerProviderTest
 
 ### Community 62 - "AchievementTracker"
-Cohesion: 0.16
-Nodes (4): AchievementDef, AchievementTracker, Flow, AppEventCoordinatorTest
+Cohesion: 0.12
+Nodes (3): AchievementDef, AchievementTracker, AppEventCoordinatorTest
 
-### Community 63 - "ProgressViewModel"
-Cohesion: 0.16
-Nodes (11): bestStreak(), Flow, ObserveProgressSnapshotUseCase, ProgressDayData, ProgressSnapshot, ProgressDayUi, StateFlow, ViewModel (+3 more)
-
-### Community 64 - "AppNavigation.kt"
-Cohesion: 0.16
-Nodes (15): AppTopBar(), Modifier, BarChart(), BarChartEntry, Dp, Modifier, BenimGunlerimApp(), Destination (+7 more)
+### Community 64 - "PrivacyPolicyScreen.kt"
+Cohesion: 0.09
+Nodes (8): DetailScreenScaffold(), OpenSourceLibrary, OssLicensesScreen(), PrivacyHeaderCard(), PrivacyPolicyScreen(), PrivacySection, PrivacySectionCard(), privacySections()
 
 ### Community 65 - "TodayUiEffect"
 Cohesion: 0.29
 Nodes (7): ActionFailed, DaySaved, OverdueTasksMoved, TaskCompletedUndo, TaskDeleted, TaskMovedTomorrow, TodayUiEffect
 
-### Community 66 - "OnboardingScreen.kt"
-Cohesion: 0.47
-Nodes (8): IntensityCard(), IntensityOption, Color, ImageVector, NeedCard(), NeedOption, OnboardingScreen(), SelectableRoutineRow()
-
-### Community 68 - "RoutineRepository"
-Cohesion: 0.09
-Nodes (9): Flow, RoutineRepository, ArchiveRoutineUseCase, SkipRoutineUseCase, StateFlow, ViewModel, RoutineDetailViewModel, DateTimeProvider (+1 more)
-
-### Community 69 - "UserPreferencesAccess"
-Cohesion: 0.14
-Nodes (3): Flow, UserPreferencesAccess, UserPreferencesSource
+### Community 68 - "ResetDialog"
+Cohesion: 0.32
+Nodes (4): ResetDialog(), ResetBreathingContent(), ResetCompletedContent(), ResetIntroContent()
 
 ### Community 70 - "Faz D — Organizmalar"
 Cohesion: 0.18
 Nodes (11): Faz D — Organizmalar, `ui/components/organisms/AchievementRow.kt`, `ui/components/organisms/AddRoutineSheet.kt`, `ui/components/organisms/AddTaskSheet.kt`, `ui/components/organisms/CloseDayCard.kt`, `ui/components/organisms/HeaderProgressCard.kt`, `ui/components/organisms/LevelHeroCard.kt`, `ui/components/organisms/RoutineRow.kt` (+3 more)
 
-### Community 71 - "TodayTaskActions"
-Cohesion: 0.14
-Nodes (4): TaskEditDraft, DeletedTaskSnapshot, Flow, TodayTaskActions
-
-### Community 73 - "AchievementsViewModelTest"
+### Community 77 - "08 — Secret Zero Exposure Policy"
 Cohesion: 0.17
-Nodes (6): AchievementsUiState, AchievementsViewModel, AchievementWithStatus, StateFlow, ViewModel, AchievementsViewModelTest
-
-### Community 75 - "MorningPlannerScheduler"
-Cohesion: 0.25
-Nodes (4): MorningPlannerSchedule, PendingIntent, MorningPlannerSchedule, MorningPlannerScheduler
-
-### Community 76 - "Benim Günlerim — Güncel Audit Raporu"
-Cohesion: 0.12
-Nodes (16): Alan Puanları, Benim Günlerim — Güncel Audit Raporu, Güncel P0 Listesi, Güncel Yayın Kararı, Kanıt Özeti, Kapanan Eski Riskler, Kapanan P0 — Güncel release AAB imzalandı, Kapanan P1 — Kutlama ayarı servis feedback’ine bağlandı (+8 more)
-
-### Community 77 - "Release Checklist - BenimGünlerim"
-Cohesion: 0.17
-Nodes (11): 10. Supply Chain ve Repo Kontrolleri, 1. Signing Kurulumu, 2. Versioning, 3. Zorunlu Kalite Kapısı, 4. Cihaz Smoke Test, 5. Backup ve Gizlilik Kontrolü, 6. Play Store Akışı, 7. Post-Release (+3 more)
+Nodes (11): 08 — Secret Zero Exposure Policy, Core rule, External/network tools, Forbidden by default, If accidental exposure occurs, Objective, Reporting format, Safe inspection patterns (+3 more)
 
 ### Community 78 - "ReminderBootstrapper"
-Cohesion: 0.17
-Nodes (4): RestoreRemindersUseCase, ReminderBootstrapper, ReminderRestorer, RestoreRemindersUseCaseTest
+Cohesion: 0.22
+Nodes (3): RestoreRemindersUseCase, ReminderBootstrapper, ReminderRestorer
 
-### Community 79 - "AppSurface"
-Cohesion: 0.12
-Nodes (33): AppDivider(), AppVerticalDivider(), Modifier, AppSurface(), Color, Dp, Modifier, Composable (+25 more)
-
-### Community 80 - "StubTaskDao"
-Cohesion: 0.07
-Nodes (7): ErrorReporter, UserPreferencesSource, ErrorReporter, Flow, UserPreferencesSource, StubCompletionLogDao, StubTaskDao
+### Community 79 - "AppNavigation.kt"
+Cohesion: 0.06
+Nodes (23): AchievementsScreen(), AppDivider(), AppVerticalDivider(), AppSurface(), DynamicCalendarBadge(), EmptyState(), SectionBlock(), BenimGunlerimApp() (+15 more)
 
 ### Community 82 - "AppDestination"
-Cohesion: 0.17
-Nodes (10): Achievements, AppDestination, Onboarding, Plan, Progress, RoutineDetailPattern, Routines, Settings (+2 more)
-
-### Community 84 - "RewardGrantServiceTest"
-Cohesion: 0.10
-Nodes (3): FakeAchievementDao, Flow, RewardGrantServiceTest
-
-### Community 85 - "UserPreferencesRepositoryTest"
-Cohesion: 0.13
-Nodes (3): Context, UserPreferencesRepositoryTest, LightDayMode
-
-### Community 89 - "TestTags"
-Cohesion: 0.11
-Nodes (18): AlertBanner(), AlertBannerSeverity, Error, Info, Warning, Modifier, CloseDayCard(), Modifier (+10 more)
-
-### Community 90 - "BootReceiver"
-Cohesion: 0.43
-Nodes (4): BootReceiver, BroadcastReceiver, Context, Intent
-
-### Community 92 - "Gizlilik Politikası Taslağı"
 Cohesion: 0.18
-Nodes (10): Analitik, Dışa Aktarma ve Geri Yükleme, Gizlilik Politikası Taslağı, Hata Raporlama, İletişim, İzinler, Toplanan Veriler, Veri Silme (+2 more)
+Nodes (9): Achievements, AppDestination, Onboarding, Progress, RoutineDetailPattern, Routines, Settings, Shop (+1 more)
 
-### Community 94 - "TimeChangeReceiver.kt"
-Cohesion: 0.53
-Nodes (4): BroadcastReceiver, Context, Intent, TimeChangeReceiver
-
-### Community 95 - "AppDatabaseMigrationTest"
+### Community 83 - "DailyScoreCalculatorTest"
 Cohesion: 0.27
-Nodes (4): AppDatabaseMigrationTest, SupportSQLiteOpenHelper, Context, SupportSQLiteDatabase
+Nodes (3): DailyScoreCalculator, DayScore, DailyScoreCalculatorTest
+
+### Community 88 - "14 — Re-Audit Protocol"
+Cohesion: 0.17
+Nodes (11): 14 — Re-Audit Protocol, Goal, Inputs, Output, Step 1 — Validate rubric lock, Step 2 — Determine change surface, Step 3 — Deep re-check impacted criteria, Step 4 — Mandatory global gates (+3 more)
+
+### Community 89 - "TodayContentList.kt"
+Cohesion: 0.09
+Nodes (11): AppHeroHeader(), HeaderProgressCard(), ContextualResetCard(), LightDayBanner(), RecoveryCard(), TodayContentList(), TodayListEventCallbacks, TodayListSummaryState (+3 more)
+
+### Community 92 - "01 — Project Understanding"
+Cohesion: 0.17
+Nodes (11): 01 — Project Understanding, Critical user state, Data flow, Executive description, Known constraints, Module/component map, Product classification, Release target (+3 more)
+
+### Community 96 - "AUDIT MASTER — Project-Aware Evidence-First Audit Controller"
+Cohesion: 0.18
+Nodes (10): 0. Authority, 1. Mandatory engine order, 2. Supported modes, 3. Read-only default, 4. Required state handling, 5. Run immutability, 6. Required BASELINE output, 7. Required REAUDIT output (+2 more)
 
 ### Community 97 - ".instance"
-Cohesion: 0.20
-Nodes (10): Config, BenimGunlerimRuleSetProvider, Rule, NoHardcodedColorRule, Rule, NoHardcodedDpRule, KtCallExpression, KtDotQualifiedExpression (+2 more)
+Cohesion: 0.15
+Nodes (3): BenimGunlerimRuleSetProvider, NoHardcodedColorRule, NoHardcodedDpRule
 
-### Community 98 - "TimeInputValidator"
-Cohesion: 0.20
-Nodes (6): TimeInputValidator, TimeValidation, Incomplete, InvalidClock, InvalidFormat, Ok
-
-### Community 100 - "Benim Günlerim — Full Project Scorecard"
-Cohesion: 0.12
-Nodes (15): 10 — Final Scorecard Template, 1 Aylık Plan, 1 Haftalık Plan, 2 Haftalık Plan, Alan Puanları, Benim Günlerim — Full Project Scorecard, En Kritik 10 Sorun, Final Not (+7 more)
-
-### Community 101 - "Audit Raporu — State / ViewModel"
-Cohesion: 0.08
-Nodes (26): 1 Haftalık Düzeltme Planı, 2 Haftalık Düzeltme Planı, `app/src/main/java/com/benimgunlerim/data/UserPreferencesRepository.kt`, `app/src/main/java/com/benimgunlerim/domain/service/RewardDisplayService.kt`, `app/src/main/java/com/benimgunlerim/domain/usecase/ToggleTaskUseCase.kt` / `ToggleRoutineUseCase.kt`, `app/src/main/java/com/benimgunlerim/ui/components/organisms/AddTaskSheet.kt`, `app/src/main/java/com/benimgunlerim/ui/plan/PlanViewModel.kt`, `app/src/main/java/com/benimgunlerim/ui/routines/RoutinesViewModel.kt` (+18 more)
-
-### Community 102 - "FixedDateTimeProvider"
-Cohesion: 0.14
-Nodes (3): FixedDateTimeProvider, AddTaskUseCaseTest, UpdateTaskUseCaseTest
-
-### Community 103 - "Audit Raporu — Backend / Sync Hazırlığı"
-Cohesion: 0.12
-Nodes (16): 1 Haftalık Düzeltme Planı, 2 Haftalık Düzeltme Planı, Audit Raporu — Backend / Sync Hazırlığı, Backend Readiness, En Güçlü 5 Taraf, En Kritik 10 Sorun, Final Karar, Genel Puan (+8 more)
-
-### Community 104 - "Kalite Kapıları"
+### Community 98 - "Required sections"
 Cohesion: 0.18
-Nodes (11): CI Kapıları, CI Secret Gereksinimleri, Cihaz Test Kapısı, Coverage Kuralı, Dış Release Kontrolü, Kalite Kapıları, Lokal Geliştirme Kapısı, Ortam Gereksinimleri (+3 more)
+Nodes (10): 03 — Purpose Analysis Protocol, Failure consequences, Non-goals, Output, Primary purpose, Primary user promises, Purpose conflict rule, Release context (+2 more)
 
-### Community 106 - "TaskCompletionState"
-Cohesion: 0.07
-Nodes (21): currentStreak(), currentStreakForEntity(), isScheduledFor(), targetDaySet(), CompletionEntityType, ROUTINE, TASK, CompletionStatus (+13 more)
+### Community 100 - "Project Audit Framework — Kullanım Rehberi"
+Cohesion: 0.18
+Nodes (10): Aksiyon üretme, Ana akış, Güvenlik prensibi, İlk kullanım, Klasörler, Project Audit Framework — Kullanım Rehberi, Puanlama felsefesi, Seçili aksiyonları uygulatma (+2 more)
 
-### Community 107 - "AppModule.kt"
-Cohesion: 0.13
-Nodes (7): LocalDataClearer, LocalDataClearerImpl, ErrorReporter, UserPreferencesSource, T, RandomProvider, SystemRandomProvider
+### Community 101 - "Action"
+Cohesion: 0.18
+Nodes (10): Acceptance criteria, Action, Dependencies, Goal, Implementation guidance, Likely files/components, Out of scope, Regression risks (+2 more)
 
-### Community 108 - "Audit Raporu — Performans"
-Cohesion: 0.07
-Nodes (27): 1 Haftalık Düzeltme Planı, 2 Haftalık Düzeltme Planı, `app/build.gradle.kts`, `app/src/main/java/com/benimgunlerim/data/local/CompletionLogDao.kt`, `app/src/main/java/com/benimgunlerim/domain/usecase/ObserveTodaySnapshotUseCase.kt`, `app/src/main/java/com/benimgunlerim/ui/components/calm/BrainDumpDialog.kt`, `app/src/main/java/com/benimgunlerim/ui/components/calm/ResetDialog.kt`, `app/src/main/java/com/benimgunlerim/ui/components/CelebrationSystem.kt` (+19 more)
+### Community 105 - "04 — Scope and Risk Protocol"
+Cohesion: 0.20
+Nodes (9): 04 — Scope and Risk Protocol, Applicability mapping, Output, R1 — Low-risk utility/prototype, R2 — Consumer/local persistence, R3 — Connected authenticated product, R4 — High-impact/regulated/financial, Risk dimensions (+1 more)
 
-### Community 109 - "AppTokens"
-Cohesion: 0.14
-Nodes (19): CompanionBubble(), Modifier, Dp, Modifier, LevelDots(), Modifier, MiniCelebrationBanner(), AppTokens (+11 more)
+### Community 106 - "DailyStateRepository"
+Cohesion: 0.05
+Nodes (28): currentStreak(), currentStreakForEntity(), DailyStateRepository, isScheduledFor(), targetDaySet(), CompletionEntityType, ROUTINE, TASK (+20 more)
 
-### Community 110 - "Audit Raporu — Testing & QA"
-Cohesion: 0.08
-Nodes (23): 1 Haftalık Düzeltme Planı, 2 Haftalık Düzeltme Planı, `app/src/main/java/com/benimgunlerim/data/UserPreferencesRepository.kt`, `app/src/main/java/com/benimgunlerim/ui/components/calm/BrainDumpDialog.kt`, `app/src/main/java/com/benimgunlerim/ui/onboarding/OnboardingScreen.kt`, `app/src/main/java/com/benimgunlerim/ui/today/TodayViewModel.kt`, `app/src/test/java/com/benimgunlerim/ui/settings/SettingsViewModelTest.kt`, `app/src/test/java/com/benimgunlerim/ui/today/TodayViewModelTest.kt` (+15 more)
+### Community 107 - "AddRoutineSheet"
+Cohesion: 0.11
+Nodes (9): TimeInputValidator, TimeValidation, Incomplete, InvalidClock, InvalidFormat, Ok, AddRoutineSheet(), AddTaskSheet() (+1 more)
+
+### Community 108 - "10 — Scoring Protocol"
+Cohesion: 0.20
+Nodes (9): 10 — Scoring Protocol, Anchors, Confidence-adjusted reporting, Critical blocker rule, No double counting, Overall formula, Scale, Score traceability (+1 more)
+
+### Community 110 - "16 — Release Certification Protocol"
+Cohesion: 0.20
+Nodes (9): 16 — Release Certification Protocol, Certification evidence, CONDITIONAL GO, GO, NO-GO, Release-target proportionality, Separation of concerns, Typical blocker classes, only where applicable (+1 more)
 
 ### Community 111 - "Token Hızlı Başvuru"
 Cohesion: 0.40
 Nodes (5): IconSize (AppTokens.IconSize), Motion (AppTokens.Motion), Radius (AppTokens.Radius), Spacing (AppTokens.Spacing), Token Hızlı Başvuru
 
-### Community 112 - "Audit Raporu — Monetizasyon & Release Hazırlığı"
-Cohesion: 0.12
-Nodes (16): 1 Haftalık Düzeltme Planı, 2 Haftalık Düzeltme Planı, Audit Raporu — Monetizasyon & Release Hazırlığı, En Güçlü 5 Taraf, En Kritik 10 Sorun, Final Karar, Genel Puan, Kullanıcı Deneyimi Etkisi (+8 more)
+### Community 112 - "Finding"
+Cohesion: 0.20
+Nodes (9): Acceptance criteria, Affected files/components, Concrete impact / failure mode, Finding, Problem, Recommended direction, Root cause, Verification method (+1 more)
 
-### Community 113 - "Benim Günlerim — Full Project Scorecard"
+### Community 113 - "Release Verdict"
+Cohesion: 0.20
+Nodes (9): Blocking findings, Checks executed, Conditions / accepted risks, Evaluated revision, Limitations, Release Verdict, Required release evidence, Target (+1 more)
+
+### Community 115 - "Discover the following"
+Cohesion: 0.22
+Nodes (8): 02 — Project Discovery Protocol, Discover the following, Discovery confidence, Output contract, Product identity, Repository health facts, Runtime/data topology, Technical topology
+
+### Community 116 - "05 — Contextual Rubric Builder"
+Cohesion: 0.22
+Nodes (8): 05 — Contextual Rubric Builder, Anti-gaming rule, Candidate quality domains, Goal, Rubric lock, Rubric may change only when materially justified, Subcriteria, Weight construction
+
+### Community 117 - "materialtheme"
+Cohesion: 0.08
+Nodes (12): GoldBadge(), StreakBadge(), BarChart(), BarChartEntry, InfoCard(), ProgressBar(), StatPill(), CloseDayCard() (+4 more)
+
+### Community 121 - "06 — Evidence Policy"
+Cohesion: 0.22
+Nodes (8): 06 — Evidence Policy, Absence-of-evidence rule, Confidence, Evidence index, Evidence levels, No fabricated execution, Scoring under uncertainty, Strong evidence preference
+
+### Community 123 - "09 — Execution Safety"
+Cohesion: 0.22
+Nodes (8): 09 — Execution Safety, Avoid destructive operations, Generated output, Network caution, Read-only command preference, Scope control, Test safety, Time/coverage integrity
+
+### Community 124 - "12 — Action Protocol"
+Cohesion: 0.22
+Nodes (8): 12 — Action Protocol, Action ID, Prioritization, QUALITY, RELEASE, Required action fields, STABILIZATION, Work lanes
+
+### Community 125 - "TodayModalsHost"
 Cohesion: 0.13
-Nodes (14): 1 Aylık Plan, 1 Haftalık Plan, 2 Haftalık Plan, Alan Puanları, Benim Günlerim — Full Project Scorecard, En Kritik 10 Sorun, Final Not, Genel Güçlü Yönler (+6 more)
+Nodes (6): BrainDumpDialog(), BlockCompletionSheet(), LevelUpDialog(), RoutineArchiveConfirmDialog(), MissedDayReviewSheet(), TodayModalsHost()
 
-### Community 115 - "Production Readiness Planı"
+### Community 127 - "Delta report must include"
 Cohesion: 0.22
-Nodes (9): Bildirim ve Background İşleri, Build & Release, CI/CD ve Kalite Kapıları, Güvenlik ve Gizlilik, Performans ve Operasyon, Production Readiness Planı, Test Stratejisi, UX, Lokalizasyon ve Erişilebilirlik (+1 more)
+Nodes (8): 15 — Delta and Regression Protocol, Action delta, Delta report must include, Finding delta, Improvement attribution, Regression delta, Rubric-version warning, Score delta
 
-### Community 116 - "4. Sprint Durumu"
+### Community 130 - "Theme.kt"
+Cohesion: 0.09
+Nodes (7): BreathingCircle(), BreathingCircleExhalingPreview(), BreathingCirclePreview(), RoutineRowFilledPreview(), TaskRowFilledPreview(), BenimGunlerimTheme(), TodayColorTokens
+
+### Community 133 - "17 — Reporting Contract"
 Cohesion: 0.22
-Nodes (9): 4. Sprint Durumu, Sprint 0 — Temel davranış ve davranış kilidi, Sprint 1 — Lokalizasyon ve metin kalitesi, Sprint 2 — Semantic color system, Sprint 3 — Card ve button system, Sprint 4 — Rutin etkileşimi, Sprint 5 — Header, gün kapatma ve missed day polish, Sprint 6 — Erişilebilirlik ve hitbox (+1 more)
+Nodes (8): 17 — Reporting Contract, Evidence limitation section, Findings table, Mandatory distinction labels, No hidden secret values, No misleading precision, Scorecard format, Writing style
 
-### Community 117 - "ProgressBar"
-Cohesion: 0.16
-Nodes (15): Modifier, LevelBadge(), LevelUpDialog(), Modifier, StreakBadge(), Modifier, XpBadge(), Color (+7 more)
-
-### Community 118 - "AppBadgeVariant"
+### Community 135 - "18 — Stack Adapter Guidance"
 Cohesion: 0.22
-Nodes (12): AppBadge(), AppBadgeVariant, Error, Info, Neutral, Success, Warning, AppColorBadge() (+4 more)
+Nodes (8): 18 — Stack Adapter Guidance, Android / Kotlin / Compose, Library / SDK, ML / AI system, React Native / Expo, React / Next.js / Web, Spring Boot / Backend, Unity / Game
 
-### Community 120 - "BenimGunlerimApplication.kt"
-Cohesion: 0.20
-Nodes (7): AppCrashHandler, ReportingUncaughtExceptionHandler, BenimGunlerimApplication, AppEventCoordinator, ensureRoutineNotificationChannel(), Application, Thread
-
-### Community 121 - "Sıralı audit planı"
-Cohesion: 0.14
-Nodes (13): 11 — Agent Run Order, 1. State / ViewModel Audit, 2. Data / Database Audit, 3. Frontend / Compose Audit, 4. Product / UX Audit, 5. Security / Privacy Audit, 6. Performance Audit, 7. Testing / QA Audit (+5 more)
-
-### Community 123 - "Güncel Puan Tablosu — 2026-08-18"
-Cohesion: 0.15
-Nodes (12): Bu Turda (Tur 3) Kapatılan Maddeler, Genel Puan, Güncel P0 Listesi, Güncel Puan Tablosu — 2026-08-18, Kapsam ve Güvenilirlik Notu, Puan Değişim Tablosu, Tur 4 — Product/UX Açık Madde Doğrulaması (kod kanıtıyla, puan değişmedi), Tur 5 — Product/UX P1 Kapanışları (gerçek kod değişikliği) (+4 more)
-
-### Community 124 - "TaskDetailSheet"
-Cohesion: 0.26
-Nodes (8): SheetSectionHeader(), TaskDetailCallbacks, TaskDetailFormActions, TaskDetailFormData, TaskDetailFormFields(), TaskDetailOptionsSection(), TaskDetailSheet(), TaskDetailSubtasksSection()
-
-### Community 127 - "Incremental Re-Audit Report — 2026-08-18"
-Cohesion: 0.17
-Nodes (11): Açık Kalan Eski Riskler, Doğrulama Kanıtı (bu oturumda çalıştırıldı), Güncel P0 Listesi, Güncel Yayın Kararı, İncelenen Değişiklik Aralığı, Incremental Re-Audit Report — 2026-08-18, Kapanan Eski Riskler, Kapsam Kararı (+3 more)
-
-### Community 128 - "TodayScreenTest"
+### Community 136 - "02 — Project Purpose"
 Cohesion: 0.22
-Nodes (3): ActivityScenarioRule, AndroidComposeTestRule, TodayScreenTest
+Nodes (8): 02 — Project Purpose, Failure consequences, Non-goals, Primary purpose, Primary user promises, Purpose confidence/conflicts, Release context, Success conditions
 
-### Community 129 - "SystemDateTimeProvider"
-Cohesion: 0.18
-Nodes (3): DateTimeProvider, DateTimeProvider, SystemDateTimeProvider
-
-### Community 130 - "BenimGunlerimTheme"
-Cohesion: 0.29
-Nodes (7): BreathingCircle(), Modifier, BreathingCircleExhalingPreview(), BreathingCirclePreview(), RoutineRowFilledPreview(), TaskRowFilledPreview(), BenimGunlerimTheme()
-
-### Community 131 - ".add"
-Cohesion: 0.12
-Nodes (12): AchievementEvaluationService, CloseDaySheet(), CloseDayStep0Summary(), CloseDayStep1MoodEnergy(), Color, CloseDayStep2Reflection(), CloseDayStep3IntentionAndCarry(), CloseSheetModal() (+4 more)
-
-### Community 132 - "AddTasksBatchUseCaseTest"
+### Community 137 - "Delta Report"
 Cohesion: 0.22
-Nodes (3): AddTasksBatchUseCaseTest, DatabaseTransactionRunner, DateTimeProvider
+Nodes (8): Action changes, Delta Report, Finding changes, Main improvements, Overall delta, Remaining risks, Run comparison, Score delta
 
-### Community 135 - "Dependency ve Platform Sağlığı Politikası"
-Cohesion: 0.25
-Nodes (7): Cadence, Dependency ve Platform Sağlığı Politikası, Otomasyon, Sürümleme Kuralı, Takip Edilecek Borçlar, targetSdk Politikası, Zorunlu Kontroller
-
-### Community 136 - "Performans Politikası"
-Cohesion: 0.25
-Nodes (7): Büyük Veri Senaryoları (Manual Deep Gate), CI Deep Gate, Gate Komutları, Performans Politikası, Threshold'lar, Uygulama Başlangıç İlkeleri, Ölçüm Kapsamı
-
-### Community 137 - "Test Stratejisi"
+### Community 138 - "GameEvent"
 Cohesion: 0.22
-Nodes (8): Flaky Test Politikasi, Kısa Vadeli Hedefler, Nightly veya Manual Deep Gate, PR Gate, Release Gate, Risk Odakli Test Alanlari, Test Stratejisi, UI ve Görsel Doğrulama Standardı
-
-### Community 138 - "SettingsEvent"
-Cohesion: 0.20
-Nodes (8): DataCleared, ExportFailed, ExportSaved, ExportWriteFailed, ImportParseFailed, ImportReadFailed, ImportSuccess, SettingsEvent
-
-### Community 141 - "DataExportService.kt"
-Cohesion: 0.27
-Nodes (3): ErrorReporter, DataExportService, JSONArray
-
-### Community 142 - "Incremental Re-Audit Report — 2026-08-17"
-Cohesion: 0.20
-Nodes (10): Açık Kalan Eski Riskler, Güncel P0 Listesi, Güncel Yayın Kararı, İncelenen Değişiklik Aralığı, Incremental Re-Audit Report — 2026-08-17, Kapanan Eski Riskler, Kapsam Kararı, Sonraki En Mantıklı PR (+2 more)
-
-### Community 143 - "FakeTransactionRunner"
-Cohesion: 0.25
-Nodes (4): FakeTransactionRunner, DatabaseTransactionRunner, T, FakeTransactionRunnerTest
-
-### Community 147 - "FakeAchievementDao"
-Cohesion: 0.15
-Nodes (3): FakeAchievementDao, DataExportService, DataExportService
-
-### Community 148 - "00 — Master Audit Prompt"
-Cohesion: 0.22
-Nodes (8): 00 — Master Audit Prompt, Denetim tarzı, Her raporda zorunlu format, İlk tur kuralı, Proje bağlamı, Puanlama standardı, Rol, Özel odak alanları
-
-### Community 150 - "7. Temel Kullanıcı Akışları"
-Cohesion: 0.22
-Nodes (9): 7.1 İlk kullanım akışı, 7.2 Görev oluşturma akışı, 7.3 Günlük görev tamamlama akışı, 7.4 Rutin oluşturma ve sürdürme akışı, 7.5 Planlama akışı, 7.6 Gün sonu akışı, 7.7 İlerleme ve başarımlar akışı, 7.8 Bildirim akışı (+1 more)
-
-### Community 151 - "NotificationMatrixSmokeTest.kt"
-Cohesion: 0.39
-Nodes (5): BroadcastReceiver, Context, DateTimeProvider, Intent, RoutineReminderReceiver
-
-### Community 152 - "Dış Release Kurulum Kontrolü"
-Cohesion: 0.29
-Nodes (6): Branch Protection, Dış Release Kurulum Kontrolü, GitHub Secrets, Monitoring, Play Console, Tag Protection
-
-### Community 153 - "RoutineEntity"
-Cohesion: 0.17
-Nodes (3): RoutineEntity, UnarchiveRoutineUseCase, RoutineReminderSchedulerContract
-
-### Community 154 - "BenimGünlerim — Güncel Proje Durumu"
-Cohesion: 0.29
-Nodes (7): 1. Mevcut Konum, 2. Tamamlanan Ürün Kapsamı, 3. Son Doğrulamalar, 5. Production Öncesi Açıklar, 6. Önerilen Uygulama Sırası, 7. Doküman Kullanım Kuralı, BenimGünlerim — Güncel Proje Durumu
-
-### Community 155 - "BenimGünlerim"
-Cohesion: 0.29
-Nodes (7): BenimGünlerim, Geliştirme Ortamı, Hızlı Kontrol, Mevcut Ürün Kapsamı, Production Dokümanları, Release Kontrolü, Teknoloji
-
-### Community 156 - "AnalyticsTracker"
-Cohesion: 0.10
-Nodes (11): AnalyticsEvent, AnalyticsTracker, LocalAnalyticsTracker, SaveMissedDaySummaryUseCase, Result, UpdateRoutineProgressUseCase, CloseDayDraft, TodayDayCloseActions (+3 more)
-
-### Community 157 - "02 — Frontend / Jetpack Compose Audit Prompt"
-Cohesion: 0.25
-Nodes (7): 02 — Frontend / Jetpack Compose Audit Prompt, Beklenen öneri tipi, Cevaplaman gereken sorular, Dosya bazlı özel kontrol, İncelenecek alanlar, Rapor formatına ek tablo, Rol
-
-### Community 158 - "OperationResult"
-Cohesion: 0.33
-Nodes (5): Failure, T, OperationResult, Success, ValidationError
-
-### Community 159 - "DailySummaryReceiver.kt"
-Cohesion: 0.53
-Nodes (4): DailySummaryReceiver, BroadcastReceiver, Context, Intent
-
-### Community 160 - "MorningPlannerReceiver.kt"
-Cohesion: 0.53
-Nodes (4): BroadcastReceiver, Context, Intent, MorningPlannerReceiver
-
-### Community 161 - "03 — State / ViewModel Audit Prompt"
-Cohesion: 0.25
-Nodes (7): 03 — State / ViewModel Audit Prompt, Beklenen öneri tipi, Cevaplaman gereken sorular, Odak alanları, Rapor formatına ek tablo, Rol, Özellikle ara
-
-### Community 162 - "SnoozeReceiver.kt"
-Cohesion: 0.53
-Nodes (4): BroadcastReceiver, Context, Intent, SnoozeReceiver
-
-### Community 163 - "TaskReminderReceiver.kt"
-Cohesion: 0.53
-Nodes (4): BroadcastReceiver, Context, Intent, TaskReminderReceiver
-
-### Community 164 - "RoutinesScreenTest"
-Cohesion: 0.38
-Nodes (3): ActivityScenarioRule, AndroidComposeTestRule, RoutinesScreenTest
-
-### Community 168 - "Gizlilik ve Yedekleme Politikası"
-Cohesion: 0.33
-Nodes (5): Android Backup Davranışı, Değişiklik Kararı, Gizlilik ve Yedekleme Politikası, Production Gereksinimleri, Yerel Veri
-
-### Community 169 - "GameEvent"
-Cohesion: 0.20
 Nodes (8): AchievementUnlocked, AllRoutinesCompleted, AllTasksCompleted, GameEvent, LevelUp, MiniBanner, RewardEarned, TodayModalStates
 
-### Community 170 - "ErrorReporter"
-Cohesion: 0.29
-Nodes (3): AppCrashHandlerTest, ErrorReporter, ErrorReporter
+### Community 142 - "AppModule.kt"
+Cohesion: 0.10
+Nodes (4): LocalDataClearer, LocalDataClearerImpl, RandomProvider, SystemRandomProvider
 
-### Community 171 - "01 — Product & UX Audit Prompt"
-Cohesion: 0.29
-Nodes (6): 01 — Product & UX Audit Prompt, Cevaplaman gereken sorular, İncelenecek ana alanlar, Rapor formatı, Rol, Özellikle kontrol et
+### Community 145 - "OnboardingScreen"
+Cohesion: 0.16
+Nodes (9): IntensityCard(), IntensityOption, NeedCard(), NeedOption, OnboardingScreen(), SelectableRoutineRow(), OnboardingSuggestions, SuggestedRoutine (+1 more)
 
-### Community 172 - "GitHub Branch/Tag Protection ve Secrets Checklist"
-Cohesion: 0.33
-Nodes (5): Branch Protection, GitHub Branch/Tag Protection ve Secrets Checklist, Otomasyon, Secrets, Tag Protection
-
-### Community 174 - "04 — Data / Database Audit Prompt"
-Cohesion: 0.29
-Nodes (6): 04 — Data / Database Audit Prompt, Cevaplaman gereken sorular, Odak alanları, Rapor formatına ek tablo, Rol, Özellikle kontrol et
-
-### Community 175 - "05 — Backend / Sync Readiness Audit Prompt"
-Cohesion: 0.29
-Nodes (6): 05 — Backend / Sync Readiness Audit Prompt, Backend yoksa değerlendir, Cevaplaman gereken sorular, Odak alanları, Rapor formatına ek tablo, Rol
-
-### Community 176 - "06 — Security & Privacy Audit Prompt"
-Cohesion: 0.29
-Nodes (6): 06 — Security & Privacy Audit Prompt, Cevaplaman gereken sorular, Güvenli ürün dili, Odak alanları, Rapor formatına ek tablo, Rol
-
-### Community 177 - "07 — Performance Audit Prompt"
-Cohesion: 0.29
-Nodes (6): 07 — Performance Audit Prompt, Cevaplaman gereken sorular, Odak alanları, Rapor formatına ek tablo, Rol, Ölçüm önerileri
-
-### Community 178 - "08 — Testing & QA Audit Prompt"
-Cohesion: 0.29
-Nodes (6): 08 — Testing & QA Audit Prompt, Cevaplaman gereken sorular, Minimum test paketi önerisi, Odak alanları, Rapor formatına ek tablo, Rol
-
-### Community 179 - "09 — Monetization & Release Audit Prompt"
-Cohesion: 0.29
-Nodes (6): 09 — Monetization & Release Audit Prompt, Cevaplaman gereken sorular, Odak alanları, Premium özellik önerilerini dikkatle değerlendir, Rapor formatına ek tablo, Rol
-
-### Community 180 - "RewardGrantService"
-Cohesion: 0.42
-Nodes (4): AlreadyGranted, Granted, GrantResult, RewardGrantService
-
-### Community 181 - "Dosya Bazlı Bulgular"
-Cohesion: 0.29
-Nodes (7): `app/build.gradle.kts`, `app/src/main/java/com/benimgunlerim/ui/settings/OssLicensesScreen.kt`, `app/src/main/java/com/benimgunlerim/ui/settings/SettingsScreen.kt`, `app/src/main/java/com/benimgunlerim/ui/shop/ShopViewModel.kt`, `docs/release/release-checklist.md` ve `docs/production/external-release-setup.md`, Dosya Bazlı Bulgular, `keystore.properties` / `app/proguard-rules.pro`
-
-### Community 182 - "4. Ürün Felsefemiz"
-Cohesion: 0.29
-Nodes (7): 4.1 Küçük adımlar önemlidir, 4.2 Kullanıcı suçlanmaz, 4.3 Gün, görevlerden ibaret değildir, 4.4 İlerleme görünür olmalıdır, 4.5 Sadelik özellik sayısından önemlidir, 4.6 Kontrol kullanıcıdadır, 4. Ürün Felsefemiz
-
-### Community 183 - "SettingsScreenTest"
-Cohesion: 0.47
-Nodes (3): ActivityScenarioRule, AndroidComposeTestRule, SettingsScreenTest
-
-### Community 185 - "Dosya Bazlı Bulgular"
-Cohesion: 0.33
-Nodes (6): `app/build.gradle.kts`, `app/src/main/AndroidManifest.xml`, `app/src/main/java/com/benimgunlerim/data/local/entity/*.kt` (6 entity dosyası), `app/src/main/java/com/benimgunlerim/data/UserPreferencesRepository.kt`, `app/src/main/res/xml/data_extraction_rules.xml`, Dosya Bazlı Bulgular
-
-### Community 188 - "ColorRailCard.kt"
-Cohesion: 0.70
-Nodes (4): ColorRailCard(), Color, Dp, Modifier
-
-### Community 189 - "SettingsViewModelTest.kt"
+### Community 147 - "01 — Operation Modes"
 Cohesion: 0.25
-Nodes (3): UserPreferencesWriter, ErrorReporter, ErrorReporter
+Nodes (7): 01 — Operation Modes, BASELINE, CERTIFY, DISCOVER, FIX, PLAN, REAUDIT
 
-### Community 198 - "Benim Günlerim — Full Project Audit Prompt Pack"
+### Community 148 - "11 — Finding Protocol"
+Cohesion: 0.25
+Nodes (7): 11 — Finding Protocol, Accepted risk, Closing findings, Duplicate policy, Finding IDs, Finding quality test, Required finding fields
+
+### Community 149 - "19 — False Positive and Overengineering Policy"
+Cohesion: 0.25
+Nodes (7): 19 — False Positive and Overengineering Policy, Create a finding when evidence connects structure to real cost/risk, Do not create a finding merely because, Fairness test before deduction, Overengineering penalty, Purpose, Recommendation threshold
+
+### Community 150 - "Current Purpose"
+Cohesion: 0.25
+Nodes (7): Current Purpose, Intended release context, Non-goals, Primary purpose, Primary user promises, Purpose revision, Success conditions
+
+### Community 152 - "13 — FIX Protocol"
+Cohesion: 0.29
+Nodes (6): 13 — FIX Protocol, Authorization gate, Completion status, Failed action, Scope discipline, Verification
+
+### Community 153 - "CloseDaySheet"
+Cohesion: 0.14
+Nodes (8): CloseDaySheet(), CloseDayStep0Summary(), CloseDayStep1MoodEnergy(), CloseDayStep2Reflection(), CloseDayStep3IntentionAndCarry(), CloseSheetModal(), OutlinedSmallButton(), SummaryTile()
+
+### Community 154 - "Project Purpose — RUN-001-BASELINE"
+Cohesion: 0.29
+Nodes (6): Failure consequences, Intended release context, Non-goals, Primary purpose, Primary user promises, Project Purpose — RUN-001-BASELINE
+
+### Community 155 - "BenimGünlerim"
+Cohesion: 0.18
+Nodes (8): graphify, BenimGünlerim, Geliştirme Ortamı, Hızlı Kontrol, Mevcut Ürün Kapsamı, Production Dokümanları, Release Kontrolü, Teknoloji
+
+### Community 156 - "NotificationMatrixSmokeTest.kt"
+Cohesion: 0.13
+Nodes (4): NotificationMatrixSmokeTest, DateTimeProvider, SystemDateTimeProvider, NotificationConstants
+
+### Community 157 - "03 — Audit Scope and Risk"
+Cohesion: 0.29
+Nodes (6): 03 — Audit Scope and Risk, Aggregate risk class, Applicable domains, Audit depth rationale, Explicit N/A domains, Risk dimensions
+
+### Community 158 - "OperationResult"
 Cohesion: 0.40
-Nodes (4): Ana kural, Benim Günlerim — Full Project Audit Prompt Pack, Kullanım, Önerilen çalışma sırası
+Nodes (4): Failure, OperationResult, Success, ValidationError
 
-### Community 199 - "Dosya Bazlı Bulgular"
-Cohesion: 0.25
-Nodes (8): `app/src/main/AndroidManifest.xml`, `app/src/main/java/com/benimgunlerim/analytics/ErrorReporterContextPolicy.kt`, `app/src/main/java/com/benimgunlerim/ui/components/calm/BrainDumpDialog.kt`, `app/src/main/java/com/benimgunlerim/ui/settings/OssLicensesScreen.kt`, `app/src/main/java/com/benimgunlerim/ui/settings/SettingsScreen.kt`, `app/src/main/res/values/strings.xml`, `app/src/main/res/xml/data_extraction_rules.xml` ve `full_backup_content.xml`, Dosya Bazlı Bulgular
-
-### Community 200 - "gradlew"
-Cohesion: 0.83
-Nodes (3): gradlew script, die(), warn()
-
-### Community 201 - "Kalite ve Release İncelemesi — 20 Ağustos 2026"
-Cohesion: 0.25
-Nodes (7): İnceleme sınırları, Kalite puanlama tablosu, Kalite ve Release İncelemesi — 20 Ağustos 2026, Production öncesi zorunlu kapanışlar, Release checklist durumu, Sonuç özeti, Test stratejisi uyumu
-
-### Community 206 - "BrainDumpParser"
-Cohesion: 0.29
-Nodes (4): BrainDumpParser, BrainDumpStep, SELECT_TASKS, WRITE
-
-### Community 207 - "Dosya Bazlı Bulgular"
+### Community 165 - "08 — Scorecard"
 Cohesion: 0.33
-Nodes (6): `app/src/main/java/com/benimgunlerim/data/DataExportService.kt` ve `DataImportService.kt`, `app/src/main/java/com/benimgunlerim/data/local/Migrations.kt`, `app/src/main/java/com/benimgunlerim/data/TaskRepository.kt`, `app/src/main/java/com/benimgunlerim/domain/usecase/ToggleRoutineUseCase.kt`, `app/src/main/java/com/benimgunlerim/ui/today/TodayViewModel.kt`, Dosya Bazlı Bulgular
+Nodes (5): 08 — Scorecard, Evidence limitations, Material deductions, Overall, Score interpretation
 
-### Community 208 - "TodayFabMenu.kt"
-Cohesion: 0.70
-Nodes (4): Color, ImageVector, QuickActionRow(), TodayFabMenuSheet()
+### Community 168 - "3. Tasarım İlkeleri"
+Cohesion: 0.33
+Nodes (6): 3. Tasarım İlkeleri, Bilgi hiyerarşisi dekorasyondan önemlidir, Küçük adım önce gelir, Sakin başarı hissi, Tutarlılık güven yaratır, Yumuşak yönlendirme
 
-### Community 209 - "TaskDeleteRestoreIntegrationTest"
-Cohesion: 0.24
-Nodes (4): DatabaseTransactionRunner, T, TaskDeleteRestoreIntegrationTest, DatabaseTransactionRunner
+### Community 169 - "8. Bileşen Standardı"
+Cohesion: 0.33
+Nodes (6): 8. Bileşen Standardı, Alert ve hata kartları, AppCard ve bilgi kartları, Butonlar, Empty state, ScreenHeroCard
 
-### Community 224 - "SettingsViewModel.kt"
-Cohesion: 0.22
-Nodes (6): normalizedTimeOrNull(), StateFlow, ViewModel, RequestImportJson, SaveExportJson, SettingsUiEffect
+### Community 171 - "9. Ekran Bazlı Tasarım Standardı"
+Cohesion: 0.33
+Nodes (6): 9. Ekran Bazlı Tasarım Standardı, Ayarlar, Bugün, İlerlemen ve başarımlar, Plan, Rutinler
 
-### Community 225 - "MainActivity"
-Cohesion: 0.38
-Nodes (4): MainActivity, NotificationConstants, Bundle, ComponentActivity
+### Community 172 - "TodayDayCloseActions"
+Cohesion: 0.20
+Nodes (4): CloseDayDraft, TodayDayCloseActions, Faz Durumu, Mimari Durumu — Aktif Yeniden Yapılanma
+
+### Community 174 - "Detailed Audit"
+Cohesion: 0.40
+Nodes (4): Detailed Audit, Evidence limitations, Material gaps, VERIFIED strengths
+
+### Community 175 - "Current Project Profile"
+Cohesion: 0.40
+Nodes (4): Current Project Profile, Identity, Risk class, Technical classification
+
+### Community 176 - "04 — Contextual Rubric"
+Cohesion: 0.40
+Nodes (4): 04 — Contextual Rubric, <Domain>, Domain subcriteria, N/A rationale
+
+### Community 177 - "15. Global UI Kuralları"
+Cohesion: 0.40
+Nodes (5): 15. Global UI Kuralları, Geometri ve yüzey, Responsive ve erişilebilirlik, Tipografi ve etkileşim, Uygulama çerçevesi
+
+### Community 178 - "Project Understanding — RUN-001-BASELINE"
+Cohesion: 0.50
+Nodes (3): Architecture and data flow, Constraints and release context, Project Understanding — RUN-001-BASELINE
+
+### Community 179 - "Findings"
+Cohesion: 0.50
+Nodes (3): DEP-001 — Android Gradle Plugin / compile SDK support mismatch, Findings, TEST-001 — KtLint verification gate fails
+
+### Community 180 - "Action Plan"
+Cohesion: 0.50
+Nodes (3): ACT-DEP-001, ACT-TEST-001, Action Plan
+
+### Community 181 - "Release Verdict — CONDITIONAL GO"
+Cohesion: 0.50
+Nodes (3): Conditions before broad public release, Release Verdict — CONDITIONAL GO, Verified gates
+
+### Community 182 - "Rubric Lock"
+Cohesion: 0.50
+Nodes (3): Change policy, Locked scope, Rubric Lock
+
+### Community 185 - "4. Görsel Karakter"
+Cohesion: 0.67
+Nodes (3): 4. Görsel Karakter, Genel ifade, Kaçınılacak ifade
+
+### Community 222 - "ProgressViewModel.kt"
+Cohesion: 0.39
+Nodes (3): ProgressDayUi, ProgressUiState, ProgressViewModel
+
+### Community 226 - "AchievementsViewModel.kt"
+Cohesion: 0.57
+Nodes (3): AchievementsUiState, AchievementsViewModel, AchievementWithStatus
+
+### Community 229 - "BrainDumpStep"
+Cohesion: 0.67
+Nodes (3): BrainDumpStep, SELECT_TASKS, WRITE
+
+### Community 232 - "AppTopBar"
+Cohesion: 0.29
+Nodes (5): Plan, AppTopBar(), `ui/components/layout/AppTopBar.kt`, Değişmez Global UI Sözleşmesi, Uygulama çerçevesi standardı (2026-07-30)
+
+### Community 249 - "TodayListContainers.kt"
+Cohesion: 0.39
+Nodes (6): RoutineListContainer(), TaskListContainer(), todayReorderModifier(), TodayRoutineUi, TodayTaskUi, TodayUiState
+
+### Community 250 - "Destination"
+Cohesion: 0.29
+Nodes (6): Destination, Plan, Progress, Routines, Settings, Today
+
+### Community 254 - "ResetState"
+Cohesion: 0.50
+Nodes (4): ResetState, BREATHING, COMPLETED, INTRO
 
 ## Knowledge Gaps
-- **643 isolated node(s):** `Keys`, `ValidationError`, `Failure`, `TASK`, `ROUTINE` (+638 more)
-  These have ≤1 connection - possible missing edges or undocumented components.
-- **57 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **51 isolated node(s):** `Success`, `ValidationError`, `TASK`, `ROUTINE`, `COMPLETED` (+46 more)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 1023 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **150 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `RoutineEntity` connect `RoutineEntity` to `DataImportServiceTest.kt`, `.add`, `TodayViewModel`, `FakeRoutineDao`, `DataExportService.kt`, `DateTimeProvider.kt`, `StubRoutineDao`, `NotificationMatrixSmokeTest.kt`, `JSONObject`, `AnalyticsTracker`, `CompletionLogEntity`, `RoutinesViewModelTest`, `TodayViewModel.kt`, `RoutineDao`, `DataExportServiceTest`, `DataImportService`, `FakeTaskDao`, `AppModule`, `FakeTaskDao`, `TodayViewModelTest`, `UserPreferences`, `ObserveTodaySnapshotUseCaseTest`, `SettingsViewModelTest.kt`, `TodayRoutineActions`, `FakeRoutineDao`, `RoutineRepository`, `RoutineReminderScheduler`, `StubTaskDao`, `ToggleRoutineUseCase`, `ToggleRoutineUseCaseTest`, `NotificationMatrixSmokeTest`, `CompletionLogExtensionsTest`, `FixedDateTimeProvider`, `TaskCompletionState`?**
-  _High betweenness centrality (0.086) - this node is a cross-community bridge._
-- **Why does `TaskEntity` connect `TaskEntity` to `DataImportServiceTest.kt`, `TodayViewModel`, `AddTasksBatchUseCaseTest`, `DataExportService.kt`, `DateTimeProvider.kt`, `PlanViewModelTest`, `JSONObject`, `PlanViewModel`, `CompletionLogEntity`, `ToggleTaskUseCaseTest`, `TodayViewModel.kt`, `TaskDaoTest`, `DataExportServiceTest`, `DataImportService`, `FakeTaskDao`, `AppModule`, `FakeTaskDao`, `TodayViewModelTest`, `SubTaskEntity`, `UserPreferences`, `ObserveTodaySnapshotUseCaseTest`, `SettingsViewModelTest.kt`, `TodayTaskActions`, `StubTaskDao`, `TaskDeleteRestoreIntegrationTest`, `CarryPendingTasksUseCaseTest`, `TaskDao`, `FixedDateTimeProvider`, `TaskCompletionState`?**
-  _High betweenness centrality (0.069) - this node is a cross-community bridge._
-- **Why does `UserPreferences` connect `UserPreferences` to `SettingsViewModel`, `TodayViewModel`, `UserPreferencesRepository`, `FakeAchievementDao`, `ShopViewModelTest`, `JSONObject`, `OnboardingViewModelTest`, `CompletionLogEntity`, `ToggleTaskUseCaseTest`, `SettingsViewModelTest`, `CloseDayUseCaseTest`, `TodayViewModel.kt`, `FakeAchievementDao`, `DataExportServiceTest`, `DataImportService`, `RewardDisplayService`, `TodayViewModelTest`, `ObserveTodaySnapshotUseCaseTest`, `SettingsViewModelTest.kt`, `ProgressViewModel`, `UserPreferencesAccess`, `AppSurface`, `StubTaskDao`, `ToggleRoutineUseCase`, `RewardGrantServiceTest`, `SettingsViewModel.kt`, `FixedDateTimeProvider`, `TaskCompletionState`, `FakeDailyStateDao`?**
-  _High betweenness centrality (0.066) - this node is a cross-community bridge._
-- **What connects `Keys`, `ValidationError`, `Failure` to the rest of the system?**
-  _643 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **Why does `TaskEntity` connect `TaskEntity` to `TodayViewModel`, `AddTasksBatchUseCaseTest`, `TaskRepositoryImpl`, `GameEngine`, `DataExportService.kt`, `SubTaskEntity`, `StubTaskDao`, `RoutineEntity`, `PlanViewModelTest`, `CompletionLogEntity`, `ToggleTaskUseCaseTest`, `TodayViewModelTest.kt`, `TaskDaoTest`, `DataExportServiceTest`, `DataImportService`, `FakeTaskDao`, `TaskDao`, `AppModule`, `assertequals`, `FakeTaskDao`, `RestoreTaskUseCaseTest`, `TodayViewModelTest`, `UserPreferences`, `AddTaskUseCaseTest`, `TodayTaskActions`, `FakeTaskDao`, `DatabaseTransactionRunner`, `Flow`, `CarryPendingTasksUseCaseTest`, `UpdateTaskUseCaseTest`, `DailyStateRepository`, `TaskDeleteRestoreIntegrationTest`?**
+  _High betweenness centrality (0.076) - this node is a cross-community bridge._
+- **What connects `Success`, `ValidationError`, `TASK` to the rest of the system?**
+  _51 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `DataImportServiceTest.kt` be split into smaller, more focused modules?**
-  _Cohesion score 0.05714285714285714 - nodes in this community are weakly interconnected._
-- **Should `TodayViewModel` be split into smaller, more focused modules?**
-  _Cohesion score 0.05668016194331984 - nodes in this community are weakly interconnected._
-- **Should `TodayModalsHost` be split into smaller, more focused modules?**
-  _Cohesion score 0.0907258064516129 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.08 - nodes in this community are weakly interconnected._
+- **Why does `RoutineEntity` connect `RoutineEntity` to `TodayViewModel`, `GameEngine`, `DataExportService.kt`, `StubRoutineDao`, `NotificationMatrixSmokeTest.kt`, `CompletionLogEntity`, `TodayViewModelTest.kt`, `AchievementEvaluationServiceTest`, `RoutineDao`, `TaskEntity`, `DataExportServiceTest`, `DataImportService`, `FakeTaskDao`, `AppModule`, `assertequals`, `FakeTaskDao`, `TodayViewModelTest`, `FakeRoutineDao`, `TodayRoutineActions`, `UserPreferences`, `RoutineDetailViewModelTest`, `RoutineEntity`, `FakeTaskDao`, `ToggleRoutineUseCaseTest`, `Flow`, `RoutinesViewModelTest`, `CompletionLogExtensionsTest`, `RoutineReminderScheduler`, `DailyStateRepository`?**
+  _High betweenness centrality (0.061) - this node is a cross-community bridge._
+- **Should `SettingsViewModel` be split into smaller, more focused modules?**
+  _Cohesion score 0.06612685560053981 - nodes in this community are weakly interconnected._
+- **Why does `UserPreferencesRepository` connect `UserPreferencesRepository` to `TodayViewModel`, `LocalErrorReporter`, `GameEngine`, `AppModule.kt`, `RoutineEntity`, `ShopViewModel`, `OnboardingViewModelTest`, `CompletionLogEntity`, `ToggleTaskUseCaseTest`, `CloseDayUseCaseTest`, `TodayViewModelTest.kt`, `AppModule`, `assertequals`, `TodayViewModelTest`, `UserPreferences`, `UserPreferencesAccess`, `ReminderBootstrapper`, `ToggleRoutineUseCaseTest`, `RewardGrantServiceTest`, `UserPreferencesRepositoryTest`, `ShopViewModelTest`, `DailyStateRepository`?**
+  _High betweenness centrality (0.054) - this node is a cross-community bridge._
+- **Should `r` be split into smaller, more focused modules?**
+  _Cohesion score 0.10226270937408169 - nodes in this community are weakly interconnected._

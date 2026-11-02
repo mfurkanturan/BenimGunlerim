@@ -13,6 +13,11 @@ plugins {
     jacoco
 }
 
+// Firebase yapılandırması (google-services.json) eklenene kadar uygulama misafir modunda derlenir ve çalışır.
+if (file("google-services.json").exists()) {
+    apply(plugin = libs.plugins.google.services.get().pluginId)
+}
+
 val keystoreProperties = Properties().also { props ->
     val localKeystoreFile = rootProject.file("keystore.properties")
     if (localKeystoreFile.exists()) {
@@ -43,8 +48,8 @@ android {
         applicationId = "com.benimgunlerim"
         minSdk = 26
         targetSdk = 36
-        versionCode = 2
-        versionName = "0.2.0"
+        versionCode = 4
+        versionName = "0.3.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -294,6 +299,12 @@ dependencies {
     ksp(libs.hilt.compiler)
 
     implementation(libs.konfetti.compose)
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.auth)
+    implementation(libs.firebase.firestore)
+    implementation(libs.firebase.messaging)
+    implementation(libs.firebase.config)
+    implementation(libs.kotlinx.coroutines.play.services)
 
     detektPlugins(project(":detekt-rules"))
 

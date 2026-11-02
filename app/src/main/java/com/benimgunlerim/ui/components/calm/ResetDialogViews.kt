@@ -1,227 +1,121 @@
 package com.benimgunlerim.ui.components.calm
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.CheckCircle
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.sp
 import com.benimgunlerim.R
+import com.benimgunlerim.ui.components.core.StarIcon
+import com.benimgunlerim.ui.components.molecules.SegmentedPills
+import com.benimgunlerim.ui.components.molecules.SheetSaveButton
+import com.benimgunlerim.ui.components.molecules.SheetTitle
+import com.benimgunlerim.ui.theme.AppTheme
 import com.benimgunlerim.ui.theme.AppTokens
-import com.benimgunlerim.ui.theme.BrandPrimary
-import com.benimgunlerim.ui.theme.BrandPrimarySoft
-import java.util.Locale
 
-private const val SHORT_RESET_SECONDS = 30
-private const val LONG_RESET_SECONDS = 60
-private const val SECONDS_PER_MINUTE = 60
+private val Durations = listOf(30, 60, 120)
+private const val MaxCandidates = 3
 
 @Composable
-internal fun ResetIntroContent(
-    selectedDuration: Int,
-    onDurationSelect: (Int) -> Unit,
-    onStart: () -> Unit,
-) {
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.fillMaxWidth(),
-    ) {
-        Text(
-            text = stringResource(R.string.reset_subtitle),
-            style = MaterialTheme.typography.bodyLarge,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-            textAlign = TextAlign.Center,
-            lineHeight = 24.sp,
+internal fun ResetIntro(durationSeconds: Int, onDurationSelect: (Int) -> Unit, onStart: () -> Unit) {
+    Column(verticalArrangement = Arrangement.spacedBy(AppTokens.Spacing.md)) {
+        SheetTitle(stringResource(R.string.reset_title))
+        Text(stringResource(R.string.reset_subtitle), style = MaterialTheme.typography.bodyLarge, color = AppTheme.colors.night.muted)
+        SegmentedPills(
+            options = listOf(
+                stringResource(R.string.reset_duration_30s),
+                stringResource(R.string.reset_duration_60s),
+                stringResource(R.string.reset_duration_120s),
+            ),
+            selectedIndex = Durations.indexOf(durationSeconds).coerceAtLeast(0),
+            onSelect = { onDurationSelect(Durations[it]) },
         )
+        SheetSaveButton(text = stringResource(R.string.reset_start), onClick = onStart, modifier = Modifier.padding(top = AppTokens.Spacing.xs))
+    }
+}
 
-        Spacer(modifier = Modifier.height(AppTokens.Spacing.lg + AppTokens.Spacing.xs))
+@Composable
+internal fun ResetBreathing(elapsedMs: Long, totalMs: Long, onEnough: () -> Unit) {
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(AppTokens.Spacing.lg),
+    ) {
+        val left = ((totalMs - elapsedMs).coerceAtLeast(0L) + 999L) / 1_000L
+        Text(
+            text = stringResource(R.string.reset_seconds_left, left),
+            style = MaterialTheme.typography.labelLarge.copy(fontWeight = FontWeight.ExtraBold),
+            color = AppTheme.colors.night.muted,
+        )
+        BreathingMoon(elapsedMs = elapsedMs, totalMs = totalMs)
+        TextButton(onClick = onEnough, modifier = Modifier.heightIn(min = AppTokens.TouchTarget.min)) {
+            Text(stringResource(R.string.reset_enough), color = AppTheme.colors.night.muted)
+        }
+    }
+}
 
-        Row(horizontalArrangement = Arrangement.spacedBy(AppTokens.Spacing.xs + AppTokens.Spacing.xxs / 2)) {
-            listOf(SHORT_RESET_SECONDS, LONG_RESET_SECONDS).forEach { sec ->
-                val isSelected = selectedDuration == sec
-                Box(
-                    modifier = Modifier
-                        .clip(RoundedCornerShape(AppTokens.Radius.md))
-                        .background(if (isSelected) BrandPrimarySoft else MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f))
-                        .border(
-                            if (isSelected) AppTokens.BorderWidth.thin + AppTokens.BorderWidth.thin / 2 else AppTokens.Spacing.none,
-                            if (isSelected) BrandPrimary else Color.Transparent,
-                            RoundedCornerShape(AppTokens.Radius.md),
-                        )
-                        .clickable { onDurationSelect(sec) }
-                        .padding(horizontal = AppTokens.Spacing.lg, vertical = AppTokens.Spacing.sm),
-                    contentAlignment = Alignment.Center,
+/** Nefesten sonra: bugünün açık hedeflerinden biri seçilir ve Bugün'de "şimdi sadece bu" olur. */
+@Composable
+internal fun ResetOneStep(
+    candidates: List<ResetCandidate>,
+    isLightDay: Boolean,
+    onPick: (ResetCandidate) -> Unit,
+    onLightDay: () -> Unit,
+    onDone: () -> Unit,
+) {
+    val night = AppTheme.colors.night
+    Column(verticalArrangement = Arrangement.spacedBy(AppTokens.Spacing.sm)) {
+        SheetTitle(stringResource(R.string.reset_completed_title))
+        Text(
+            text = stringResource(if (candidates.isEmpty()) R.string.reset_no_candidates else R.string.reset_completed_subtitle),
+            style = MaterialTheme.typography.bodyLarge,
+            color = night.muted,
+        )
+        candidates.take(MaxCandidates).forEach { candidate ->
+            Surface(
+                onClick = { onPick(candidate) },
+                shape = RoundedCornerShape(AppTokens.Radius.lg),
+                color = night.card,
+                border = BorderStroke(AppTokens.BorderWidth.thin, night.line),
+                modifier = Modifier.fillMaxWidth().heightIn(min = AppTokens.Layout.fabDefaultSize),
+            ) {
+                Row(
+                    modifier = Modifier.padding(horizontal = AppTokens.Spacing.md, vertical = AppTokens.Spacing.sm),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(AppTokens.Spacing.sm),
                 ) {
-                    Text(
-                        text = if (sec == SHORT_RESET_SECONDS) {
-                            stringResource(R.string.reset_duration_30s)
-                        } else {
-                            stringResource(R.string.reset_duration_60s)
-                        },
-                        style = MaterialTheme.typography.labelLarge.copy(
-                            fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Medium,
-                        ),
-                        color = if (isSelected) BrandPrimary else MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
+                    StarIcon(lit = false, size = AppTokens.Star.row, litColor = night.moon, edgeColor = night.moon, idleColor = night.moon)
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(candidate.title, style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold), color = night.text)
+                        Text(
+                            stringResource(if (candidate.isRoutine) R.string.today_starter_routine else R.string.today_starter_task),
+                            style = MaterialTheme.typography.bodySmall,
+                            color = night.muted,
+                        )
+                    }
                 }
             }
         }
-
-        Spacer(modifier = Modifier.height(AppTokens.Spacing.xxl))
-
-        Button(
-            onClick = onStart,
-            modifier = Modifier.fillMaxWidth().height(AppTokens.Calm.resetButtonHeight),
-            shape = RoundedCornerShape(AppTokens.Calm.resetButtonRadius),
-            colors = ButtonDefaults.buttonColors(containerColor = BrandPrimary),
-        ) {
-            Text(
-                text = stringResource(R.string.reset_start),
-                style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
-                color = Color.White,
-            )
+        if (!isLightDay) {
+            TextButton(onClick = onLightDay, modifier = Modifier.fillMaxWidth().heightIn(min = AppTokens.TouchTarget.min)) {
+                Text(stringResource(R.string.reset_light_day), color = night.moon, fontWeight = FontWeight.Bold)
+            }
         }
-    }
-}
-
-@Composable
-internal fun ResetBreathingContent(
-    remainingSeconds: Int,
-    isExhaling: Boolean,
-    onCancel: () -> Unit,
-) {
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.fillMaxWidth(),
-    ) {
-        Text(
-            text = String.format(
-                Locale.ROOT,
-                "%02d:%02d",
-                remainingSeconds / SECONDS_PER_MINUTE,
-                remainingSeconds % SECONDS_PER_MINUTE,
-            ),
-            style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold),
-            color = BrandPrimary,
-        )
-
-        Spacer(modifier = Modifier.height(AppTokens.Spacing.xxl + AppTokens.Spacing.xs))
-
-        BreathingCircle(isExhaling = isExhaling)
-
-        Spacer(modifier = Modifier.height(AppTokens.Spacing.xxl + AppTokens.Spacing.lg / 2))
-
-        TextButton(onClick = onCancel) {
-            Text(
-                text = stringResource(R.string.action_cancel),
-                style = MaterialTheme.typography.labelLarge,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-        }
-    }
-}
-
-@Suppress("LongMethod")
-@Composable
-internal fun ResetCompletedContent(
-    onPickTask: () -> Unit,
-    onEnableLightDay: () -> Unit,
-    onDismiss: () -> Unit,
-) {
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.fillMaxWidth(),
-    ) {
-        Box(
-            modifier = Modifier.size(AppTokens.Calm.resetCompletedIcon).clip(CircleShape).background(BrandPrimarySoft),
-            contentAlignment = Alignment.Center,
-        ) {
-            Icon(
-                imageVector = Icons.Rounded.CheckCircle,
-                contentDescription = null,
-                tint = BrandPrimary,
-                modifier = Modifier.size(AppTokens.Calm.resetCompletedIconSize),
-            )
-        }
-
-        Spacer(modifier = Modifier.height(AppTokens.Spacing.md))
-
-        Text(
-            text = stringResource(R.string.reset_completed_title),
-            style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold),
-            color = MaterialTheme.colorScheme.onSurface,
-        )
-        Spacer(modifier = Modifier.height(AppTokens.Spacing.xxs + AppTokens.Spacing.xxs / 2))
-        Text(
-            text = stringResource(R.string.reset_completed_subtitle),
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-            textAlign = TextAlign.Center,
-        )
-
-        Spacer(modifier = Modifier.height(AppTokens.Spacing.lg + AppTokens.Spacing.xs))
-
-        Button(
-            onClick = onPickTask,
-            modifier = Modifier.fillMaxWidth().height(AppTokens.TouchTarget.min),
-            shape = RoundedCornerShape(AppTokens.Radius.md),
-            colors = ButtonDefaults.buttonColors(containerColor = BrandPrimary),
-        ) {
-            Text(
-                text = stringResource(R.string.reset_pick_task),
-                style = MaterialTheme.typography.titleSmall.copy(fontWeight = FontWeight.Bold),
-                color = Color.White,
-            )
-        }
-
-        Spacer(modifier = Modifier.height(AppTokens.Spacing.xs + AppTokens.Spacing.xxs / 2))
-
-        OutlinedButton(
-            onClick = onEnableLightDay,
-            modifier = Modifier.fillMaxWidth().height(AppTokens.TouchTarget.min),
-            shape = RoundedCornerShape(AppTokens.Radius.md),
-        ) {
-            Text(
-                text = stringResource(R.string.reset_light_day),
-                style = MaterialTheme.typography.titleSmall.copy(fontWeight = FontWeight.SemiBold),
-                color = BrandPrimary,
-            )
-        }
-
-        Spacer(modifier = Modifier.height(AppTokens.Spacing.xs))
-
-        TextButton(onClick = onDismiss) {
-            Text(
-                text = stringResource(R.string.reset_continue),
-                style = MaterialTheme.typography.labelLarge,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
+        TextButton(onClick = onDone, modifier = Modifier.fillMaxWidth().heightIn(min = AppTokens.TouchTarget.min)) {
+            Text(stringResource(R.string.reset_continue), color = night.muted, textAlign = TextAlign.Center)
         }
     }
 }

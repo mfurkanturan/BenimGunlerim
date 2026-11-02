@@ -74,6 +74,10 @@ class SettingsViewModel @Inject constructor(
         }
     }
 
+    fun setUserName(name: String) {
+        viewModelScope.launch { preferencesRepository.setUserName(name) }
+    }
+
     fun setAnalyticsEnabled(enabled: Boolean) {
         viewModelScope.launch { preferencesRepository.setAnalyticsEnabled(enabled) }
     }

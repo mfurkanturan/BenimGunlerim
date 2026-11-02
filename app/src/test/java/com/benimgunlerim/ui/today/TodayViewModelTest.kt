@@ -1,6 +1,7 @@
 package com.benimgunlerim.ui.today
 
 import com.benimgunlerim.R
+import com.benimgunlerim.ui.theme.CategoryTones
 import com.benimgunlerim.analytics.AnalyticsTracker
 import com.benimgunlerim.data.UserPreferences
 import com.benimgunlerim.data.UserPreferencesRepository
@@ -45,9 +46,6 @@ import com.benimgunlerim.domain.usecase.ArchiveRoutineUseCase
 import com.benimgunlerim.domain.usecase.UpdateTaskUseCase
 import com.benimgunlerim.domain.usecase.UpdateTaskTitleUseCase
 import androidx.compose.ui.graphics.Color
-import com.benimgunlerim.ui.theme.Info
-import com.benimgunlerim.ui.theme.Streak
-import com.benimgunlerim.ui.theme.Success
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import io.mockk.coEvery
@@ -110,6 +108,7 @@ class TodayViewModelTest {
     private val updateRoutineUseCase: UpdateRoutineUseCase = mockk(relaxed = true)
     private val skipRoutineUseCase: SkipRoutineUseCase = mockk(relaxed = true)
     private val archiveRoutineUseCase: ArchiveRoutineUseCase = mockk(relaxed = true)
+    private val addRoutineUseCase: com.benimgunlerim.domain.usecase.AddRoutineUseCase = mockk(relaxed = true)
     private val closeDayUseCase: CloseDayUseCase = mockk(relaxed = true)
     private val carryPendingTasksUseCase: CarryPendingTasksUseCase = mockk(relaxed = true)
     private val observeDailyStateUseCase: ObserveDailyStateUseCase = mockk(relaxed = true)
@@ -189,7 +188,8 @@ class TodayViewModelTest {
         viewModel.addTasksFromBrainDump(titles)
         advanceUntilIdle()
 
-        coVerify { addTasksBatchUseCase(titles = titles, date = fixedDate, priority = 1) }
+        // "Kafam dolu" görevleri normal öncelikle eklenir (1 = Yüksek olurdu).
+        coVerify { addTasksBatchUseCase(titles = titles, date = fixedDate, priority = 2) }
     }
 
     @Test
@@ -492,10 +492,10 @@ class TodayViewModelTest {
 
     @Test
     fun categoryPalette_matchesTurkishKeywords() {
-        assertEquals(Info, CategoryPalette.colorFor("İş toplantısı"))
-        assertEquals(Success, CategoryPalette.colorFor("Sağlık yürüyüş"))
-        assertEquals(Color(0xFF64748B), CategoryPalette.colorFor("Market listesi"))
-        assertEquals(Streak, CategoryPalette.colorFor("Çocuk parkı"))
+        assertEquals(CategoryTones[1].fg, CategoryPalette.colorFor("İş toplantısı"))
+        assertEquals(CategoryTones[0].fg, CategoryPalette.colorFor("Sağlık yürüyüş"))
+        assertEquals(CategoryTones[5].fg, CategoryPalette.colorFor("Market listesi"))
+        assertEquals(CategoryTones[3].fg, CategoryPalette.colorFor("Çocuk parkı"))
     }
 
     // ── Helpers ───────────────────────────────────────────────────────────────
@@ -574,6 +574,7 @@ class TodayViewModelTest {
         updateRoutineUseCase,
         skipRoutineUseCase,
         archiveRoutineUseCase,
+        addRoutineUseCase,
         closeDayUseCase,
         carryPendingTasksUseCase,
         observeDailyStateUseCase,

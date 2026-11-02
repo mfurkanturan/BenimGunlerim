@@ -18,8 +18,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import com.benimgunlerim.ui.theme.AppTokens
-import com.benimgunlerim.ui.theme.CandyPrimary
-import com.benimgunlerim.ui.theme.SemanticError
 
 enum class AppButtonVariant { Primary, Secondary, Ghost, Danger }
 
@@ -53,10 +51,10 @@ fun AppButton(
             enabled = enabled,
             shape = shape,
             colors = ButtonDefaults.buttonColors(
-                containerColor = CandyPrimary,
-                contentColor = Color.White,
-                disabledContainerColor = CandyPrimary.copy(alpha = 0.4f),
-                disabledContentColor = Color.White.copy(alpha = 0.6f),
+                containerColor = MaterialTheme.colorScheme.primary,
+                contentColor = MaterialTheme.colorScheme.onPrimary,
+                disabledContainerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.4f),
+                disabledContentColor = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.6f),
             ),
         ) {
             iconContent()
@@ -69,12 +67,12 @@ fun AppButton(
             enabled = enabled,
             shape = shape,
             colors = ButtonDefaults.outlinedButtonColors(
-                contentColor = CandyPrimary,
-                disabledContentColor = CandyPrimary.copy(alpha = 0.4f),
+                contentColor = MaterialTheme.colorScheme.primary,
+                disabledContentColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.4f),
             ),
             border = BorderStroke(
                 1.dp,
-                if (enabled) CandyPrimary else CandyPrimary.copy(alpha = 0.3f),
+                if (enabled) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.primary.copy(alpha = 0.3f),
             ),
         ) {
             iconContent()
@@ -102,10 +100,10 @@ fun AppButton(
             enabled = enabled,
             shape = shape,
             colors = ButtonDefaults.buttonColors(
-                containerColor = SemanticError,
-                contentColor = Color.White,
-                disabledContainerColor = SemanticError.copy(alpha = 0.4f),
-                disabledContentColor = Color.White.copy(alpha = 0.6f),
+                containerColor = MaterialTheme.colorScheme.error,
+                contentColor = MaterialTheme.colorScheme.onError,
+                disabledContainerColor = MaterialTheme.colorScheme.error.copy(alpha = 0.4f),
+                disabledContentColor = MaterialTheme.colorScheme.onError.copy(alpha = 0.6f),
             ),
         ) {
             iconContent()

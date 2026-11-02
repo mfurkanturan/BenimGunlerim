@@ -1,5 +1,6 @@
 package com.benimgunlerim.ui.components.gamification
 
+import com.benimgunlerim.ui.theme.AppTheme
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -13,22 +14,20 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import com.benimgunlerim.R
 import com.benimgunlerim.ui.theme.AppTokens
-import com.benimgunlerim.ui.theme.Streak
-import com.benimgunlerim.ui.theme.StreakSoft
 
 @Composable
 fun StreakBadge(streak: Int, modifier: Modifier = Modifier) {
     Row(
         modifier = modifier
             .clip(RoundedCornerShape(AppTokens.Radius.pill))
-            .background(StreakSoft)
+            .background(AppTheme.colors.reward.streakSoft)
             .padding(horizontal = AppTokens.Spacing.sm, vertical = AppTokens.Spacing.xxs),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
             text = stringResource(R.string.streak_badge_format, streak),
             style = MaterialTheme.typography.labelMedium,
-            color = Streak,
+            color = AppTheme.colors.reward.streak,
         )
     }
 }

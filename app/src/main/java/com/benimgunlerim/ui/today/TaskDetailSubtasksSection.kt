@@ -41,8 +41,6 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import com.benimgunlerim.R
 import com.benimgunlerim.data.local.entity.SubTaskEntity
-import com.benimgunlerim.ui.theme.CandyPrimary
-import com.benimgunlerim.ui.theme.StreakCoral
 
 private val ItemCornerRadius = 10.dp
 private val InputCornerRadius = 8.dp
@@ -81,14 +79,14 @@ internal fun TaskDetailSubtasksSection(
                 ) {
                     Box(
                         Modifier.size(22.dp).clip(CircleShape)
-                            .background(if (st.isCompleted) CandyPrimary else CandyPrimary.copy(alpha = 0.12f))
-                            .border(1.5.dp, CandyPrimary.copy(alpha = if (st.isCompleted) 1f else 0.4f), CircleShape)
+                            .background(if (st.isCompleted) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.primary.copy(alpha = 0.12f))
+                            .border(1.5.dp, MaterialTheme.colorScheme.primary.copy(alpha = if (st.isCompleted) 1f else 0.4f), CircleShape)
                             .semantics { contentDescription = subtaskToggleCd }
                             .clickable(enabled = !interactionLocked) { onToggleSubTask(st) },
                         contentAlignment = Alignment.Center,
                     ) {
                         if (st.isCompleted) {
-                            Icon(Icons.Rounded.Check, contentDescription = null, tint = Color.White, modifier = Modifier.size(14.dp))
+                            Icon(Icons.Rounded.Check, contentDescription = null, tint = MaterialTheme.colorScheme.onPrimary, modifier = Modifier.size(14.dp))
                         }
                     }
                     Text(
@@ -107,7 +105,7 @@ internal fun TaskDetailSubtasksSection(
                         Icon(
                             Icons.Rounded.DeleteOutline,
                             contentDescription = stringResource(R.string.today_delete_label),
-                            tint = StreakCoral,
+                            tint = MaterialTheme.colorScheme.error,
                             modifier = Modifier.size(16.dp),
                         )
                     }
@@ -146,9 +144,9 @@ internal fun TaskDetailSubtasksSection(
                     }
                 },
                 enabled = !interactionLocked,
-                modifier = Modifier.size(48.dp).clip(RoundedCornerShape(InputCornerRadius)).background(CandyPrimary),
+                modifier = Modifier.size(48.dp).clip(RoundedCornerShape(InputCornerRadius)).background(MaterialTheme.colorScheme.primary),
             ) {
-                Icon(Icons.Rounded.Add, contentDescription = stringResource(R.string.today_subtask_add_cd), tint = Color.White)
+                Icon(Icons.Rounded.Add, contentDescription = stringResource(R.string.today_subtask_add_cd), tint = MaterialTheme.colorScheme.onPrimary)
             }
         }
     }

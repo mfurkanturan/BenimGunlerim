@@ -55,6 +55,8 @@ class AccessibilityTest {
 
     @Test
     fun today_fab_has_content_description() {
+        // Ekle satırı listenin altında; önce ona kaydır.
+        composeTestRule.onNodeWithTag(TestTags.TodayList).performScrollToNode(hasTestTag(TestTags.TodayFab))
         composeTestRule
             .onNodeWithContentDescription(
                 InstrumentationRegistry.getInstrumentation().targetContext.getString(R.string.today_add_task_fab_cd),
@@ -65,6 +67,7 @@ class AccessibilityTest {
 
     @Test
     fun today_fab_touch_target_is_at_least_48dp() {
+        composeTestRule.onNodeWithTag(TestTags.TodayList).performScrollToNode(hasTestTag(TestTags.TodayFab))
         composeTestRule
             .onNodeWithTag(TestTags.TodayFab)
             .assertWidthIsAtLeast(48.dp)
@@ -167,12 +170,14 @@ class AccessibilityTest {
             .onNodeWithTag(TestTags.PlanRoot)
             .assertIsDisplayed()
         composeTestRule
+            .onNodeWithTag(TestTags.PlanWeekPicker)
+            .assertIsDisplayed()
+        // Ekleme satırı listenin sonunda; görev çoksa ekran dışında kalabilir.
+        composeTestRule.onNodeWithTag(TestTags.PlanRoot).performScrollToNode(hasTestTag(TestTags.PlanFab))
+        composeTestRule
             .onNodeWithTag(TestTags.PlanFab)
             .assertIsDisplayed()
             .assertHasClickAction()
-        composeTestRule
-            .onNodeWithTag(TestTags.PlanWeekPicker)
-            .assertIsDisplayed()
     }
 
     @Test

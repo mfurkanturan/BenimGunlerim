@@ -36,7 +36,6 @@ import com.benimgunlerim.R
 import com.benimgunlerim.ui.components.core.AppSurface
 import com.benimgunlerim.ui.components.layout.DetailScreenScaffold
 import com.benimgunlerim.ui.theme.AppTokens
-import com.benimgunlerim.ui.theme.BrandPrimary
 
 data class PrivacySection(
     val title: String,
@@ -133,7 +132,7 @@ fun PrivacyPolicyScreen(
                 Icon(
                     imageVector = Icons.Rounded.OpenInBrowser,
                     contentDescription = stringResource(R.string.privacy_web_action_cd),
-                    tint = BrandPrimary,
+                    tint = MaterialTheme.colorScheme.primary,
                 )
             }
         },
@@ -166,7 +165,7 @@ private fun PrivacyHeaderCard() {
             Icon(
                 imageVector = Icons.Rounded.Security,
                 contentDescription = null,
-                tint = BrandPrimary,
+                tint = MaterialTheme.colorScheme.primary,
             )
             Column {
                 Text(
@@ -201,7 +200,7 @@ private fun PrivacySectionCard(section: PrivacySection) {
                 Icon(
                     imageVector = section.icon,
                     contentDescription = null,
-                    tint = BrandPrimary,
+                    tint = MaterialTheme.colorScheme.primary,
                 )
                 Text(
                     text = section.title,

@@ -9,6 +9,7 @@ import com.benimgunlerim.data.UserPreferencesRepository
 import com.benimgunlerim.data.currentStreak
 import com.benimgunlerim.data.currentStreakForEntity
 import com.benimgunlerim.data.isScheduledFor
+import com.benimgunlerim.data.targetDaySet
 import com.benimgunlerim.data.local.entity.CompletionLogEntity
 import com.benimgunlerim.data.local.entity.DailyStateEntity
 import com.benimgunlerim.data.local.entity.RoutineEntity
@@ -76,6 +77,7 @@ class ObserveTodaySnapshotUseCase @Inject constructor(
                     CompletionEntityType.ROUTINE.value,
                     routine.id,
                     today,
+                    routine.targetDaySet(),
                 )
             },
             gameState = prefs,

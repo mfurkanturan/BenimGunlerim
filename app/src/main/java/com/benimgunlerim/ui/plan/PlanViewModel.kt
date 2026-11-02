@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.benimgunlerim.data.local.entity.SubTaskEntity
 import com.benimgunlerim.data.local.entity.TaskEntity
+import com.benimgunlerim.data.TaskRepository
 import com.benimgunlerim.domain.DateTimeProvider
 import com.benimgunlerim.domain.usecase.AddTaskUseCase
 import com.benimgunlerim.domain.usecase.DeleteTaskUseCase
@@ -57,6 +58,7 @@ class PlanViewModel @Inject constructor(
     private val moveTaskToDateUseCase: MoveTaskToDateUseCase,
     private val updateTaskUseCase: UpdateTaskUseCase,
     private val restoreTaskUseCase: RestoreTaskUseCase,
+    private val taskRepository: TaskRepository,
 ) : ViewModel() {
     private val today = dateTimeProvider.today()
     private val _selectedDate = MutableStateFlow(today)
@@ -166,6 +168,17 @@ class PlanViewModel @Inject constructor(
     fun toggleTask(taskId: String) {
         val task = latestTasksById[taskId] ?: return
         viewModelScope.launch { toggleTaskUseCase(task) }
+    }
+
+    fun reorderTasks(orderedTaskIds: List<String>) {
+        val tasks = orderedTaskIds.mapNotNull(latestTasksById::get)
+        if (tasks.size != orderedTaskIds.size) return
+        viewModelScope.launch {
+            // Tamamlananlar her zaman listenin sonunda kalır.
+            val pending = tasks.filter { it.completionState != com.benimgunlerim.domain.model.TaskCompletionState.COMPLETED.value }
+            val completed = tasks.filter { it.completionState == com.benimgunlerim.domain.model.TaskCompletionState.COMPLETED.value }
+            taskRepository.reorder(pending + completed)
+        }
     }
 
     fun moveTaskToDate(taskId: String, date: LocalDate) {

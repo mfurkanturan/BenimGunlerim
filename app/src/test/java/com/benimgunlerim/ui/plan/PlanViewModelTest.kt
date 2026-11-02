@@ -2,6 +2,7 @@
 
 package com.benimgunlerim.ui.plan
 
+import com.benimgunlerim.data.TaskRepository
 import com.benimgunlerim.data.local.entity.TaskEntity
 import com.benimgunlerim.domain.DateTimeProvider
 import com.benimgunlerim.domain.usecase.AddTaskUseCase
@@ -48,6 +49,7 @@ class PlanViewModelTest {
     private val moveTaskToDateUseCase: MoveTaskToDateUseCase = mockk(relaxed = true)
     private val updateTaskUseCase: UpdateTaskUseCase = mockk(relaxed = true)
     private val restoreTaskUseCase: RestoreTaskUseCase = mockk(relaxed = true)
+    private val taskRepository: TaskRepository = mockk(relaxed = true)
     private val fixedDate = LocalDate.of(2025, 6, 9)
 
     private lateinit var viewModel: PlanViewModel
@@ -69,6 +71,7 @@ class PlanViewModelTest {
             moveTaskToDateUseCase = moveTaskToDateUseCase,
             updateTaskUseCase = updateTaskUseCase,
             restoreTaskUseCase = restoreTaskUseCase,
+            taskRepository = taskRepository,
         )
     }
 

@@ -18,7 +18,6 @@ import com.benimgunlerim.R
 import com.benimgunlerim.ui.components.core.AppSurface
 import com.benimgunlerim.ui.components.layout.DetailScreenScaffold
 import com.benimgunlerim.ui.theme.AppTokens
-import com.benimgunlerim.ui.theme.BrandPrimary
 
 data class OpenSourceLibrary(
     val name: String,
@@ -88,6 +87,18 @@ private val LIBRARIES = listOf(
         license = "Apache License 2.0",
         description = "Dependency injection for Android applications.",
     ),
+    OpenSourceLibrary(
+        name = "Nunito",
+        author = "The Nunito Project Authors",
+        license = "SIL Open Font License 1.1",
+        description = "Body typeface.",
+    ),
+    OpenSourceLibrary(
+        name = "Bricolage Grotesque",
+        author = "The Bricolage Grotesque Project Authors",
+        license = "SIL Open Font License 1.1",
+        description = "Display typeface for headings.",
+    ),
 )
 
 @Composable
@@ -126,7 +137,7 @@ fun OssLicensesScreen(
                             Text(
                                 text = lib.license,
                                 style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.SemiBold),
-                                color = BrandPrimary,
+                                color = MaterialTheme.colorScheme.primary,
                             )
                         }
                         Text(

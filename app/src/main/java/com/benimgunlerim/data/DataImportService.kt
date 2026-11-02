@@ -217,6 +217,7 @@ class DataImportService @Inject constructor(
         quietHoursEnd = optString("quietHoursEnd", "07:00"),
         celebrationEffectsEnabled = optBoolean("celebrationEffectsEnabled", true),
         lightDayModeDate = optString("lightDayModeDate", ""),
+        userName = optString("userName", ""),
     )
 
     private fun JSONArray?.orEmpty(): JSONArray = this ?: JSONArray()
@@ -405,6 +406,7 @@ class DataImportService @Inject constructor(
             prefs.notificationMode.requireMaxLength("preferences.notificationMode", MAX_SHORT_TEXT_LENGTH)
             prefs.companionType.requireMaxLength("preferences.companionType", MAX_SHORT_TEXT_LENGTH)
             prefs.companionName.requireMaxLength("preferences.companionName", MAX_SHORT_TEXT_LENGTH)
+            prefs.userName.requireMaxLength("preferences.userName", MAX_SHORT_TEXT_LENGTH)
             prefs.ownedItems.requireMaxLength("preferences.ownedItems", MAX_LONG_TEXT_LENGTH)
             prefs.rewardedEvents.requireMaxLength("preferences.rewardedEvents", MAX_LONG_TEXT_LENGTH)
             require(isHmTime(prefs.dailySummaryTime)) { "Invalid preferences dailySummaryTime: ${prefs.dailySummaryTime}" }

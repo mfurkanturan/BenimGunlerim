@@ -14,6 +14,13 @@ import androidx.compose.material.icons.rounded.WbSunny
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.benimgunlerim.R
 
+/** Boş günde Bugün ekranının önerdiği hazır başlangıçlar; onboarding önerileriyle aynı metinler. */
+data class DayStarter(
+    val nameRes: Int,
+    val icon: ImageVector,
+    val isRoutine: Boolean,
+)
+
 data class SuggestedRoutine(
     val nameRes: Int,
     val icon: ImageVector,
@@ -54,6 +61,12 @@ object OnboardingSuggestions {
                 SuggestedRoutine(R.string.onboarding_suggest_daily_plan, Icons.Rounded.CalendarMonth, defaultSelected = true),
             )
         }
+
+    fun dayStarters(): List<DayStarter> = listOf(
+        DayStarter(R.string.onboarding_suggest_water, Icons.Rounded.WaterDrop, isRoutine = true),
+        DayStarter(R.string.onboarding_suggest_walk, Icons.Rounded.DirectionsWalk, isRoutine = true),
+        DayStarter(R.string.onboarding_task_plan_day, Icons.Rounded.CalendarMonth, isRoutine = false),
+    )
 
     fun suggestedTaskTitle(needId: String): Int = when (needId) {
         "duzen" -> R.string.onboarding_task_plan_day

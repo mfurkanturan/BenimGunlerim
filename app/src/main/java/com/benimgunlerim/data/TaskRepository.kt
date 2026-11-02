@@ -38,6 +38,7 @@ interface TaskRepository {
         reminderTime: String? = null,
     ): TaskEntity
     suspend fun update(task: TaskEntity)
+    suspend fun reorder(tasks: List<TaskEntity>)
     suspend fun setCompletionState(task: TaskEntity, state: TaskCompletionState): TaskEntity
     suspend fun setCompletionStateById(taskId: String, state: TaskCompletionState)
     suspend fun updateTitle(task: TaskEntity, title: String)
@@ -131,6 +132,12 @@ class TaskRepositoryImpl @Inject constructor(
     // ── Update ───────────────────────────────────────────────────────────────
 
     override suspend fun update(task: TaskEntity) = taskDao.update(task)
+
+    override suspend fun reorder(tasks: List<TaskEntity>) {
+        taskDao.insertAll(tasks.mapIndexed { index, task ->
+            task.copy(sortOrder = index, updatedAt = dateTimeProvider.currentTimeMillis())
+        })
+    }
 
     override suspend fun setCompletionState(
         task: TaskEntity,

@@ -55,6 +55,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
@@ -87,6 +88,8 @@ data class TodayUiState(
     /** Room/Flow hata verdiğinde — kullanıcı Tekrar dene ile yeniden abone olur. */
     val snapshotLoadError: Boolean = false,
     val isLightDayMode: Boolean = false,
+    /** Göğün ve selamlamanın dayandığı gün dilimi; dakikada bir güncellenir. */
+    val dayPhase: com.benimgunlerim.ui.theme.DayPhase = com.benimgunlerim.ui.theme.DayPhase.Ogle,
 )
 
 sealed class TodayUiEffect {
@@ -104,7 +107,7 @@ sealed class TodayUiEffect {
 class TodayViewModel @Inject constructor(
     private val prefsRepository: UserPreferencesRepository,
     analyticsTracker: AnalyticsTracker,
-    achievementTracker: AchievementTracker,
+    private val achievementTracker: AchievementTracker,
     feedbackManager: FeedbackManager,
     rewardDisplayService: RewardDisplayService,
     private val dateTimeProvider: DateTimeProvider,
@@ -126,6 +129,7 @@ class TodayViewModel @Inject constructor(
     updateRoutineUseCase: UpdateRoutineUseCase,
     skipRoutineUseCase: SkipRoutineUseCase,
     archiveRoutineUseCase: ArchiveRoutineUseCase,
+    addRoutineUseCase: com.benimgunlerim.domain.usecase.AddRoutineUseCase,
     closeDayUseCase: CloseDayUseCase,
     carryPendingTasksUseCase: CarryPendingTasksUseCase,
     private val observeDailyStateUseCase: ObserveDailyStateUseCase,
@@ -185,6 +189,7 @@ class TodayViewModel @Inject constructor(
             updateRoutineUseCase = updateRoutineUseCase,
             skipRoutineUseCase = skipRoutineUseCase,
             archiveRoutineUseCase = archiveRoutineUseCase,
+            addRoutineUseCase = addRoutineUseCase,
         ),
         routineEntitiesById = { routineEntitiesById },
         uiStateValue = { uiState.value },
@@ -249,6 +254,9 @@ class TodayViewModel @Inject constructor(
 
     val gameEvents: Flow<GameEvent> = rewardDisplayService.gameEvents
 
+    /** Seri başarımı için en son kontrol edilen seri; aynı seriyi tekrar kontrol etmemek için. */
+    private var lastCheckedStreak = 0
+
     val uiState: StateFlow<TodayUiState> = combine(
         combine(currentDateFlow, retrySnapshotTrigger) { date, _ -> date }
             .flatMapLatest { date -> observeTodaySnapshotSafe(date) },
@@ -261,6 +269,13 @@ class TodayViewModel @Inject constructor(
         val summaryTime = snapshot.gameState.dailySummaryTime
         val canClose = runCatching { dateTimeProvider.currentTime() >= java.time.LocalTime.parse(summaryTime) }.getOrDefault(false)
         val isLightDay = LightDayMode.isActiveOn(snapshot.gameState.lightDayModeDate, dateTimeProvider.today())
+        // Seri başarımları gün kapatmayı beklemez: seri arttığı an kontrol edilir (tryUnlock tek seferlik).
+        if (snapshot.currentStreak > lastCheckedStreak) {
+            lastCheckedStreak = snapshot.currentStreak
+            if (snapshot.currentStreak >= MIN_STREAK_ACHIEVEMENT) {
+                viewModelScope.launch { achievementTracker.checkStreak(snapshot.currentStreak) }
+            }
+        }
         TodayUiState(
             tasks = snapshot.tasks.map { it.toTodayUiModel() },
             routines = snapshot.routines.map {
@@ -285,6 +300,8 @@ class TodayViewModel @Inject constructor(
             dailySummaryTime = summaryTime,
             snapshotLoadError = loadErr,
             isLightDayMode = isLightDay,
+            dayPhase = com.benimgunlerim.ui.theme.DebugSkyPhase.override
+                ?: com.benimgunlerim.ui.theme.dayPhaseFor(dateTimeProvider.currentTime()),
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), TodayUiState())
 
@@ -311,6 +328,16 @@ class TodayViewModel @Inject constructor(
 
     fun toggleTask(task: TaskEntity) = taskActions.toggleTask(task)
     fun toggleTask(taskId: String) = taskActions.toggleTask(taskId)
+
+    fun reorderTodayTasks(orderedTaskIds: List<String>) {
+        val tasks = orderedTaskIds.mapNotNull(taskEntitiesById::get)
+        if (tasks.size != orderedTaskIds.size) return
+        viewModelScope.launch {
+            val pending = tasks.filter { it.completionState != com.benimgunlerim.domain.model.TaskCompletionState.COMPLETED.value }
+            val completed = tasks.filter { it.completionState == com.benimgunlerim.domain.model.TaskCompletionState.COMPLETED.value }
+            taskRepository.reorder(pending + completed)
+        }
+    }
     fun updateTaskTitle(task: TaskEntity, title: String) = taskActions.updateTaskTitle(task, title)
     fun updateTaskTitle(taskId: String, title: String) = taskActions.updateTaskTitle(taskId, title)
 
@@ -359,12 +386,37 @@ class TodayViewModel @Inject constructor(
     fun updateRoutineProgress(routine: RoutineEntity, value: Float, wasCompleted: Boolean) = routineActions.updateRoutineProgress(routine, value, wasCompleted)
     fun updateRoutineProgress(routineId: String, value: Float, wasCompleted: Boolean) = routineActions.updateRoutineProgress(routineId, value, wasCompleted)
 
+    /**
+     * Yıldıza tek dokunuş: sayılı rutinde (örn. 2 bardak su) bir adım ilerletir, hedefteyse sıfırlar;
+     * tek seferlik rutinde tamamlar/geri alır.
+     */
+    fun stepRoutine(routineId: String) {
+        val state = uiState.value
+        val routine = state.routines.firstOrNull { it.id == routineId } ?: return
+        val done = routineId in state.completedRoutineIds
+        val target = routine.targetValue ?: 1
+        if (target > 1 && !done) {
+            updateRoutineProgress(routineId, routine.currentValue + 1f, wasCompleted = false)
+        } else {
+            toggleRoutine(routineId, completedToday = done)
+        }
+    }
+
     fun updateRoutine(
         routineId: String,
         name: String,
         targetDays: Set<DayOfWeek>,
         preferredTime: String?,
     ) = routineActions.updateRoutine(routineId, name, targetDays, preferredTime)
+
+    fun addRoutine(
+        name: String,
+        targetDays: Set<DayOfWeek> = DayOfWeek.entries.toSet(),
+        preferredTime: String? = null,
+        targetValue: Int? = null,
+        targetUnit: String? = null,
+        category: String? = null,
+    ) = routineActions.addRoutine(name, targetDays, preferredTime, targetValue, targetUnit, category)
 
     fun skipRoutine(routineId: String) = routineActions.skipRoutine(routineId)
     fun archiveRoutine(routineId: String) = routineActions.archiveRoutine(routineId)
@@ -412,3 +464,6 @@ class TodayViewModel @Inject constructor(
         tomorrowIntention: String = "",
     ) = dayCloseActions.saveMissedDaySummary(date, note, mood, energy, bestMoment, challenge, tomorrowIntention)
 }
+
+/** En küçük seri başarımı eşiği (streak_3). */
+private const val MIN_STREAK_ACHIEVEMENT = 3

@@ -182,7 +182,11 @@ class ObserveProgressSnapshotUseCase @Inject constructor(
     }
 }
 
-private fun List<ProgressDayData>.bestStreak(): Int {
+/**
+ * En iyi seri: Günlerim yıldızlarıyla ve "aktif seri" ile aynı tanım — en az bir hedefin yapıldığı
+ * (puanı > 0) art arda günler. Eskiden %50 eşiği vardı; aktif seriyle çelişiyordu.
+ */
+internal fun List<ProgressDayData>.bestStreak(): Int {
     if (isEmpty()) return 0
     val sorted = sortedBy { it.date }
     var best = 0
@@ -190,7 +194,7 @@ private fun List<ProgressDayData>.bestStreak(): Int {
     var prevDate: LocalDate? = null
     for (day in sorted) {
         val date = runCatching { LocalDate.parse(day.date) }.getOrNull() ?: continue
-        val isSuccessful = day.dailyScore >= 50 || day.completionRate >= 0.5f
+        val isSuccessful = day.dailyScore > 0 || day.completionRate > 0f
         if (isSuccessful) {
             current = if (prevDate != null && date == prevDate!!.plusDays(1)) current + 1 else 1
             if (current > best) best = current

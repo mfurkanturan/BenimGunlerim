@@ -6,6 +6,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.benimgunlerim.domain.DateTimeProvider
 import com.benimgunlerim.domain.LightDayMode
 import java.io.File
+import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import java.time.LocalDate
 import java.time.LocalTime
 import kotlinx.coroutines.flow.first
@@ -33,15 +34,17 @@ class UserPreferencesRepositoryTest {
         override fun currentTimeMillis(): Long = 1_000L
     }
     private lateinit var repository: UserPreferencesRepository
+    private lateinit var dataStore: androidx.datastore.core.DataStore<androidx.datastore.preferences.core.Preferences>
+    private val storeScope = kotlinx.coroutines.CoroutineScope(kotlinx.coroutines.Dispatchers.IO + kotlinx.coroutines.SupervisorJob())
 
     @Before
     fun setUp() {
         context = ApplicationProvider.getApplicationContext()
-        // DataStore's Preferences implementation persists to this fixed path —
-        // wipe it so each test starts from a clean, deterministic state.
-        File(context.filesDir, "datastore/user_preferences.preferences_pb").delete()
+        // Testin kendi dosyası: uygulamanın gerçek tercihleri (ad, XP, onboarding) asla silinmez.
+        val file = File(context.cacheDir, "test_prefs_${System.nanoTime()}.preferences_pb")
+        dataStore = PreferenceDataStoreFactory.create(scope = storeScope) { file }
         fixedDateTimeProvider.currentToday = LocalDate.of(2026, 8, 16)
-        repository = UserPreferencesRepository(context, fixedDateTimeProvider)
+        repository = UserPreferencesRepository(dataStore, fixedDateTimeProvider)
     }
 
     // ── grantRewardOnce ─────────────────────────────────────────────────────

@@ -12,8 +12,9 @@ class GameEngineTest {
     // ── xpForTask ────────────────────────────────────────────────────────────
 
     @Test
-    fun xpForTask_priority1_returnsLowXp() {
-        assertEquals(GameEngine.XP_TASK_LOW, GameEngine.xpForTask(1))
+    fun xpForTask_priority1_isHigh_returnsHighXp() {
+        // Arayüzde 1 = Yüksek (AddTaskSheet, görev ayrıntısı); yüksek öncelik en çok XP verir.
+        assertEquals(GameEngine.XP_TASK_HIGH, GameEngine.xpForTask(1))
     }
 
     @Test
@@ -22,8 +23,8 @@ class GameEngineTest {
     }
 
     @Test
-    fun xpForTask_priority3_returnsHighXp() {
-        assertEquals(GameEngine.XP_TASK_HIGH, GameEngine.xpForTask(3))
+    fun xpForTask_priority3_isLow_returnsLowXp() {
+        assertEquals(GameEngine.XP_TASK_LOW, GameEngine.xpForTask(3))
     }
 
     @Test
@@ -64,10 +65,19 @@ class GameEngineTest {
 
     @Test
     fun xpForTask_highPriorityGivesMoreThanLow() {
-        assertTrue(GameEngine.xpForTask(3) > GameEngine.xpForTask(1))
+        assertTrue(GameEngine.xpForTask(1) > GameEngine.xpForTask(3)) // 1 = Yüksek, 3 = Düşük
     }
 
     // ── calculateLevel ───────────────────────────────────────────────────
+
+    @Test
+    fun calculateLevel_afterLevel10_stepsBecome200Xp() {
+        // Ekranlar da bu tek formülü kullanır (eskiden XP/100+1 yazıyorlardı ve 1000 XP sonrası ayrışıyordu).
+        val info = GameEngine.calculateLevel(1_100)
+        assertEquals(11, info.level)
+        assertEquals(100, info.currentXp)
+        assertEquals(200, info.xpForNextLevel)
+    }
 
     @Test
     fun calculateLevel_zeroXp_returnsLevel1() {

@@ -4,18 +4,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import com.benimgunlerim.ui.theme.BenimGunlerimTheme
 
-@Preview(name = "Nefes alma", showBackground = true)
+@Preview(name = "Nefes alma", showBackground = true, backgroundColor = 0xFF14213D)
 @Composable
-fun BreathingCirclePreview() {
-    BenimGunlerimTheme {
-        BreathingCircle(isExhaling = false)
-    }
+fun BreathingMoonInhalePreview() {
+    BenimGunlerimTheme { BreathingMoon(elapsedMs = 3_000L, totalMs = 60_000L) }
 }
 
-@Preview(name = "Nefes verme", showBackground = true)
+@Preview(name = "Nefes verme", showBackground = true, backgroundColor = 0xFF14213D)
 @Composable
-fun BreathingCircleExhalingPreview() {
-    BenimGunlerimTheme {
-        BreathingCircle(isExhaling = true)
-    }
+fun BreathingMoonExhalePreview() {
+    BenimGunlerimTheme { BreathingMoon(elapsedMs = 30_000L + 7_000L, totalMs = 60_000L) }
 }

@@ -23,16 +23,12 @@ import com.benimgunlerim.R
 import com.benimgunlerim.ui.components.core.AppDivider
 import com.benimgunlerim.ui.components.core.AppSurface
 import com.benimgunlerim.ui.components.layout.ScreenScaffold
-import com.benimgunlerim.ui.components.molecules.BarChart
-import com.benimgunlerim.ui.components.molecules.BarChartEntry
 import com.benimgunlerim.ui.components.molecules.MetricCard
+import com.benimgunlerim.ui.components.molecules.ScreenTitle
 import com.benimgunlerim.ui.components.molecules.SectionBlock
 import com.benimgunlerim.ui.components.organisms.AchievementRow
-import com.benimgunlerim.ui.components.organisms.LevelHeroCard
 import com.benimgunlerim.ui.theme.AppTokens
 import java.time.LocalDate
-import java.time.format.TextStyle
-import java.util.Locale
 
 @Composable
 fun ProgressScreen(
@@ -40,34 +36,8 @@ fun ProgressScreen(
     onNavigateToAchievements: () -> Unit = {},
 ) {
     val state by viewModel.uiState.collectAsState()
-    val level = (state.gameState.totalXp / 100) + 1
-    val maxXp = level * 100
     val today = remember { LocalDate.now() }
-    val primaryColor = MaterialTheme.colorScheme.primary
 
-    // Always build 7 days chart entries
-    val weekChartEntries = remember(state.last30Days, today, primaryColor) {
-        (6 downTo 0).map { offset ->
-            val date = today.minusDays(offset.toLong())
-            val dateStr = date.toString()
-            val dayRecord = state.last30Days.firstOrNull { it.date == dateStr }
-            val score = dayRecord?.dailyScore?.toFloat() ?: 0f
-            val label = date.dayOfWeek.getDisplayName(TextStyle.SHORT, Locale("tr")).uppercase()
-
-            BarChartEntry(
-                label = label,
-                value = score,
-                color = primaryColor,
-                isHighlighted = offset == 0,
-            )
-        }
-    }
-
-    val maxChartScore = remember(weekChartEntries) {
-        (weekChartEntries.maxOfOrNull { it.value } ?: 100f).coerceAtLeast(100f)
-    }
-
-    val daysUnit = stringResource(R.string.progress_unit_days)
     val completedText = stringResource(R.string.progress_unit_completed)
 
     ScreenScaffold { contentPadding ->
@@ -76,72 +46,22 @@ fun ProgressScreen(
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
                 .padding(contentPadding),
-            verticalArrangement = Arrangement.spacedBy(AppTokens.Spacing.sectionGap),
+            verticalArrangement = Arrangement.spacedBy(AppTokens.Spacing.md),
         ) {
-            LevelHeroCard(
-                level = level,
-                levelTitle = stringResource(R.string.today_level_default_title),
-                currentXp = state.gameState.totalXp,
-                maxXp = maxXp,
-                streak = state.currentStreak,
-                gold = state.gameState.gold,
+            ScreenTitle(
+                title = stringResource(R.string.days_title),
+                subtitle = stringResource(R.string.days_subtitle),
+            )
+            DaysNightSky(days = state.last30Days, today = today)
+            DaysLevelCard(totalXp = state.gameState.totalXp)
+
+            DaysStatsCard(
+                currentStreak = state.currentStreak,
+                bestStreak = state.bestStreak,
+                routineRate = state.routineHitRate,
+                taskRate = state.taskHitRate,
             )
 
-            // 4'lü Metrik Izgarası
-            SectionBlock(title = stringResource(R.string.progress_consistency_title)) {
-                Column(verticalArrangement = Arrangement.spacedBy(AppTokens.Spacing.xs)) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.spacedBy(AppTokens.Spacing.xs),
-                    ) {
-                        MetricCard(
-                            title = stringResource(R.string.progress_metric_active_streak),
-                            value = "${state.currentStreak}",
-                            unit = daysUnit,
-                            modifier = Modifier.weight(1f),
-                        )
-                        MetricCard(
-                            title = stringResource(R.string.progress_metric_best_streak),
-                            value = "${state.bestStreak}",
-                            unit = daysUnit,
-                            modifier = Modifier.weight(1f),
-                        )
-                    }
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.spacedBy(AppTokens.Spacing.xs),
-                    ) {
-                        MetricCard(
-                            title = stringResource(R.string.progress_balance_routine),
-                            value = "${(state.routineHitRate * 100).toInt()}%",
-                            unit = stringResource(R.string.progress_bar_unit_completed),
-                            modifier = Modifier.weight(1f),
-                        )
-                        MetricCard(
-                            title = stringResource(R.string.progress_balance_task),
-                            value = "${(state.taskHitRate * 100).toInt()}%",
-                            unit = stringResource(R.string.progress_bar_unit_completed),
-                            modifier = Modifier.weight(1f),
-                        )
-                    }
-                }
-            }
-
-            // Haftalık Ritim Grafiği
-            SectionBlock(title = stringResource(R.string.progress_chart_title)) {
-                AppSurface(
-                    radius = AppTokens.Radius.md,
-                    modifier = Modifier.fillMaxWidth(),
-                ) {
-                    BarChart(
-                        entries = weekChartEntries,
-                        maxValue = maxChartScore,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = AppTokens.Spacing.xs),
-                    )
-                }
-            }
 
             // Başarımlar
             SectionBlock(
@@ -159,7 +79,7 @@ fun ProgressScreen(
                 },
             ) {
                 if (state.unlockedAchievements.isNotEmpty()) {
-                    AppSurface(radius = AppTokens.Radius.md, padding = AppTokens.Spacing.none) {
+                    AppSurface(radius = AppTokens.Radius.lg, padding = AppTokens.Spacing.none) {
                         Column {
                             state.unlockedAchievements.forEachIndexed { index, achievement ->
                                 if (index > 0) AppDivider()
@@ -175,7 +95,7 @@ fun ProgressScreen(
                         }
                     }
                 } else {
-                    AppSurface(radius = AppTokens.Radius.md) {
+                    AppSurface(radius = AppTokens.Radius.lg) {
                         Text(
                             text = stringResource(R.string.progress_achievements_empty),
                             style = MaterialTheme.typography.bodyMedium,

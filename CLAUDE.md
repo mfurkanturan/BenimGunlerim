@@ -371,7 +371,7 @@ Başarımlar + Progress ekranlarında ortak satır. Unlock/locked durumu paramet
 ## Demir Kurallar — İstisna Yok
 
 1. **Ekran/bileşen dosyasında DP literal yasak.** `AppTokens.Spacing.md` kullan.
-2. **Ekran/bileşen dosyasında hardcoded renk yasak.** `MaterialTheme.colorScheme.*` kullan.
+2. **Ekran/bileşen dosyasında hardcoded renk yasak.** `MaterialTheme.colorScheme.*` veya `AppTheme.colors.*` (progress / status / night / reward / category) kullan. Ham palet `ui/theme/ColorPrimitives.kt`; anlam tablosu DESIGN.md §5. `ColorUsageGuardTest` ihlali yakalar.
 3. **Kullanıcıya gösterilen tüm metinler `strings.xml`'den gelir.** Hardcoded Türkçe metin yasak.
 4. **İki ekranda görünen her yapı `molecules/` veya `organisms/`'te olmalı.**
 5. **Ekran dosyaları 200 satırı geçemez.** Geçiyorsa bir bileşen hâlâ organisms'e taşınmamış.
@@ -426,15 +426,18 @@ Faz B-E tamamlanana kadar ekranlar eski yapıda kalmaya devam edebilir. Her fazd
 
 ## Ekran Başına Hangi Bileşenler
 
-| Ekran | Ana bileşenler |
+| Ekran | Ana bileşenler (Gün Işığı — ayrıntı DESIGN.md §9) |
 |-------|---------------|
-| **Bugün** | HeaderProgressCard, SectionBlock×3, TaskRow, RoutineRow, CloseDayCard, AddTaskSheet |
-| **Plan** | WeekPicker, SectionBlock, TaskRow, AddTaskSheet |
-| **Rutinler** | SectionBlock, RoutineRow (ColorRailCard içinde), AddRoutineSheet |
-| **İlerleme** | LevelHeroCard, MetricCard×4, BarChart, ProgressBar×2, AchievementRow mini |
-| **Başarımlar** | StatPill×3, AchievementRow×N |
-| **Dükkan** | GoldBadge, InfoCard (günlük hediye), SectionBlock×N, ShopItemCard×N |
-| **Ayarlar** | ColorRailCard×4, AppChip, MetricCard×N, AppButton (Danger) |
+| **Bugün** | DaySkyHeader, RoutineStepList, TaskListContainer (TaskRow), DashedAddRow, TodayEmptyInvite, FocusCard, CloseDayCard, AddTaskSheet, AddRoutineSheet, TaskDetailSheet |
+| **Günü kapat / Reset** | CloseDaySheet (NightSurfaceTheme), ResetDialog + BreathingMoon |
+| **Plan** | ScreenTitle, WeekPicker (hafta ufku), PlanDayHeader, PlanEmptyDay, DashedAddRow, AddTaskSheet |
+| **Rutinler** | ScreenTitle, WeekPathCard, RoutineGroupHeader, RoutineRow (ışık zinciri), AddRoutineSheet |
+| **Günlerim** | ScreenTitle, DaysNightSky, DaysLevelCard, DaysStatsCard, AchievementRow |
+| **Ayarlar** | ScreenTitle, SettingsProfileSection, SectionBlock, SettingsFooter |
+| **Onboarding** | OnboardingSky, ChoiceCard, StarSuggestionRow, BigTextField |
+| **Kutlamalar** | CelebrationCard (AchievementDialog, LevelUpDialog) |
+
+Fontlar: başlık Bricolage Grotesque, gövde Nunito (ikisi de değişken `.ttf`, `res/font/`). Ekleme sayfaları ortak parçaları `molecules/SheetParts.kt`'den alır.
 
 ---
 

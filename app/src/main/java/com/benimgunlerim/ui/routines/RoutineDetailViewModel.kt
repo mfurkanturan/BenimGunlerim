@@ -16,6 +16,7 @@ import com.benimgunlerim.domain.model.CompletionStatus
 import com.benimgunlerim.domain.usecase.ArchiveRoutineUseCase
 import com.benimgunlerim.domain.usecase.SkipRoutineUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import java.time.DayOfWeek
 import java.time.LocalDate
 import javax.inject.Inject
 import kotlinx.coroutines.flow.SharingStarted
@@ -85,7 +86,7 @@ class RoutineDetailViewModel @Inject constructor(
         val successRate = ((completedIn30.toFloat() / scheduledIn30) * 100).toInt().coerceIn(0, 100)
 
         // Best streak from all logs
-        val bestStreak = calculateBestStreak(completedLogs)
+        val bestStreak = calculateBestStreak(completedLogs, routine.targetDaySet())
 
         RoutineDetailUiState(
             routine = RoutineDetailRoutineUi(
@@ -101,6 +102,7 @@ class RoutineDetailViewModel @Inject constructor(
                 entityType = CompletionEntityType.ROUTINE.value,
                 entityId = routineId,
                 today = today,
+                scheduledDays = routine.targetDaySet(),
             ),
             bestStreak = bestStreak,
             successRate = successRate,
@@ -120,22 +122,21 @@ class RoutineDetailViewModel @Inject constructor(
         viewModelScope.launch { skipRoutineUseCase(routine, dateTimeProvider.today()) }
     }
 
-    private fun calculateBestStreak(logs: List<CompletionLogEntity>): Int {
+    /** En uzun zincir: sadece rutinin günleri sayılır; günü olmayan günler zinciri kırmaz. */
+    private fun calculateBestStreak(logs: List<CompletionLogEntity>, scheduled: Set<DayOfWeek>): Int {
         val dates = logs
             .mapNotNull { runCatching { LocalDate.parse(it.date) }.getOrNull() }
             .toSortedSet()
         if (dates.isEmpty()) return 0
-        var best = 1
-        var current = 1
-        var prev = dates.first()
-        for (date in dates.drop(1)) {
-            if (date == prev.plusDays(1)) {
-                current++
-                if (current > best) best = current
-            } else {
-                current = 1
+        var best = 0
+        var current = 0
+        var day = dates.first()
+        while (!day.isAfter(dates.last())) {
+            if (scheduled.isEmpty() || day.dayOfWeek in scheduled) {
+                current = if (day in dates) current + 1 else 0
+                best = maxOf(best, current)
             }
-            prev = date
+            day = day.plusDays(1)
         }
         return best
     }

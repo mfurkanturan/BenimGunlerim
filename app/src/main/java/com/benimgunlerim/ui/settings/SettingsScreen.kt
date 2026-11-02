@@ -25,6 +25,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.benimgunlerim.R
 import com.benimgunlerim.ui.TestTags
 import com.benimgunlerim.ui.components.layout.ScreenScaffold
+import com.benimgunlerim.ui.components.molecules.ScreenTitle
 import com.benimgunlerim.ui.components.molecules.AlertBanner
 import com.benimgunlerim.ui.components.molecules.AlertBannerSeverity
 import com.benimgunlerim.ui.theme.AppTokens
@@ -34,6 +35,7 @@ import com.benimgunlerim.ui.theme.AppTokens
 fun SettingsScreen(
     viewModel: SettingsViewModel = hiltViewModel(),
     onNavigateToOnboarding: () -> Unit = {},
+    accountSection: @Composable () -> Unit = {},
 ) {
     val context = LocalContext.current
     val prefs by viewModel.preferences.collectAsState()
@@ -43,6 +45,7 @@ fun SettingsScreen(
     var showImportConfirmDialog by remember { mutableStateOf(false) }
     var showOssLicenses by remember { mutableStateOf(false) }
     var showPrivacyPolicy by remember { mutableStateOf(false) }
+    var showNameDialog by remember { mutableStateOf(false) }
     var pendingExportContent by remember { mutableStateOf<String?>(null) }
 
     val exportLauncher = rememberLauncherForActivityResult(
@@ -95,9 +98,9 @@ fun SettingsScreen(
                 .verticalScroll(rememberScrollState())
                 .padding(contentPadding)
                 .testTag(TestTags.SettingsRoot),
-            verticalArrangement = Arrangement.spacedBy(AppTokens.Spacing.sectionGap),
+            verticalArrangement = Arrangement.spacedBy(AppTokens.Spacing.md),
         ) {
-            // Operasyon bildirim banner'ı
+            ScreenTitle(title = stringResource(R.string.settings_header_title))
             if (dataMessage != null) {
                 val (severity, msgText) = when (val msg = dataMessage) {
                     is SettingsEvent.DataCleared -> AlertBannerSeverity.Info to stringResource(R.string.settings_msg_cleared)
@@ -117,13 +120,15 @@ fun SettingsScreen(
                 )
             }
 
+            SettingsProfileSection(userName = prefs.userName, totalXp = prefs.totalXp, onEditClick = { showNameDialog = true })
+            accountSection()
+
             SettingsExperienceSection(
                 prefs = prefs,
                 onSetNotificationMode = { viewModel.setNotificationMode(it) },
                 onSetCelebrationEffects = { viewModel.setCelebrationEffectsEnabled(it) },
                 onSetMorningPlanner = { viewModel.setMorningPlannerEnabled(it) },
             )
-
             SettingsRemindersSection(prefs = prefs)
 
             SettingsPrivacySection(
@@ -139,7 +144,20 @@ fun SettingsScreen(
                 onImportClick = { showImportConfirmDialog = true },
                 onClearClick = { showClearDialog = true },
             )
+
+            SettingsFooter()
         }
+    }
+
+    if (showNameDialog) {
+        SettingsNameDialog(
+            initialName = prefs.userName,
+            onDismiss = { showNameDialog = false },
+            onSave = {
+                viewModel.setUserName(it)
+                showNameDialog = false
+            },
+        )
     }
 
     if (showClearDialog) {

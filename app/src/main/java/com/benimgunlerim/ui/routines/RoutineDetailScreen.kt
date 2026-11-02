@@ -2,6 +2,7 @@
 
 package com.benimgunlerim.ui.routines
 
+import com.benimgunlerim.ui.theme.AppTheme
 import androidx.compose.ui.tooling.preview.Preview
 
 import androidx.compose.foundation.background
@@ -43,11 +44,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.benimgunlerim.R
 import com.benimgunlerim.ui.components.layout.DetailScreenScaffold
-import com.benimgunlerim.ui.theme.CandyPrimary
-import com.benimgunlerim.ui.theme.CandySecondary
-import com.benimgunlerim.ui.theme.CompletedGreen
-import com.benimgunlerim.ui.theme.LevelSky
-import com.benimgunlerim.ui.theme.StreakCoral
 
 @Composable
 fun RoutineDetailScreen(
@@ -68,7 +64,7 @@ fun RoutineDetailScreen(
     ) { padding ->
         if (state.isLoading) {
             Box(Modifier.fillMaxSize().padding(padding), contentAlignment = Alignment.Center) {
-                CircularProgressIndicator(color = CandyPrimary)
+                CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
             }
         } else if (state.routine == null) {
             Box(Modifier.fillMaxSize().padding(padding), contentAlignment = Alignment.Center) {
@@ -114,10 +110,10 @@ private fun RoutineHeroCard(routine: RoutineDetailRoutineUi) {
             .clip(RoundedCornerShape(28.dp))
             .background(
                 Brush.verticalGradient(
-                    listOf(CandyPrimary.copy(.12f), CandyPrimary.copy(.05f)),
+                    listOf(MaterialTheme.colorScheme.primary.copy(.12f), MaterialTheme.colorScheme.primary.copy(.05f)),
                 ),
             )
-            .border(1.dp, CandyPrimary.copy(.18f), RoundedCornerShape(28.dp))
+            .border(1.dp, MaterialTheme.colorScheme.primary.copy(.18f), RoundedCornerShape(28.dp))
             .padding(20.dp),
     ) {
         Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
@@ -126,15 +122,15 @@ private fun RoutineHeroCard(routine: RoutineDetailRoutineUi) {
                 style = MaterialTheme.typography.headlineMedium.copy(fontWeight = FontWeight.ExtraBold),
             )
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                DetailPill(stringResource(goalTypeLabelRes(routine.targetType)), CandyPrimary)
+                DetailPill(stringResource(goalTypeLabelRes(routine.targetType)), MaterialTheme.colorScheme.primary)
                 if (routine.targetValue != null) {
                     val unitDisplay = routine.targetUnit ?: ""
                     val targetText = stringResource(R.string.routine_detail_target_prefix) +
                         " ${routine.targetValue} $unitDisplay".trim()
-                    DetailPill(targetText, LevelSky)
+                    DetailPill(targetText, AppTheme.colors.status.info.fg)
                 }
                 if (!routine.preferredTime.isNullOrBlank()) {
-                    DetailPill(routine.preferredTime!!, CandySecondary)
+                    DetailPill(routine.preferredTime!!, AppTheme.colors.status.info.fg)
                 }
             }
         }
@@ -147,13 +143,13 @@ private fun RoutineStatsRow(state: RoutineDetailUiState) {
         StatCard(
             label = stringResource(R.string.routine_detail_stat_streak),
             value = stringResource(R.string.routine_detail_stat_days, state.currentStreak),
-            color = CandyPrimary,
+            color = MaterialTheme.colorScheme.primary,
             modifier = Modifier.weight(1f),
         )
         StatCard(
             label = stringResource(R.string.routine_detail_stat_best),
             value = stringResource(R.string.routine_detail_stat_days, state.bestStreak),
-            color = LevelSky,
+            color = AppTheme.colors.status.info.fg,
             modifier = Modifier.weight(1f),
         )
         val successRateText = String.format(
@@ -163,7 +159,7 @@ private fun RoutineStatsRow(state: RoutineDetailUiState) {
         StatCard(
             label = stringResource(R.string.routine_detail_stat_success),
             value = successRateText,
-            color = CompletedGreen,
+            color = AppTheme.colors.status.success.fg,
             modifier = Modifier.weight(1f),
         )
     }
@@ -202,7 +198,7 @@ private fun RoutineLast7DaysCard(last7Days: List<Boolean>) {
                             .height(if (completed) 32.dp else 16.dp)
                             .fillMaxWidth()
                             .clip(RoundedCornerShape(50))
-                            .background(if (completed) CandyPrimary else MaterialTheme.colorScheme.surfaceVariant),
+                            .background(if (completed) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surfaceVariant),
                     )
                     Text(
                         labels.getOrElse(index) { "" },
@@ -243,14 +239,14 @@ private fun RoutineScheduledDaysCard(scheduledDays: Set<java.time.DayOfWeek>) {
                     Modifier
                         .size(38.dp)
                         .clip(CircleShape)
-                        .background(if (active) CandyPrimary else MaterialTheme.colorScheme.surfaceVariant)
-                        .border(1.dp, if (active) CandyPrimary else MaterialTheme.colorScheme.outline, CircleShape),
+                        .background(if (active) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surfaceVariant)
+                        .border(1.dp, if (active) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline, CircleShape),
                     contentAlignment = Alignment.Center,
                 ) {
                     Text(
                         label,
                         style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.ExtraBold),
-                        color = if (active) Color.White else MaterialTheme.colorScheme.onSurfaceVariant,
+                        color = if (active) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 }
             }
@@ -291,7 +287,7 @@ private fun StatCard(label: String, value: String, color: Color, modifier: Modif
 @Composable
 private fun RoutineDetailStatPreview() {
     com.benimgunlerim.ui.theme.BenimGunlerimTheme {
-        StatCard(label = "Bu hafta", value = "6/7", color = com.benimgunlerim.ui.theme.CandyPrimary)
+        StatCard(label = "Bu hafta", value = "6/7", color = androidx.compose.material3.MaterialTheme.colorScheme.primary)
     }
 }
 

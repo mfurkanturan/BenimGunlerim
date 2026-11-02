@@ -1,5 +1,6 @@
 package com.benimgunlerim.ui.today
 
+import com.benimgunlerim.ui.theme.AppTheme
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -8,8 +9,13 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Bedtime
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -21,56 +27,68 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.benimgunlerim.R
-import com.benimgunlerim.ui.theme.CandyPrimary
-import com.benimgunlerim.ui.theme.CandySecondary
-import com.benimgunlerim.ui.theme.CompletedGreen
-import com.benimgunlerim.ui.theme.LevelSky
-import com.benimgunlerim.ui.theme.StreakCoral
+import com.benimgunlerim.ui.components.core.StarIcon
+import com.benimgunlerim.ui.theme.AppTokens
 
-private const val PROGRESS_BG_ALPHA = 0.10f
 private const val UNSELECTED_BG_ALPHA = 0.14f
 private const val UNSELECTED_BORDER_ALPHA = 0.20f
 private const val UNSELECTED_ENERGY_ALPHA = 0.12f
 private val ItemHeight = 44.dp
 private val ItemCornerRadius = 10.dp
-private val ProgressBarHeight = 8.dp
-private val ProgressCornerRadius = 99.dp
 private val EnergyLevels = listOf(1, 2, 3, 4, 5)
+private const val NightStarLimit = 7
 
+/** Gece sahnesinin üstü: hilal ve bugün yakılan ışıklar; başlık "N ışık yaktın." */
 @Composable
 internal fun CloseDayStep0Summary(completedCount: Int, totalCount: Int, progress: Float, overdueCount: Int) {
-    Text(stringResource(R.string.today_close_step0_title), style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.ExtraBold))
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(AppTokens.Spacing.xs),
+    ) {
+        Icon(
+            imageVector = Icons.Rounded.Bedtime,
+            contentDescription = null,
+            tint = AppTheme.colors.night.moon,
+            modifier = Modifier.size(AppTokens.IconSize.lg),
+        )
+        Spacer(Modifier.weight(1f))
+        repeat(totalCount.coerceAtMost(NightStarLimit)) { i ->
+            StarIcon(
+                lit = i < completedCount,
+                size = AppTokens.Sky.starSmall,
+                litColor = AppTheme.colors.night.moon,
+                edgeColor = AppTheme.colors.night.moon,
+                idleColor = AppTheme.colors.night.line,
+                dashed = true,
+            )
+        }
+    }
     Text(
-        stringResource(R.string.today_close_step0_subtitle),
-        style = MaterialTheme.typography.bodySmall,
+        text = if (completedCount > 0) {
+            stringResource(R.string.night_lights_title, completedCount)
+        } else {
+            stringResource(R.string.night_no_lights_title)
+        },
+        style = MaterialTheme.typography.displayMedium,
+        color = MaterialTheme.colorScheme.onSurface,
+    )
+    Text(
+        text = stringResource(if (completedCount > 0) R.string.night_lights_subtitle else R.string.night_no_lights_subtitle),
+        style = MaterialTheme.typography.bodyMedium,
         color = MaterialTheme.colorScheme.onSurfaceVariant,
     )
     if (totalCount == 0) {
         Text(
             stringResource(R.string.today_close_step0_empty_hint),
-            style = MaterialTheme.typography.bodyMedium,
+            style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
     } else {
-        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-            SummaryTile("$completedCount / $totalCount", stringResource(R.string.today_close_step0_completed), CandyPrimary, Modifier.weight(1f))
-            SummaryTile("%${(progress * 100).toInt()}", stringResource(R.string.today_close_step0_success), CompletedGreen, Modifier.weight(1f))
-            if (overdueCount > 0) SummaryTile("$overdueCount", stringResource(R.string.today_close_step0_overdue), StreakCoral, Modifier.weight(1f))
-        }
-        Box(
-            Modifier
-                .fillMaxWidth()
-                .height(ProgressBarHeight)
-                .clip(RoundedCornerShape(ProgressCornerRadius))
-                .background(CandySecondary.copy(alpha = PROGRESS_BG_ALPHA)),
-        ) {
-            Box(
-                Modifier
-                    .fillMaxWidth(progress.coerceIn(0f, 1f))
-                    .height(ProgressBarHeight)
-                    .clip(RoundedCornerShape(ProgressCornerRadius))
-                    .background(CandySecondary),
-            )
+        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(AppTokens.Spacing.xs)) {
+            SummaryTile("$completedCount / $totalCount", stringResource(R.string.today_close_step0_completed), AppTheme.colors.night.moon, Modifier.weight(1f))
+            SummaryTile("%${(progress * 100).toInt()}", stringResource(R.string.today_close_step0_success), AppTheme.colors.night.moon, Modifier.weight(1f))
+            if (overdueCount > 0) SummaryTile("$overdueCount", stringResource(R.string.today_close_step0_overdue), AppTheme.colors.progress.done, Modifier.weight(1f))
         }
     }
 }
@@ -101,7 +119,7 @@ internal fun CloseDayStep1MoodEnergy(
                         .clickable { onMoodChange(i) },
                     contentAlignment = Alignment.Center,
                 ) {
-                    Text(moodLabels[i], style = MaterialTheme.typography.labelSmall.copy(fontWeight = if (mood == i) FontWeight.ExtraBold else FontWeight.Normal), color = if (mood == i) Color.White else col, maxLines = 1)
+                    Text(moodLabels[i], style = MaterialTheme.typography.labelSmall.copy(fontWeight = if (mood == i) FontWeight.ExtraBold else FontWeight.Normal), color = if (mood == i) AppTheme.colors.night.sky else col, maxLines = 1)
                 }
             }
         }
@@ -112,16 +130,16 @@ internal fun CloseDayStep1MoodEnergy(
             EnergyLevels.forEach { e ->
                 Box(
                     Modifier.weight(1f).height(ItemHeight).clip(RoundedCornerShape(ItemCornerRadius))
-                        .background(if (energy == e) LevelSky else LevelSky.copy(alpha = UNSELECTED_ENERGY_ALPHA))
+                        .background(if (energy == e) AppTheme.colors.night.moon else AppTheme.colors.night.moon.copy(alpha = UNSELECTED_ENERGY_ALPHA))
                         .border(
                             1.dp,
-                            if (energy == e) LevelSky else LevelSky.copy(alpha = UNSELECTED_BORDER_ALPHA),
+                            if (energy == e) AppTheme.colors.night.moon else AppTheme.colors.night.moon.copy(alpha = UNSELECTED_BORDER_ALPHA),
                             RoundedCornerShape(ItemCornerRadius),
                         )
                         .clickable { onEnergyChange(e) },
                     contentAlignment = Alignment.Center,
                 ) {
-                    Text("$e", style = MaterialTheme.typography.titleSmall.copy(fontWeight = if (energy == e) FontWeight.ExtraBold else FontWeight.Normal), color = if (energy == e) Color.White else LevelSky)
+                    Text("$e", style = MaterialTheme.typography.titleSmall.copy(fontWeight = if (energy == e) FontWeight.ExtraBold else FontWeight.Normal), color = if (energy == e) AppTheme.colors.night.sky else AppTheme.colors.night.moon)
                 }
             }
         }

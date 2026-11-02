@@ -37,8 +37,10 @@ class OnboardingViewModel @Inject constructor(
         intensityId: String,
         approvedRoutineNames: List<String>,
         approvedTaskTitle: String?,
+        userName: String = "",
     ) {
         viewModelScope.launch {
+            if (userName.isNotBlank()) preferencesRepository.setUserName(userName)
             // Add only the routines the user explicitly approved — no auto-mock
             approvedRoutineNames.forEach { name ->
                 addRoutineUseCase(

@@ -165,9 +165,10 @@ object GameEngine {
         )
     }
 
+    /** Öncelik: 1 = Yüksek, 2 = Normal, 3 = Düşük (arayüzle aynı). Yüksek öncelik daha çok XP verir. */
     fun xpForTask(priority: Int): Int = when (priority) {
-        1    -> XP_TASK_LOW
-        3    -> XP_TASK_HIGH
+        1    -> XP_TASK_HIGH
+        3    -> XP_TASK_LOW
         else -> XP_TASK_NORMAL
     }
 

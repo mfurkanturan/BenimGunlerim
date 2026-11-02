@@ -29,7 +29,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import com.benimgunlerim.R
-import com.benimgunlerim.ui.theme.StreakCoral
+import com.benimgunlerim.ui.theme.AppTheme
 
 private const val OVERDUE_BG_ALPHA = 0.10f
 private const val OVERDUE_BORDER_ALPHA = 0.25f
@@ -141,10 +141,10 @@ internal fun CloseDayStep3IntentionAndCarry(
     if (overdueCount > 0) {
         Row(
             Modifier.fillMaxWidth().clip(RoundedCornerShape(OverdueCardCornerRadius))
-                .background(if (carryTasks) StreakCoral.copy(alpha = OVERDUE_BG_ALPHA) else MaterialTheme.colorScheme.surfaceVariant)
+                .background(if (carryTasks) AppTheme.colors.night.moon.copy(alpha = OVERDUE_BG_ALPHA) else MaterialTheme.colorScheme.surfaceVariant)
                 .border(
                     1.dp,
-                    if (carryTasks) StreakCoral.copy(alpha = OVERDUE_BORDER_ALPHA)
+                    if (carryTasks) AppTheme.colors.night.moon.copy(alpha = OVERDUE_BORDER_ALPHA)
                     else MaterialTheme.colorScheme.outline,
                     RoundedCornerShape(OverdueCardCornerRadius),
                 )
@@ -153,8 +153,8 @@ internal fun CloseDayStep3IntentionAndCarry(
             horizontalArrangement = Arrangement.spacedBy(12.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Box(Modifier.size(20.dp).clip(RoundedCornerShape(4.dp)).background(if (carryTasks) StreakCoral else MaterialTheme.colorScheme.outline.copy(alpha = INACTIVE_CHECK_ALPHA)), contentAlignment = Alignment.Center) {
-                if (carryTasks) Icon(Icons.Rounded.Check, contentDescription = carryCheckboxCd, tint = Color.White, modifier = Modifier.size(14.dp))
+            Box(Modifier.size(20.dp).clip(RoundedCornerShape(4.dp)).background(if (carryTasks) AppTheme.colors.night.moon else MaterialTheme.colorScheme.outline.copy(alpha = INACTIVE_CHECK_ALPHA)), contentAlignment = Alignment.Center) {
+                if (carryTasks) Icon(Icons.Rounded.Check, contentDescription = carryCheckboxCd, tint = AppTheme.colors.night.sky, modifier = Modifier.size(14.dp))
             }
             Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(2.dp)) {
                 Text(stringResource(R.string.today_close_step3_move_overdue, overdueCount), style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.SemiBold))
